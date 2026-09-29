@@ -1230,7 +1230,7 @@ async function aaLoadSupabase(){
   const PAGE=1000; let offset=0; const all=[]; let total=null;
   aaToast(&#x27;Loading live data from Supabase…&#x27;);
   while(true){
-    const url=AA_SB_URL+&#x27;/rest/v1/agent_daily?select=emp_id,perf_date,process,tenure,manager_name,am_dm_name,trainer_name,assign_lead,bkgs,s_bkgs,overall_gwp,gwp,atten,capture,eligible_leads,appts_created,talk_time_hrs,total_dialled,total_connected,open_lead,unique_dialled,name,user_name&amp;order=id.asc&amp;limit=&#x27;+PAGE+&#x27;&amp;offset=&#x27;+offset;
+    const url=AA_SB_URL+&#x27;/rest/v1/agent_daily?select=emp_id,perf_date,process,tenure,manager_name,am_dm_name,trainer_name,assign_lead,bkgs,s_bkgs,overall_gwp,gwp,atten,capture,eligible_leads,appts_created,talk_time_hrs,total_dialled,total_connected,open_lead,unique_dialled,user_name&amp;order=id.asc&amp;limit=&#x27;+PAGE+&#x27;&amp;offset=&#x27;+offset;
     const res=await fetch(url,{headers:{apikey:AA_SB_KEY,Authorization:&#x27;Bearer &#x27;+AA_SB_KEY,Prefer:&#x27;count=exact&#x27;,Range:offset+&#x27;-&#x27;+(offset+PAGE-1)}});
     if(!res.ok) throw new Error(&#x27;Supabase HTTP &#x27;+res.status);
     if(total==null){ const cr=res.headers.get(&#x27;content-range&#x27;); if(cr&amp;&amp;cr.includes(&#x27;/&#x27;)) total=parseInt(cr.split(&#x27;/&#x27;)[1])||null; }
@@ -4224,7 +4224,7 @@ function mapSupabaseRow(r){
 async function loadFromSupabase(){
   const PAGE=1000; let offset=0; const all=[];
   while(true){
-    const url=SUPABASE_URL+'/rest/v1/zero_to_90?select=employee_id,employee_name,start_date,batch_no,nht_trainer_code,nht_trainer_name,lp_trainer_code,lp_trainer_name,business_unit,location,segment,status,lwd,nop_0_30,nop_31_60,nop_61_90,ape_0_30,ape_31_60,ape_61_90,lead_0_30,lead_31_60,lead_61_90,visits_0_30,visits_31_60,visits_61_90,data_date&order=id.asc&limit='+PAGE+'&offset='+offset;
+    const url=SUPABASE_URL+'/rest/v1/zero_to_90?select=employee_id,employee_name,start_date,batch_no,nht_trainer_code,nht_trainer_name,lp_trainer_code,lp_trainer_name,business_unit,location,segment,status,lwd,nop_0_30,nop_31_60,nop_61_90,ape_0_30,ape_31_60,ape_61_90,lead_0_30,lead_31_60,lead_61_90,data_date&order=id.asc&limit='+PAGE+'&offset='+offset;
     const res=await fetch(url,{headers:{apikey:SUPABASE_KEY,Authorization:'Bearer '+SUPABASE_KEY,Range:offset+'-'+(offset+PAGE-1)}});
     if(!res.ok) throw new Error('Supabase HTTP '+res.status);
     const batch=await res.json();
