@@ -631,6 +631,29 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
   /* FG-Conversion growth columns */
   #fcTbl th.fc-gro{background:#1e5b3a}
   #fcTbl td.fc-gro{background:#f3fbf6;font-variant-numeric:tabular-nums}
+
+  /* FG October: improved / not-improved split */
+  #fcTbl tr.oct-detail>td{background:#f7f9fc;padding:14px 16px;text-align:left}
+  .oct-split{display:grid;grid-template-columns:1fr;gap:12px}
+  .oct-mini{background:#fff;border:1px solid #e4e9f0;border-radius:12px;overflow:hidden}
+  .oct-mini-hd{font-size:12.5px;font-weight:800;padding:10px 14px;border-bottom:1px solid #eef2f7}
+  .oct-mini-hd.g{background:#ecfdf5;color:#047857}.oct-mini-hd.b{background:#fef2f2;color:#b91c1c}
+  .oct-mini-hd span{font-weight:600;opacity:.75}
+  .oct-mini-scroll{overflow-x:auto;max-height:440px;overflow-y:auto}
+  #fcTbl .oct-mini table{width:100%;min-width:760px;border-collapse:collapse;font-size:12px;box-shadow:none;border-radius:0}
+  #fcTbl .oct-mini th{background:#f1f5f9;color:#475569;padding:7px 10px;font-size:10px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;white-space:nowrap;position:sticky;top:0;text-align:center;z-index:1}
+  #fcTbl .oct-mini td{padding:7px 10px;border-bottom:1px solid #eef2f7;white-space:nowrap;text-align:center;font-size:12px;background:#fff}
+  #fcTbl .oct-mini th.lft,#fcTbl .oct-mini td.lft{text-align:left}
+  #fcTbl .oct-mini tr:hover td{background:#f8fbff}
+  .oct-empty{padding:16px;text-align:center;color:#94a3b8;font-size:12px}
+  .oct-agent-tbl{margin-top:14px;overflow-x:auto}
+  .oct-agent-tbl table{width:100%;min-width:0;border-collapse:collapse;font-size:12.5px}
+  .oct-agent-tbl .chip{display:inline-block;padding:2px 8px;border-radius:20px;font-weight:800;font-size:11px}
+  .oct-agent-tbl .chip.g{background:#dcfce7;color:#047857}.oct-agent-tbl .chip.b{background:#fee2e2;color:#b91c1c}.oct-agent-tbl .chip.n{background:#f1f5f9;color:#64748b}
+  .oct-agent-tbl th{background:#0f2b4d;color:#fff;padding:8px 10px;font-size:10.5px;text-transform:uppercase;white-space:nowrap}
+  .oct-agent-tbl td{padding:7px 10px;border-bottom:1px solid #eef2f7;text-align:center;white-space:nowrap}
+  .oct-agent-tbl th.lft,.oct-agent-tbl td.lft{text-align:left}
+  .oct-agent-tbl tr.oct-hl td{background:#eff6ff;font-weight:700}
 </style>
 </head>
 <body>
@@ -748,6 +771,7 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
       <div class="ctl"><label>View</label>
         <div class="seg-toggle" id="viewTog">
           <button data-view="seg" class="on">Segment</button>
+          <button data-view="loc">City</button>
           <button data-view="trainer">Trainer</button>
           <button data-view="phases">All Phases</button>
           <button data-view="journey">Agent Journey</button>
@@ -1833,10 +1857,10 @@ aaInit();
       </div>
     </div>
   </header>
-  <div id="fcChoice" style="padding:50px 20px;max-width:820px;margin:0 auto">
+  <div id="fcChoice" style="padding:50px 20px;max-width:1100px;margin:0 auto">
     <h2 style="text-align:center;font-size:22px;color:var(--ink);margin:0 0 6px">FG-Conversion</h2>
     <p style="text-align:center;color:var(--ink-soft);margin:0 0 30px">Choose a group to view</p>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px">
       <button class="fc-choice-card" data-choice="fg">
         <div class="fcc-ico">🎯</div>
         <div class="fcc-name">Health Core</div>
@@ -1846,6 +1870,11 @@ aaInit();
         <div class="fcc-ico">🌐</div>
         <div class="fcc-name">Health NRI-GGN</div>
         <div class="fcc-desc">29 agents · June / July / Aug · Team-Leader wise</div>
+      </button>
+      <button class="fc-choice-card" data-choice="oct">
+        <div class="fcc-ico">📈</div>
+        <div class="fcc-name">FG October</div>
+        <div class="fcc-desc">Online conversion · Pre (Jul–Sep) vs LMTD vs Oct · Segment & Trainer wise · Improved vs Not improved</div>
       </button>
     </div>
   </div>
@@ -1859,6 +1888,7 @@ aaInit();
           <div class="ssd-seg" id="fcGroupSeg" style="margin-right:8px">
             <button class="ssd-segbtn active" data-fcgroup="fg">Health Core</button>
             <button class="ssd-segbtn" data-fcgroup="nri">Health NRI-GGN</button>
+            <button class="ssd-segbtn" data-fcgroup="oct">FG October</button>
           </div>
           <div class="ssd-seg" id="fcViewSeg">
             <button class="ssd-segbtn active" data-fcview="segment">Segment Wise</button>
@@ -1874,6 +1904,11 @@ aaInit();
             <select id="fcConv" class="ssd-search" style="min-width:150px;cursor:pointer">
               <option value="total">Total Conversion</option>
               <option value="online">Online Conversion</option>
+            </select>
+            <select id="fcOctType" class="ssd-search" style="min-width:130px;cursor:pointer;display:none">
+              <option value="ALL">All types</option>
+              <option value="Red">🔴 Red</option>
+              <option value="Amber">🟠 Amber</option>
             </select>
             <input type="text" id="fcSearch" class="ssd-search" placeholder="🔍 Search agent…">
           </div>
@@ -1940,7 +1975,8 @@ const SLABS=['0-30','31-60','61-90'];
 const SLAB_BOUNDS={'0-30':[0,30],'31-60':[30,60],'61-90':[60,90]};
 const SEG_MAP={'Ind':'Individual','IND':'Individual','ind':'Individual','Health Growth':'Growth','health growth':'Growth','HEALTH GROWTH':'Growth','Health growth':'Growth','Growth':'Growth'};
 // Health Regional segment normalization (in case of casing/spacing variants)
-const LOC_NORM_HR={'Bhubaneswar':'Bhubaneshwar','bhubaneswar':'Bhubaneshwar','BHUBANESWAR':'Bhubaneshwar'};
+const LOC_NORM_HR={'Bhubaneswar':'Bhubaneshwar','bhubaneswar':'Bhubaneshwar','BHUBANESWAR':'Bhubaneshwar',
+  'Gurgan':'Gurgaon','gurgan':'Gurgaon','GURGAN':'Gurgaon','Gurugram':'Gurgaon','gurugram':'Gurgaon','GURUGRAM':'Gurgaon'};
   const SEG_MAP_HR={'Health fresh':'Health Fresh','HEALTH FRESH':'Health Fresh','Health NRI':'Health NRI','Health nri':'Health NRI','Health Growth':'Health Growth','Health HOM':'HOM','HOM':'HOM'};
 const EXCLUDE_SEG=['Handover','Handover Data'];
 // ---- Business Unit registry ----
@@ -2227,16 +2263,16 @@ function agentDetailHtml(g){
   BUCKETS.forEach(bk0=>{const bk=isConv&&bk0.key==='nop'?{...bk0,label:'Missing Conversion only'}:bk0;const list=g.agents.filter(a=>a.bucket===bk.key);
     h+=`<div class="bucket bk-${bk.cls}"><div class="bucket-hd"><span class="bdot ${bk.cls}"></span>${bk.label}<span class="bcount">${list.length}</span></div>`;
     if(!list.length)h+=`<div class="empty">None</div>`;
-    else if(isConv){h+=`<div class="agtbl-wrap"><table class="agtbl"><thead><tr><th>Ecode</th><th>Agent</th><th>Conv%</th><th>tgt</th><th>APE</th><th>tgt</th></tr></thead><tbody>`;
+    else if(isConv){h+=`<div class="agtbl-wrap"><table class="agtbl"><thead><tr><th>Ecode</th><th>Agent</th><th>City</th><th>Conv%</th><th>tgt</th><th>APE</th><th>tgt</th></tr></thead><tbody>`;
       list.sort((a,b)=>a.name.localeCompare(b.name)).forEach(a=>{const nC=(a.conv||0)>=a.tN?'g':'b',aC=a.aA>=a.tA?'g':'b';
         h+=`<tr class="fos-agent" data-feid="${a.id||''}" data-fname="${(a.name||'').replace(/"/g,'&quot;')}" data-fvisits="${a.visits||0}" data-fbook="${a.aN||0}" data-fslab="${a.slab||''}" style="cursor:pointer"><td class="muted" style="font-size:11px">${a.id||''} <span style="color:#0d5a63">📊</span></td><td class="an">${a.name}${(a.status==='Inactive'||a.lwd)?' <span class="extag">exited</span>':''}</td>
-          <td class="pct ${nC}">${((a.conv||0)*100).toFixed(2)}%</td><td class="muted">${Math.round(a.tN*100)}%</td><td class="pct ${aC}">${fmtAPE(a.aA)}</td><td class="muted">${fmtAPE(a.tA)}</td></tr>`;});
+          <td class="muted">${a.loc||''}</td><td class="pct ${nC}">${((a.conv||0)*100).toFixed(2)}%</td><td class="muted">${Math.round(a.tN*100)}%</td><td class="pct ${aC}">${fmtAPE(a.aA)}</td><td class="muted">${fmtAPE(a.tA)}</td></tr>`;});
       h+=`</tbody></table></div>`;}
-    else{h+=`<div class="agtbl-wrap"><table class="agtbl"><thead><tr><th>Agent</th><th>NOP</th><th>tgt</th>${noApe?'':'<th>APE</th><th>tgt</th>'}</tr></thead><tbody>`;
+    else{h+=`<div class="agtbl-wrap"><table class="agtbl"><thead><tr><th>Agent</th><th>City</th><th>NOP</th><th>tgt</th>${noApe?'':'<th>APE</th><th>tgt</th>'}</tr></thead><tbody>`;
       list.sort((a,b)=>a.name.localeCompare(b.name)).forEach(a=>{const nC=a.aN>=a.tN?'g':'b',aC=a.aA>=a.tA?'g':'b';
         const clk=(state.bu==='GGN'&&a.id)?` class="zga-agent" data-zeid="${a.id}" data-zname="${(a.name||'').replace(/"/g,'&quot;')}" style="cursor:pointer"`:'';
         h+=`<tr${clk}><td class="an">${a.name}${(state.bu==='GGN'&&a.id)?' <span style="color:#0d5a63;font-size:10px">📊</span>':''}${(a.status==='Inactive'||a.lwd)?' <span class="extag">exited</span>':''}</td>
-          <td class="pct ${nC}">${fmt(a.aN)}</td><td class="muted">${fmt(a.tN)}</td>${noApe?'':`<td class="pct ${aC}">${fmtAPE(a.aA)}</td><td class="muted">${fmtAPE(a.tA)}</td>`}</tr>`;});
+          <td class="muted">${a.loc||''}</td><td class="pct ${nC}">${fmt(a.aN)}</td><td class="muted">${fmt(a.tN)}</td>${noApe?'':`<td class="pct ${aC}">${fmtAPE(a.aA)}</td><td class="muted">${fmtAPE(a.tA)}</td>`}</tr>`;});
       h+=`</tbody></table></div>`;}
     h+=`</div>`;});
   return h+`</div></div>`;
@@ -2464,10 +2500,10 @@ function renderSummary(bi){
   const gkey=state.view==='seg'?(isHR?'locseg':'seg'):state.view;
   renderTargetStrip(isConv,noApe,noNop);
   const rows=buildRows(bi.recs,state.slab,gkey);const T=totalsOf(rows);renderKPIs(T);
-  if(gkey==='locseg')rows.sort((a,b)=>a.name.localeCompare(b.name));
-  document.getElementById('tblTitle').firstChild.textContent=(state.view==='seg'?(isHR?(isConv?'City-wise summary ':'Location-wise summary '):'Segment-wise summary '):'Trainer-wise summary ');
+  if(gkey==='locseg'||gkey==='loc')rows.sort((a,b)=>a.name.localeCompare(b.name));
+  document.getElementById('tblTitle').firstChild.textContent=(state.view==='seg'?(isHR?(isConv?'City-wise summary ':'Location-wise summary '):'Segment-wise summary '):(state.view==='loc'?'City-wise summary ':'Trainer-wise summary '));
   document.getElementById('tblTag').textContent=`Batch #${state.batch} · ${state.slab} days`;
-  const colHead=state.view==='seg'?(isHR?(isConv?'City · Segment':'Location · Segment'):'Segment'):'Trainer (LP M1)';
+  const colHead=state.view==='seg'?(isHR?(isConv?'City · Segment':'Location · Segment'):'Segment'):(state.view==='loc'?'City':'Trainer (LP M1)');
   const L1=isConv?'Conv':'NOP', BK=isConv?'Conv%':'Bkgs';
   const cs=(noApe||noNop)?1:2; // colspan for paired metric groups
   const NCOLS=(noApe||noNop)?12:18;
@@ -2730,7 +2766,12 @@ function ingest(rows){
     const segRaw=(get('Segment')||'').trim();if(EXCLUDE_SEG.includes(segRaw)){skipped++;return;}
     const status=(get('Status')||'').trim();
     let lwd=parseDate(get('LWD'));
-    let loc=(get('Location')||'').trim(); if(typeof LOC_NORM_HR!=='undefined'&&LOC_NORM_HR[loc])loc=LOC_NORM_HR[loc];
+    let loc=(get('Location')||'').trim();
+    // Working City: source column. Header match ignores case, spaces, underscores and hyphens.
+    let wcity='';
+    {const want=['workingcity','workcity','basecity','postingcity'];
+     for(const kk in r){const nk=kk.replace(/^\ufeff/,'').trim().toLowerCase().replace(/[\s_\-]/g,'');
+       if(want.includes(nk)){const v=r[kk];if(v!==null&&v!==undefined&&(''+v).trim()!==''){wcity=(''+v).trim();break;}}}} if(typeof LOC_NORM_HR!=='undefined'&&LOC_NORM_HR[loc])loc=LOC_NORM_HR[loc];
     // Business Unit: explicit column, else infer from Location matching HR target locations
     let bu=detectBU(get('Business Unit')||get('BU')||get('Business_Unit')||get('Vertical'));
     if(!bu){ bu = (TGT_HR[loc]) ? 'HR' : 'GGN'; }
@@ -2742,7 +2783,7 @@ function ingest(rows){
     // A batch 12 with its own start date (e.g. a genuinely new batch) stays separate.
     if(bu==='GGN'&&batchNo===12){const sd=(get('Start Date')||'').trim();if(sd==='20-May-26')batchNo=11;}
     const rec={id:get('EmployeeID'),name:get('Employee Name'),start,batch:batchNo,
-      trainer:(get('LP-Trainer Name M')||'Unassigned').trim(),seg,loc,bu,status,lwd,
+      trainer:(get('LP-Trainer Name M')||'Unassigned').trim(),seg,loc,wcity,bu,status,lwd,
       nop:{'0-30':num(r.__nop0),'31-60':num(r.__nop1),'61-90':num(r.__nop2)},
       ape:{'0-30':num(r.__ape0),'31-60':num(r.__ape1),'61-90':num(r.__ape2)},
       lead:{'0-30':num(r.__lead0),'31-60':num(r.__lead1),'61-90':num(r.__lead2)},
@@ -2891,7 +2932,7 @@ function exportAgentRaw(){
     const row={
       'Employee ID': r.id||'', 'Employee Name': r.name||'', 'Batch': r.batch,
       'Start Date': r.start.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'2-digit'}),
-      'Segment': r.seg||'', 'Location': r.loc||'', 'Trainer': r.trainer||'',
+      'Segment': r.seg||'', 'Location': r.loc||'', 'Working City': r.wcity||'', 'Trainer': r.trainer||'',
       'Status': (attrited?'Inactive':'Active'),
       'Tenure (days)': tenureOf(r),
       'Met 0-30': slabStatus(r,'0-30'),
@@ -2906,15 +2947,34 @@ function exportAgentRaw(){
         row['Visits '+sl]  = Math.round((r.lead&&r.lead[sl])||0);
         row['Booking '+sl] = Math.round(r.nop[sl]||0);
         row['APE '+sl]     = Math.round(r.ape[sl]||0);
+        const ld=(r.lead&&r.lead[sl])||0, bk=r.nop[sl]||0;
+        row['Conv% '+sl]   = ld>0 ? Math.round(bk/ld*1000)/10 : '';
       });
+      // overall conversion across the slabs the agent actually reached
+      let tV=0,tB=0;
+      slabList.forEach(sl=>{ tV+=(r.lead&&r.lead[sl])||0; tB+=r.nop[sl]||0; });
+      const td0=tgtFor(r,'0-30')||tgtFor(r,'31-60')||tgtFor(r,'61-90');
+      row['Visits Total']   = Math.round(tV);
+      row['Booking Total']  = Math.round(tB);
+      row['Conv% Overall']  = tV>0 ? Math.round(tB/tV*1000)/10 : '';
+      row['Conv Target %']  = td0 ? Math.round(td0[0]*1000)/10 : '';
+      row['Conv Met']       = (tV>0&&td0) ? ((tB/tV)>=td0[0]?'Met':'Not Met') : '';
     }
     rows.push(row);
   });
+  const wcFilled=rows.filter(x=>(x['Working City']||'').trim()!=='').length;
+  console.log('Agent Raw ('+bu+'): '+rows.length+' rows, Working City filled on '+wcFilled
+    +(window.__wcNoCol?' (zero_to_90 has no working_city column)':''));
   const ws=XLSX.utils.json_to_sheet(rows);
   const wb=XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb,ws,'Agent Raw');
   const cut=CUTOFF.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'2-digit'});
   XLSX.writeFile(wb, (BU_REGISTRY[bu].label.replace(/[^A-Za-z0-9]+/g,'_'))+'_Agent_Raw_'+cut+'.xlsx');
+  if(rows.length&&wcFilled===0&&!window.__wcWarned){ window.__wcWarned=true;
+    alert('The file downloaded, but Working City is empty.\n\n'
+      +(window.__wcNoCol
+        ? 'The zero_to_90 table has no working_city column yet. Add it in Supabase, then reload.'
+        : 'The working_city column exists but has no values for these agents.')); }
 }
 function exportExcel(){
   const wb=XLSX.utils.book_new();
@@ -3601,6 +3661,188 @@ function renderFCKpis(){
     <div class="ssd-kpi k4"><div class="glow"></div><div class="lab">Δ Aug 13–31 vs 1–12</div><div class="val">${dpp}pp</div><div class="sub">${agents.length?Math.round(top/agents.length*100):0}% at/above target</div></div>`;
 }
 function fcRenderActive(){ renderFCKpis(); renderFCTable(); }
+
+// ===== FG October: Pre (Jul–Sep) vs LMTD Avg vs Oct MTD — online conversion =====
+// Supabase table: fg_oct (stable snake_case columns; one row per agent; truncate + re-import daily)
+const OCT_EMBED=[{"agent_id":"PW84895","name":"Sagouri Das","team":"Bengali","am_dm":"Abhishek Srivastava","trainer":"Pooja Neogi","tenure":"9 to 12","type":"Red","al_pre":881,"al_lmtd":24.7,"al_mtd":7,"ob_pre":42,"ob_lmtd":1.0,"ob_mtd":0,"ogwp_pre":840483,"ogwp_lmtd":37465,"ogwp_mtd":0,"tl_pre":28057,"tl_lmtd":584.0,"tl_mtd":605,"conn_pre":35.3,"conn_lmtd":33.2,"conn_mtd":36.6,"el_pre":741,"el_lmtd":20.3,"el_mtd":5,"ap_pre":24,"ap_lmtd":1.0,"ap_mtd":0,"apc_pre":67,"apc_lmtd":1.7,"apc_mtd":0,"att_pre":77,"att_lmtd":2.0,"att_mtd":1,"gwp_pre":1203737,"gwp_lmtd":76744,"gwp_mtd":0,"bk_pre":64,"bk_lmtd":2.3,"bk_mtd":0,"data_date":"02-Oct-26"},{"agent_id":"PW89492","name":"Rahul Dev Sarkar","team":"Bengali","am_dm":"Abhishek Srivastava","trainer":"Pooja Neogi","tenure":"6 to 9","type":"Red","al_pre":859,"al_lmtd":19.7,"al_mtd":0,"ob_pre":37,"ob_lmtd":1.0,"ob_mtd":0,"ogwp_pre":606151,"ogwp_lmtd":17449,"ogwp_mtd":0,"tl_pre":15410,"tl_lmtd":356.7,"tl_mtd":200,"conn_pre":35.8,"conn_lmtd":32.7,"conn_mtd":null,"el_pre":747,"el_lmtd":15.7,"el_mtd":0,"ap_pre":35,"ap_lmtd":0.7,"ap_mtd":0,"apc_pre":56,"apc_lmtd":1.0,"apc_mtd":0,"att_pre":78,"att_lmtd":1.7,"att_mtd":0,"gwp_pre":781982,"gwp_lmtd":21333,"gwp_mtd":0,"bk_pre":45,"bk_lmtd":1.3,"bk_mtd":0,"data_date":"02-Oct-26"},{"agent_id":"PW83736","name":"Srimanta Das","team":"Bengali","am_dm":"Abhishek Srivastava","trainer":"Pooja Neogi","tenure":"9 to 12","type":"Red","al_pre":859,"al_lmtd":20.7,"al_mtd":7,"ob_pre":39,"ob_lmtd":1.3,"ob_mtd":0,"ogwp_pre":747040,"ogwp_lmtd":24432,"ogwp_mtd":0,"tl_pre":15309,"tl_lmtd":338.0,"tl_mtd":288,"conn_pre":37.8,"conn_lmtd":38.5,"conn_mtd":34.2,"el_pre":747,"el_lmtd":18.0,"el_mtd":5,"ap_pre":6,"ap_lmtd":0.3,"ap_mtd":0,"apc_pre":50,"apc_lmtd":1.3,"apc_mtd":0,"att_pre":75,"att_lmtd":1.7,"att_mtd":1,"gwp_pre":790213,"gwp_lmtd":24432,"gwp_mtd":0,"bk_pre":40,"bk_lmtd":1.3,"bk_mtd":0,"data_date":"02-Oct-26"},{"agent_id":"PW81576","name":"Puja Mondal","team":"Bengali","am_dm":"Abhishek Srivastava","trainer":"Pooja Neogi","tenure":"9 to 12","type":"Red","al_pre":771,"al_lmtd":16.3,"al_mtd":7,"ob_pre":33,"ob_lmtd":1.0,"ob_mtd":0,"ogwp_pre":632948,"ogwp_lmtd":25717,"ogwp_mtd":0,"tl_pre":14620,"tl_lmtd":324.0,"tl_mtd":141,"conn_pre":33.4,"conn_lmtd":36.8,"conn_mtd":25.6,"el_pre":671,"el_lmtd":14.0,"el_mtd":6,"ap_pre":25,"ap_lmtd":0.3,"ap_mtd":1,"apc_pre":66,"apc_lmtd":1.0,"apc_mtd":2,"att_pre":71,"att_lmtd":1.3,"att_mtd":0,"gwp_pre":1043976,"gwp_lmtd":25717,"gwp_mtd":0,"bk_pre":54,"bk_lmtd":1.0,"bk_mtd":0,"data_date":"02-Oct-26"},{"agent_id":"PW88159","name":"Radha Biswas","team":"Bengali","am_dm":"Abhishek Srivastava","trainer":"Pooja Neogi","tenure":"6 to 9","type":"Red","al_pre":865,"al_lmtd":20.3,"al_mtd":13,"ob_pre":34,"ob_lmtd":0.3,"ob_mtd":0,"ogwp_pre":873139,"ogwp_lmtd":2258,"ogwp_mtd":0,"tl_pre":13095,"tl_lmtd":297.0,"tl_mtd":239,"conn_pre":37.5,"conn_lmtd":40.0,"conn_mtd":34.9,"el_pre":750,"el_lmtd":16.7,"el_mtd":12,"ap_pre":17,"ap_lmtd":0.7,"ap_mtd":1,"apc_pre":66,"apc_lmtd":1.7,"apc_mtd":1,"att_pre":77,"att_lmtd":1.7,"att_mtd":2,"gwp_pre":1155240,"gwp_lmtd":10665,"gwp_mtd":0,"bk_pre":48,"bk_lmtd":1.0,"bk_mtd":0,"data_date":"02-Oct-26"},{"agent_id":"PW81182","name":"Akash Agrahari","team":"Delhi","am_dm":"Sandeep Sharma","trainer":"Rajat","tenure":"9 to 12","type":"Amber","al_pre":1473,"al_lmtd":38.0,"al_mtd":30,"ob_pre":41,"ob_lmtd":1.0,"ob_mtd":0,"ogwp_pre":594062,"ogwp_lmtd":15459,"ogwp_mtd":0,"tl_pre":13561,"tl_lmtd":312.7,"tl_mtd":474,"conn_pre":31.2,"conn_lmtd":32.1,"conn_mtd":26.8,"el_pre":1466,"el_lmtd":36.0,"el_mtd":30,"ap_pre":121,"ap_lmtd":1.7,"ap_mtd":2,"apc_pre":153,"apc_lmtd":3.0,"apc_mtd":2,"att_pre":77,"att_lmtd":2.0,"att_mtd":2,"gwp_pre":933214,"gwp_lmtd":18013,"gwp_mtd":0,"bk_pre":58,"bk_lmtd":1.3,"bk_mtd":0,"data_date":"02-Oct-26"},{"agent_id":"PW82243","name":"Sheetal Jaiswal","team":"Delhi","am_dm":"Brij Mohan Tiwari","trainer":"Rajat","tenure":"9 to 12","type":"Amber","al_pre":1488,"al_lmtd":31.3,"al_mtd":25,"ob_pre":39,"ob_lmtd":0.7,"ob_mtd":0,"ogwp_pre":783460,"ogwp_lmtd":22972,"ogwp_mtd":0,"tl_pre":22166,"tl_lmtd":478.0,"tl_mtd":329,"conn_pre":29.0,"conn_lmtd":30.1,"conn_mtd":32.4,"el_pre":1480,"el_lmtd":29.3,"el_mtd":25,"ap_pre":58,"ap_lmtd":1.7,"ap_mtd":0,"apc_pre":124,"apc_lmtd":3.0,"apc_mtd":1,"att_pre":74,"att_lmtd":1.7,"att_mtd":2,"gwp_pre":1911402,"gwp_lmtd":38417,"gwp_mtd":0,"bk_pre":73,"bk_lmtd":1.3,"bk_mtd":0,"data_date":"02-Oct-26"},{"agent_id":"PW81578","name":"Priyansh","team":"Delhi","am_dm":"Brij Mohan Tiwari","trainer":"Rajat","tenure":"9 to 12","type":"Red","al_pre":1337,"al_lmtd":34.3,"al_mtd":18,"ob_pre":35,"ob_lmtd":1.0,"ob_mtd":1,"ogwp_pre":849151,"ogwp_lmtd":54811,"ogwp_mtd":16956,"tl_pre":7861,"tl_lmtd":107.3,"tl_mtd":347,"conn_pre":25.1,"conn_lmtd":28.4,"conn_mtd":26.2,"el_pre":1333,"el_lmtd":33.3,"el_mtd":18,"ap_pre":15,"ap_lmtd":0.3,"ap_mtd":0,"apc_pre":84,"apc_lmtd":2.3,"apc_mtd":0,"att_pre":72,"att_lmtd":2.0,"att_mtd":1,"gwp_pre":1397825,"gwp_lmtd":54811,"gwp_mtd":16956,"bk_pre":51,"bk_lmtd":1.0,"bk_mtd":1,"data_date":"02-Oct-26"},{"agent_id":"PW85664","name":"Aditi","team":"Delhi","am_dm":"Sandeep Sharma","trainer":"Rajat","tenure":"6 to 9","type":"Red","al_pre":1462,"al_lmtd":38.0,"al_mtd":33,"ob_pre":37,"ob_lmtd":0.7,"ob_mtd":1,"ogwp_pre":588159,"ogwp_lmtd":24804,"ogwp_mtd":18351,"tl_pre":18720,"tl_lmtd":437.0,"tl_mtd":431,"conn_pre":32.2,"conn_lmtd":34.1,"conn_mtd":32.5,"el_pre":1457,"el_lmtd":37.3,"el_mtd":33,"ap_pre":111,"ap_lmtd":2.0,"ap_mtd":2,"apc_pre":179,"apc_lmtd":2.0,"apc_mtd":3,"att_pre":77,"att_lmtd":2.0,"att_mtd":2,"gwp_pre":1334613,"gwp_lmtd":35485,"gwp_mtd":18351,"bk_pre":65,"bk_lmtd":1.0,"bk_mtd":1,"data_date":"02-Oct-26"},{"agent_id":"PW88209","name":"Kashish Gautam","team":"Delhi","am_dm":"Sandeep Sharma","trainer":"Rajat","tenure":"6 to 9","type":"Red","al_pre":1425,"al_lmtd":36.7,"al_mtd":32,"ob_pre":33,"ob_lmtd":0.7,"ob_mtd":0,"ogwp_pre":487518,"ogwp_lmtd":9524,"ogwp_mtd":0,"tl_pre":17688,"tl_lmtd":380.3,"tl_mtd":362,"conn_pre":30.8,"conn_lmtd":32.7,"conn_mtd":37.0,"el_pre":1313,"el_lmtd":31.7,"el_mtd":32,"ap_pre":51,"ap_lmtd":1.3,"ap_mtd":0,"apc_pre":128,"apc_lmtd":2.3,"apc_mtd":2,"att_pre":75,"att_lmtd":1.7,"att_mtd":2,"gwp_pre":733525,"gwp_lmtd":9524,"gwp_mtd":0,"bk_pre":51,"bk_lmtd":0.7,"bk_mtd":0,"data_date":"02-Oct-26"},{"agent_id":"PW88988","name":"Dheeraj Negi","team":"Delhi","am_dm":"Brij Mohan Tiwari","trainer":"Rajat","tenure":"6 to 9","type":"Red","al_pre":1363,"al_lmtd":43.7,"al_mtd":29,"ob_pre":30,"ob_lmtd":1.0,"ob_mtd":1,"ogwp_pre":545710,"ogwp_lmtd":33119,"ogwp_mtd":27093,"tl_pre":12252,"tl_lmtd":292.3,"tl_mtd":430,"conn_pre":30.4,"conn_lmtd":31.1,"conn_mtd":32.0,"el_pre":1214,"el_lmtd":33.0,"el_mtd":29,"ap_pre":73,"ap_lmtd":1.3,"ap_mtd":0,"apc_pre":115,"apc_lmtd":2.7,"apc_mtd":0,"att_pre":74,"att_lmtd":2.0,"att_mtd":2,"gwp_pre":1385481,"gwp_lmtd":42499,"gwp_mtd":27093,"bk_pre":97,"bk_lmtd":1.7,"bk_mtd":1,"data_date":"02-Oct-26"},{"agent_id":"PW89005","name":"Amir Kant Sah","team":"Delhi","am_dm":"Brij Mohan Tiwari","trainer":"Rajat","tenure":"6 to 9","type":"Red","al_pre":1380,"al_lmtd":23.3,"al_mtd":29,"ob_pre":27,"ob_lmtd":0.3,"ob_mtd":2,"ogwp_pre":515378,"ogwp_lmtd":5124,"ogwp_mtd":16548,"tl_pre":17932,"tl_lmtd":384.3,"tl_mtd":424,"conn_pre":28.9,"conn_lmtd":27.4,"conn_mtd":30.2,"el_pre":1380,"el_lmtd":23.3,"el_mtd":28,"ap_pre":54,"ap_lmtd":0.3,"ap_mtd":2,"apc_pre":124,"apc_lmtd":1.0,"apc_mtd":4,"att_pre":75,"att_lmtd":1.3,"att_mtd":2,"gwp_pre":935123,"gwp_lmtd":5124,"gwp_mtd":60921,"bk_pre":43,"bk_lmtd":0.3,"bk_mtd":4,"data_date":"02-Oct-26"},{"agent_id":"PW88184","name":"Priyanshu Baranwal","team":"Delhi","am_dm":"Sandeep Sharma","trainer":"Rajat","tenure":"6 to 9","type":"Red","al_pre":1449,"al_lmtd":36.0,"al_mtd":30,"ob_pre":28,"ob_lmtd":0.3,"ob_mtd":0,"ogwp_pre":375396,"ogwp_lmtd":2723,"ogwp_mtd":0,"tl_pre":17325,"tl_lmtd":361.7,"tl_mtd":457,"conn_pre":29.3,"conn_lmtd":29.4,"conn_mtd":25.6,"el_pre":1344,"el_lmtd":34.3,"el_mtd":30,"ap_pre":70,"ap_lmtd":3.3,"ap_mtd":2,"apc_pre":133,"apc_lmtd":4.7,"apc_mtd":3,"att_pre":78,"att_lmtd":1.7,"att_mtd":2,"gwp_pre":927888,"gwp_lmtd":2723,"gwp_mtd":21408,"bk_pre":51,"bk_lmtd":0.3,"bk_mtd":2,"data_date":"02-Oct-26"},{"agent_id":"PW81541","name":"Yuvraj Singh Parmar","team":"Delhi","am_dm":"Sandeep Sharma","trainer":"Rajat","tenure":"9 to 12","type":"Red","al_pre":1071,"al_lmtd":29.7,"al_mtd":11,"ob_pre":18,"ob_lmtd":0.3,"ob_mtd":1,"ogwp_pre":348924,"ogwp_lmtd":4008,"ogwp_mtd":54540,"tl_pre":15347,"tl_lmtd":348.3,"tl_mtd":213,"conn_pre":30.9,"conn_lmtd":33.9,"conn_mtd":29.9,"el_pre":1068,"el_lmtd":29.3,"el_mtd":11,"ap_pre":44,"ap_lmtd":1.0,"ap_mtd":0,"apc_pre":141,"apc_lmtd":2.7,"apc_mtd":1,"att_pre":77,"att_lmtd":1.7,"att_mtd":1,"gwp_pre":916886,"gwp_lmtd":29644,"gwp_mtd":68658,"bk_pre":38,"bk_lmtd":1.0,"bk_mtd":2,"data_date":"02-Oct-26"},{"agent_id":"PW88983","name":"Balwinder Singh","team":"Delhi","am_dm":"Brij Mohan Tiwari","trainer":"Rajat","tenure":"6 to 9","type":"Red","al_pre":1313,"al_lmtd":38.0,"al_mtd":27,"ob_pre":14,"ob_lmtd":1.0,"ob_mtd":2,"ogwp_pre":244108,"ogwp_lmtd":15170,"ogwp_mtd":34764,"tl_pre":15303,"tl_lmtd":358.0,"tl_mtd":272,"conn_pre":29.6,"conn_lmtd":30.4,"conn_mtd":26.6,"el_pre":1204,"el_lmtd":31.7,"el_mtd":27,"ap_pre":38,"ap_lmtd":0.7,"ap_mtd":0,"apc_pre":72,"apc_lmtd":2.3,"apc_mtd":1,"att_pre":75,"att_lmtd":2.0,"att_mtd":2,"gwp_pre":440089,"gwp_lmtd":15170,"gwp_mtd":34764,"bk_pre":28,"bk_lmtd":1.0,"bk_mtd":2,"data_date":"02-Oct-26"},{"agent_id":"PW87188","name":"Piyush Samuel","team":"Delhi","am_dm":"Brij Mohan Tiwari","trainer":"Rajat","tenure":"6 to 9","type":"Red","al_pre":1334,"al_lmtd":28.7,"al_mtd":16,"ob_pre":12,"ob_lmtd":0.3,"ob_mtd":0,"ogwp_pre":185285,"ogwp_lmtd":5508,"ogwp_mtd":0,"tl_pre":7185,"tl_lmtd":132.7,"tl_mtd":187,"conn_pre":21.4,"conn_lmtd":25.5,"conn_mtd":27.2,"el_pre":1331,"el_lmtd":28.0,"el_mtd":16,"ap_pre":82,"ap_lmtd":2.3,"ap_mtd":2,"apc_pre":147,"apc_lmtd":3.3,"apc_mtd":5,"att_pre":76,"att_lmtd":1.7,"att_mtd":1,"gwp_pre":1084527,"gwp_lmtd":17124,"gwp_mtd":0,"bk_pre":51,"bk_lmtd":1.0,"bk_mtd":0,"data_date":"02-Oct-26"},{"agent_id":"PW82270","name":"Tannu Kumari","team":"FF","am_dm":"Akash sharma","trainer":"Shreya","tenure":"9 to 12","type":"Amber","al_pre":1405,"al_lmtd":32.7,"al_mtd":18,"ob_pre":63,"ob_lmtd":0.7,"ob_mtd":0,"ogwp_pre":995669,"ogwp_lmtd":9789,"ogwp_mtd":0,"tl_pre":21296,"tl_lmtd":474.7,"tl_mtd":489,"conn_pre":28.9,"conn_lmtd":26.2,"conn_mtd":33.5,"el_pre":1087,"el_lmtd":26.0,"el_mtd":10,"ap_pre":43,"ap_lmtd":1.7,"ap_mtd":1,"apc_pre":91,"apc_lmtd":2.7,"apc_mtd":2,"att_pre":71,"att_lmtd":1.3,"att_mtd":2,"gwp_pre":1526383,"gwp_lmtd":25317,"gwp_mtd":0,"bk_pre":78,"bk_lmtd":1.3,"bk_mtd":0,"data_date":"02-Oct-26"},{"agent_id":"PW81158","name":"Mohd Danish","team":"FF","am_dm":"Tanu Tyagi","trainer":"Priya","tenure":"9 to 12","type":"Red","al_pre":1441,"al_lmtd":33.0,"al_mtd":4,"ob_pre":62,"ob_lmtd":2.3,"ob_mtd":0,"ogwp_pre":1025681,"ogwp_lmtd":56182,"ogwp_mtd":0,"tl_pre":16856,"tl_lmtd":343.3,"tl_mtd":572,"conn_pre":28.0,"conn_lmtd":34.2,"conn_mtd":27.5,"el_pre":1178,"el_lmtd":23.0,"el_mtd":3,"ap_pre":26,"ap_lmtd":0.7,"ap_mtd":0,"apc_pre":90,"apc_lmtd":1.3,"apc_mtd":1,"att_pre":77,"att_lmtd":1.7,"att_mtd":1,"gwp_pre":1300429,"gwp_lmtd":56182,"gwp_mtd":0,"bk_pre":72,"bk_lmtd":2.3,"bk_mtd":0,"data_date":"02-Oct-26"},{"agent_id":"PW81179","name":"Aman Sharma","team":"FF","am_dm":"Ashutosh Kumar Trivedi","trainer":"Saif","tenure":"9 to 12","type":"Red","al_pre":1196,"al_lmtd":28.7,"al_mtd":43,"ob_pre":49,"ob_lmtd":0.0,"ob_mtd":4,"ogwp_pre":1156809,"ogwp_lmtd":0,"ogwp_mtd":100478,"tl_pre":18591,"tl_lmtd":486.7,"tl_mtd":418,"conn_pre":32.0,"conn_lmtd":32.4,"conn_mtd":34.3,"el_pre":935,"el_lmtd":20.3,"el_mtd":33,"ap_pre":33,"ap_lmtd":0.0,"ap_mtd":3,"apc_pre":89,"apc_lmtd":1.3,"apc_mtd":6,"att_pre":61,"att_lmtd":1.3,"att_mtd":2,"gwp_pre":1455280,"gwp_lmtd":4052,"gwp_mtd":165815,"bk_pre":62,"bk_lmtd":0.3,"bk_mtd":5,"data_date":"02-Oct-26"},{"agent_id":"PW82271","name":"Muzammil Akhtar","team":"FF","am_dm":"Nimit Dawar","trainer":"Ravi","tenure":"9 to 12","type":"Red","al_pre":1253,"al_lmtd":26.0,"al_mtd":5,"ob_pre":50,"ob_lmtd":1.0,"ob_mtd":1,"ogwp_pre":771622,"ogwp_lmtd":34206,"ogwp_mtd":16102,"tl_pre":16519,"tl_lmtd":307.0,"tl_mtd":542,"conn_pre":30.9,"conn_lmtd":32.9,"conn_mtd":34.2,"el_pre":932,"el_lmtd":18.3,"el_mtd":4,"ap_pre":19,"ap_lmtd":1.3,"ap_mtd":0,"apc_pre":78,"apc_lmtd":2.3,"apc_mtd":0,"att_pre":74,"att_lmtd":1.3,"att_mtd":1,"gwp_pre":1082601,"gwp_lmtd":38322,"gwp_mtd":47870,"bk_pre":64,"bk_lmtd":1.3,"bk_mtd":2,"data_date":"02-Oct-26"},{"agent_id":"PW88156","name":"Akhilendra Singh","team":"FF","am_dm":"Sanjana Garg","trainer":"Avantika","tenure":"6 to 9","type":"Red","al_pre":1443,"al_lmtd":27.3,"al_mtd":30,"ob_pre":59,"ob_lmtd":0.3,"ob_mtd":0,"ogwp_pre":737823,"ogwp_lmtd":3988,"ogwp_mtd":0,"tl_pre":15335,"tl_lmtd":308.3,"tl_mtd":326,"conn_pre":30.7,"conn_lmtd":30.7,"conn_mtd":31.7,"el_pre":1094,"el_lmtd":19.3,"el_mtd":25,"ap_pre":25,"ap_lmtd":1.3,"ap_mtd":0,"apc_pre":86,"apc_lmtd":2.0,"apc_mtd":1,"att_pre":74,"att_lmtd":1.3,"att_mtd":1,"gwp_pre":1205708,"gwp_lmtd":3988,"gwp_mtd":0,"bk_pre":76,"bk_lmtd":0.3,"bk_mtd":0,"data_date":"02-Oct-26"},{"agent_id":"PW88155","name":"Aman Ponia","team":"FF","am_dm":"Sanjana Garg","trainer":"Avantika","tenure":"6 to 9","type":"Red","al_pre":1297,"al_lmtd":26.7,"al_mtd":20,"ob_pre":50,"ob_lmtd":1.0,"ob_mtd":2,"ogwp_pre":880560,"ogwp_lmtd":14069,"ogwp_mtd":20908,"tl_pre":18208,"tl_lmtd":423.7,"tl_mtd":352,"conn_pre":32.6,"conn_lmtd":32.2,"conn_mtd":31.4,"el_pre":974,"el_lmtd":18.3,"el_mtd":15,"ap_pre":26,"ap_lmtd":0.3,"ap_mtd":1,"apc_pre":73,"apc_lmtd":0.7,"apc_mtd":3,"att_pre":73,"att_lmtd":1.3,"att_mtd":2,"gwp_pre":1281701,"gwp_lmtd":14069,"gwp_mtd":32884,"bk_pre":70,"bk_lmtd":1.0,"bk_mtd":3,"data_date":"02-Oct-26"},{"agent_id":"PW88202","name":"Raj Kumar Maurya","team":"FF","am_dm":"Tanu Tyagi","trainer":"Priya","tenure":"6 to 9","type":"Red","al_pre":1533,"al_lmtd":31.7,"al_mtd":51,"ob_pre":63,"ob_lmtd":1.7,"ob_mtd":4,"ogwp_pre":1185357,"ogwp_lmtd":27209,"ogwp_mtd":53305,"tl_pre":19829,"tl_lmtd":414.0,"tl_mtd":547,"conn_pre":29.5,"conn_lmtd":32.7,"conn_mtd":32.3,"el_pre":1141,"el_lmtd":22.7,"el_mtd":36,"ap_pre":54,"ap_lmtd":1.0,"ap_mtd":2,"apc_pre":119,"apc_lmtd":2.7,"apc_mtd":3,"att_pre":79,"att_lmtd":1.7,"att_mtd":2,"gwp_pre":1582466,"gwp_lmtd":32897,"gwp_mtd":73513,"bk_pre":85,"bk_lmtd":2.0,"bk_mtd":5,"data_date":"02-Oct-26"},{"agent_id":"PW89433","name":"Tarun Kumar","team":"FF","am_dm":"Nimit Dawar","trainer":"Ravi","tenure":"6 to 9","type":"Red","al_pre":1202,"al_lmtd":26.3,"al_mtd":8,"ob_pre":41,"ob_lmtd":0.7,"ob_mtd":2,"ogwp_pre":608469,"ogwp_lmtd":17758,"ogwp_mtd":29074,"tl_pre":7222,"tl_lmtd":171.7,"tl_mtd":371,"conn_pre":29.4,"conn_lmtd":31.5,"conn_mtd":36.0,"el_pre":886,"el_lmtd":20.3,"el_mtd":5,"ap_pre":51,"ap_lmtd":1.7,"ap_mtd":0,"apc_pre":64,"apc_lmtd":1.7,"apc_mtd":0,"att_pre":72,"att_lmtd":1.7,"att_mtd":2,"gwp_pre":878426,"gwp_lmtd":33622,"gwp_mtd":29074,"bk_pre":57,"bk_lmtd":1.7,"bk_mtd":2,"data_date":"02-Oct-26"},{"agent_id":"PW82481","name":"Kashish Khatri","team":"FF","am_dm":"Sanjana Garg","trainer":"Avantika","tenure":"9 to 12","type":"Red","al_pre":1493,"al_lmtd":27.3,"al_mtd":16,"ob_pre":43,"ob_lmtd":0.7,"ob_mtd":1,"ogwp_pre":649885,"ogwp_lmtd":13448,"ogwp_mtd":12120,"tl_pre":20425,"tl_lmtd":391.3,"tl_mtd":536,"conn_pre":32.0,"conn_lmtd":33.5,"conn_mtd":28.5,"el_pre":1172,"el_lmtd":20.7,"el_mtd":12,"ap_pre":52,"ap_lmtd":1.0,"ap_mtd":1,"apc_pre":116,"apc_lmtd":1.3,"apc_mtd":2,"att_pre":76,"att_lmtd":1.3,"att_mtd":1,"gwp_pre":1586781,"gwp_lmtd":28504,"gwp_mtd":26280,"bk_pre":76,"bk_lmtd":1.7,"bk_mtd":2,"data_date":"02-Oct-26"},{"agent_id":"PW89461","name":"Vinay","team":"FF","am_dm":"Sanjana Garg","trainer":"Shalini Kumari","tenure":"6 to 9","type":"Red","al_pre":1645,"al_lmtd":49.0,"al_mtd":15,"ob_pre":44,"ob_lmtd":0.3,"ob_mtd":1,"ogwp_pre":619452,"ogwp_lmtd":8948,"ogwp_mtd":12027,"tl_pre":21232,"tl_lmtd":452.7,"tl_mtd":526,"conn_pre":33.0,"conn_lmtd":33.2,"conn_mtd":35.2,"el_pre":1236,"el_lmtd":35.0,"el_mtd":14,"ap_pre":30,"ap_lmtd":0.7,"ap_mtd":1,"apc_pre":72,"apc_lmtd":1.3,"apc_mtd":2,"att_pre":78,"att_lmtd":2.0,"att_mtd":1,"gwp_pre":936742,"gwp_lmtd":8948,"gwp_mtd":12027,"bk_pre":62,"bk_lmtd":0.3,"bk_mtd":1,"data_date":"02-Oct-26"},{"agent_id":"PW87890","name":"Shreya Seth","team":"FF","am_dm":"Vipul","trainer":"Shreya","tenure":"6 to 9","type":"Red","al_pre":1374,"al_lmtd":27.0,"al_mtd":28,"ob_pre":36,"ob_lmtd":0.3,"ob_mtd":0,"ogwp_pre":594198,"ogwp_lmtd":9840,"ogwp_mtd":0,"tl_pre":8573,"tl_lmtd":95.7,"tl_mtd":362,"conn_pre":31.6,"conn_lmtd":33.2,"conn_mtd":29.7,"el_pre":1044,"el_lmtd":20.3,"el_mtd":20,"ap_pre":27,"ap_lmtd":0.3,"ap_mtd":0,"apc_pre":73,"apc_lmtd":1.0,"apc_mtd":0,"att_pre":73,"att_lmtd":1.3,"att_mtd":2,"gwp_pre":856373,"gwp_lmtd":25147,"gwp_mtd":0,"bk_pre":47,"bk_lmtd":0.7,"bk_mtd":0,"data_date":"02-Oct-26"},{"agent_id":"PW88181","name":"Shivani Tebetya","team":"FF","am_dm":"Vipul","trainer":"Shreya","tenure":"6 to 9","type":"Red","al_pre":1501,"al_lmtd":40.0,"al_mtd":19,"ob_pre":35,"ob_lmtd":0.3,"ob_mtd":1,"ogwp_pre":482811,"ogwp_lmtd":3528,"ogwp_mtd":13805,"tl_pre":20615,"tl_lmtd":416.7,"tl_mtd":550,"conn_pre":31.1,"conn_lmtd":32.6,"conn_mtd":30.6,"el_pre":1103,"el_lmtd":28.0,"el_mtd":13,"ap_pre":21,"ap_lmtd":0.0,"ap_mtd":0,"apc_pre":79,"apc_lmtd":1.3,"apc_mtd":6,"att_pre":74,"att_lmtd":1.7,"att_mtd":2,"gwp_pre":578267,"gwp_lmtd":3528,"gwp_mtd":13805,"bk_pre":41,"bk_lmtd":0.3,"bk_mtd":1,"data_date":"02-Oct-26"},{"agent_id":"PW88912","name":"Ankush Dhara","team":"FF","am_dm":"Nimit Dawar","trainer":"Ravi","tenure":"6 to 9","type":"Red","al_pre":1247,"al_lmtd":30.0,"al_mtd":0,"ob_pre":24,"ob_lmtd":0.3,"ob_mtd":0,"ogwp_pre":374643,"ogwp_lmtd":6044,"ogwp_mtd":0,"tl_pre":14963,"tl_lmtd":319.3,"tl_mtd":426,"conn_pre":24.1,"conn_lmtd":23.8,"conn_mtd":null,"el_pre":900,"el_lmtd":21.0,"el_mtd":0,"ap_pre":9,"ap_lmtd":0.7,"ap_mtd":0,"apc_pre":36,"apc_lmtd":1.0,"apc_mtd":0,"att_pre":77,"att_lmtd":1.7,"att_mtd":0,"gwp_pre":643796,"gwp_lmtd":23122,"gwp_mtd":0,"bk_pre":38,"bk_lmtd":0.7,"bk_mtd":0,"data_date":"02-Oct-26"},{"agent_id":"PW87588","name":"Vaibhav","team":"FF_UHNI","am_dm":"Bilal Ahmad Khanday","trainer":"Diksha","tenure":"6 to 9","type":"Red","al_pre":1506,"al_lmtd":42.3,"al_mtd":16,"ob_pre":126,"ob_lmtd":2.3,"ob_mtd":6,"ogwp_pre":2818174,"ogwp_lmtd":49014,"ogwp_mtd":182065,"tl_pre":14232,"tl_lmtd":320.0,"tl_mtd":330,"conn_pre":30.1,"conn_lmtd":29.4,"conn_mtd":30.5,"el_pre":1257,"el_lmtd":29.0,"el_mtd":14,"ap_pre":81,"ap_lmtd":0.7,"ap_mtd":0,"apc_pre":124,"apc_lmtd":3.0,"apc_mtd":0,"att_pre":79,"att_lmtd":2.0,"att_mtd":1,"gwp_pre":4621952,"gwp_lmtd":55538,"gwp_mtd":236776,"bk_pre":166,"bk_lmtd":2.7,"bk_mtd":7,"data_date":"02-Oct-26"},{"agent_id":"PW89404","name":"Suraj Kumar Purbey","team":"FF_UHNI","am_dm":"Ashutosh Kumar Trivedi","trainer":"Saif","tenure":"6 to 9","type":"Red","al_pre":1425,"al_lmtd":36.0,"al_mtd":26,"ob_pre":134,"ob_lmtd":2.7,"ob_mtd":0,"ogwp_pre":2805298,"ogwp_lmtd":57260,"ogwp_mtd":0,"tl_pre":26594,"tl_lmtd":594.0,"tl_mtd":423,"conn_pre":33.2,"conn_lmtd":33.8,"conn_mtd":35.8,"el_pre":1241,"el_lmtd":31.3,"el_mtd":23,"ap_pre":44,"ap_lmtd":1.0,"ap_mtd":0,"apc_pre":82,"apc_lmtd":1.3,"apc_mtd":0,"att_pre":77,"att_lmtd":1.7,"att_mtd":2,"gwp_pre":3674638,"gwp_lmtd":62076,"gwp_mtd":0,"bk_pre":165,"bk_lmtd":3.0,"bk_mtd":0,"data_date":"02-Oct-26"},{"agent_id":"PW84472","name":"Yash Kumar","team":"FF_UHNI","am_dm":"Saurabh Kumar Dixit","trainer":"Diksha","tenure":"9 to 12","type":"Red","al_pre":1195,"al_lmtd":33.7,"al_mtd":10,"ob_pre":66,"ob_lmtd":0.3,"ob_mtd":0,"ogwp_pre":1321762,"ogwp_lmtd":6924,"ogwp_mtd":0,"tl_pre":18323,"tl_lmtd":408.3,"tl_mtd":371,"conn_pre":32.4,"conn_lmtd":34.5,"conn_mtd":28.1,"el_pre":974,"el_lmtd":23.0,"el_mtd":8,"ap_pre":26,"ap_lmtd":0.0,"ap_mtd":0,"apc_pre":91,"apc_lmtd":1.0,"apc_mtd":0,"att_pre":59,"att_lmtd":1.7,"att_mtd":1,"gwp_pre":1531666,"gwp_lmtd":17420,"gwp_mtd":0,"bk_pre":78,"bk_lmtd":0.7,"bk_mtd":0,"data_date":"02-Oct-26"},{"agent_id":"PW87550","name":"Praveen Singh","team":"PED Flag Team","am_dm":"Prince Thakur","trainer":"Karan Arora","tenure":"6 to 9","type":"Red","al_pre":1028,"al_lmtd":15.3,"al_mtd":20,"ob_pre":36,"ob_lmtd":0.7,"ob_mtd":1,"ogwp_pre":588015,"ogwp_lmtd":9023,"ogwp_mtd":13608,"tl_pre":14670,"tl_lmtd":306.0,"tl_mtd":320,"conn_pre":31.1,"conn_lmtd":33.2,"conn_mtd":31.2,"el_pre":821,"el_lmtd":11.0,"el_mtd":13,"ap_pre":29,"ap_lmtd":0.3,"ap_mtd":2,"apc_pre":87,"apc_lmtd":1.3,"apc_mtd":5,"att_pre":78,"att_lmtd":1.3,"att_mtd":2,"gwp_pre":991927,"gwp_lmtd":9023,"gwp_mtd":13608,"bk_pre":49,"bk_lmtd":0.7,"bk_mtd":1,"data_date":"02-Oct-26"},{"agent_id":"PW87887","name":"Raza Khan","team":"PED Flag Team","am_dm":"Prince Thakur","trainer":"Karan Arora","tenure":"6 to 9","type":"Red","al_pre":1116,"al_lmtd":26.0,"al_mtd":25,"ob_pre":41,"ob_lmtd":0.3,"ob_mtd":2,"ogwp_pre":878294,"ogwp_lmtd":4556,"ogwp_mtd":21924,"tl_pre":9169,"tl_lmtd":185.0,"tl_mtd":321,"conn_pre":29.4,"conn_lmtd":26.9,"conn_mtd":28.4,"el_pre":908,"el_lmtd":20.0,"el_mtd":18,"ap_pre":27,"ap_lmtd":1.0,"ap_mtd":0,"apc_pre":70,"apc_lmtd":2.0,"apc_mtd":0,"att_pre":79,"att_lmtd":1.7,"att_mtd":2,"gwp_pre":1239001,"gwp_lmtd":4556,"gwp_mtd":21924,"bk_pre":52,"bk_lmtd":0.3,"bk_mtd":2,"data_date":"02-Oct-26"},{"agent_id":"PW87544","name":"Anshul Yadav","team":"PED Flag Team","am_dm":"Sheikh Khurram Ajaz","trainer":"Abhishek Rathore","tenure":"6 to 9","type":"Red","al_pre":1011,"al_lmtd":17.3,"al_mtd":18,"ob_pre":34,"ob_lmtd":0.0,"ob_mtd":1,"ogwp_pre":506658,"ogwp_lmtd":0,"ogwp_mtd":13572,"tl_pre":12769,"tl_lmtd":274.3,"tl_mtd":273,"conn_pre":30.3,"conn_lmtd":29.7,"conn_mtd":36.8,"el_pre":828,"el_lmtd":14.3,"el_mtd":13,"ap_pre":29,"ap_lmtd":0.7,"ap_mtd":0,"apc_pre":93,"apc_lmtd":1.0,"apc_mtd":1,"att_pre":74,"att_lmtd":1.3,"att_mtd":2,"gwp_pre":864278,"gwp_lmtd":40343,"gwp_mtd":51240,"bk_pre":46,"bk_lmtd":0.7,"bk_mtd":2,"data_date":"02-Oct-26"},{"agent_id":"PW89437","name":"Tanmay Yatree","team":"PED Flag Team","am_dm":"Attur Rehman Khan","trainer":"Abhishek Rathore","tenure":"6 to 9","type":"Red","al_pre":1242,"al_lmtd":29.3,"al_mtd":23,"ob_pre":41,"ob_lmtd":0.7,"ob_mtd":0,"ogwp_pre":670624,"ogwp_lmtd":11864,"ogwp_mtd":0,"tl_pre":11894,"tl_lmtd":269.7,"tl_mtd":384,"conn_pre":31.6,"conn_lmtd":32.3,"conn_mtd":35.0,"el_pre":975,"el_lmtd":24.0,"el_mtd":19,"ap_pre":43,"ap_lmtd":1.3,"ap_mtd":2,"apc_pre":69,"apc_lmtd":1.7,"apc_mtd":2,"att_pre":76,"att_lmtd":1.7,"att_mtd":2,"gwp_pre":950203,"gwp_lmtd":23858,"gwp_mtd":0,"bk_pre":54,"bk_lmtd":1.0,"bk_mtd":0,"data_date":"02-Oct-26"},{"agent_id":"PW81564","name":"Shubha Rauth","team":"PED Flag Team","am_dm":"Vikash Yadav","trainer":"Sanya Sharma","tenure":"9 to 12","type":"Red","al_pre":986,"al_lmtd":16.7,"al_mtd":18,"ob_pre":31,"ob_lmtd":1.7,"ob_mtd":1,"ogwp_pre":719489,"ogwp_lmtd":45843,"ogwp_mtd":31476,"tl_pre":12555,"tl_lmtd":271.3,"tl_mtd":253,"conn_pre":31.3,"conn_lmtd":34.6,"conn_mtd":37.5,"el_pre":787,"el_lmtd":12.7,"el_mtd":15,"ap_pre":8,"ap_lmtd":0.3,"ap_mtd":0,"apc_pre":39,"apc_lmtd":0.7,"apc_mtd":0,"att_pre":74,"att_lmtd":1.3,"att_mtd":2,"gwp_pre":893227,"gwp_lmtd":45843,"gwp_mtd":31476,"bk_pre":39,"bk_lmtd":1.7,"bk_mtd":1,"data_date":"02-Oct-26"},{"agent_id":"PW89443","name":"Ankush","team":"PED Flag Team","am_dm":"Prince Thakur","trainer":"Karan Arora","tenure":"6 to 9","type":"Red","al_pre":1059,"al_lmtd":31.0,"al_mtd":20,"ob_pre":35,"ob_lmtd":1.0,"ob_mtd":1,"ogwp_pre":535248,"ogwp_lmtd":20500,"ogwp_mtd":16884,"tl_pre":7438,"tl_lmtd":213.3,"tl_mtd":228,"conn_pre":27.6,"conn_lmtd":30.8,"conn_mtd":27.9,"el_pre":848,"el_lmtd":21.7,"el_mtd":16,"ap_pre":31,"ap_lmtd":1.7,"ap_mtd":0,"apc_pre":60,"apc_lmtd":1.7,"apc_mtd":1,"att_pre":74,"att_lmtd":2.0,"att_mtd":2,"gwp_pre":844255,"gwp_lmtd":20500,"gwp_mtd":16884,"bk_pre":47,"bk_lmtd":1.0,"bk_mtd":1,"data_date":"02-Oct-26"},{"agent_id":"PW87170","name":"Abdul Rahim","team":"PED Flag Team","am_dm":"Prince Thakur","trainer":"Karan Arora","tenure":"6 to 9","type":"Red","al_pre":1111,"al_lmtd":26.3,"al_mtd":9,"ob_pre":32,"ob_lmtd":1.0,"ob_mtd":1,"ogwp_pre":788475,"ogwp_lmtd":9937,"ogwp_mtd":10068,"tl_pre":12175,"tl_lmtd":236.7,"tl_mtd":294,"conn_pre":27.4,"conn_lmtd":28.4,"conn_mtd":33.5,"el_pre":884,"el_lmtd":19.0,"el_mtd":8,"ap_pre":38,"ap_lmtd":1.0,"ap_mtd":1,"apc_pre":93,"apc_lmtd":2.3,"apc_mtd":2,"att_pre":79,"att_lmtd":1.7,"att_mtd":1,"gwp_pre":1125500,"gwp_lmtd":9937,"gwp_mtd":10068,"bk_pre":48,"bk_lmtd":1.0,"bk_mtd":1,"data_date":"02-Oct-26"},{"agent_id":"PW84513","name":"Prapti","team":"PED Flag Team","am_dm":"Vikash Yadav","trainer":"Sanya Sharma","tenure":"9 to 12","type":"Red","al_pre":1173,"al_lmtd":30.7,"al_mtd":20,"ob_pre":33,"ob_lmtd":1.0,"ob_mtd":1,"ogwp_pre":738105,"ogwp_lmtd":30293,"ogwp_mtd":7796,"tl_pre":7836,"tl_lmtd":184.0,"tl_mtd":238,"conn_pre":28.8,"conn_lmtd":27.1,"conn_mtd":32.4,"el_pre":912,"el_lmtd":20.3,"el_mtd":15,"ap_pre":40,"ap_lmtd":0.3,"ap_mtd":0,"apc_pre":96,"apc_lmtd":2.3,"apc_mtd":3,"att_pre":76,"att_lmtd":2.0,"att_mtd":2,"gwp_pre":987709,"gwp_lmtd":30293,"gwp_mtd":7796,"bk_pre":45,"bk_lmtd":1.0,"bk_mtd":1,"data_date":"02-Oct-26"},{"agent_id":"PW81553","name":"Pankaj Singh Rawat","team":"PED Flag Team","am_dm":"Sheikh Khurram Ajaz","trainer":"Abhishek Rathore","tenure":"9 to 12","type":"Red","al_pre":951,"al_lmtd":26.3,"al_mtd":18,"ob_pre":27,"ob_lmtd":1.3,"ob_mtd":2,"ogwp_pre":588200,"ogwp_lmtd":41403,"ogwp_mtd":24336,"tl_pre":11718,"tl_lmtd":281.3,"tl_mtd":248,"conn_pre":28.8,"conn_lmtd":26.3,"conn_mtd":35.7,"el_pre":742,"el_lmtd":21.3,"el_mtd":13,"ap_pre":32,"ap_lmtd":0.0,"ap_mtd":0,"apc_pre":93,"apc_lmtd":1.7,"apc_mtd":2,"att_pre":75,"att_lmtd":1.7,"att_mtd":2,"gwp_pre":792202,"gwp_lmtd":45556,"gwp_mtd":24336,"bk_pre":35,"bk_lmtd":1.7,"bk_mtd":2,"data_date":"02-Oct-26"},{"agent_id":"PW88185","name":"Anuj","team":"PED Flag Team","am_dm":"Sheikh Khurram Ajaz","trainer":"Abhishek Rathore","tenure":"6 to 9","type":"Red","al_pre":952,"al_lmtd":32.0,"al_mtd":19,"ob_pre":28,"ob_lmtd":0.3,"ob_mtd":1,"ogwp_pre":560355,"ogwp_lmtd":3541,"ogwp_mtd":5314,"tl_pre":13023,"tl_lmtd":282.0,"tl_mtd":326,"conn_pre":29.8,"conn_lmtd":26.4,"conn_mtd":31.4,"el_pre":765,"el_lmtd":24.3,"el_mtd":14,"ap_pre":22,"ap_lmtd":0.7,"ap_mtd":0,"apc_pre":63,"apc_lmtd":2.0,"apc_mtd":0,"att_pre":74,"att_lmtd":2.0,"att_mtd":2,"gwp_pre":685207,"gwp_lmtd":16141,"gwp_mtd":5314,"bk_pre":32,"bk_lmtd":1.0,"bk_mtd":1,"data_date":"02-Oct-26"},{"agent_id":"PW89021","name":"Abhilash Sharma","team":"PED Flag Team","am_dm":"Attur Rehman Khan","trainer":"Abhishek Rathore","tenure":"6 to 9","type":"Red","al_pre":1187,"al_lmtd":32.7,"al_mtd":24,"ob_pre":31,"ob_lmtd":1.7,"ob_mtd":1,"ogwp_pre":693092,"ogwp_lmtd":41508,"ogwp_mtd":24588,"tl_pre":15673,"tl_lmtd":328.3,"tl_mtd":394,"conn_pre":32.0,"conn_lmtd":36.4,"conn_mtd":33.0,"el_pre":924,"el_lmtd":26.0,"el_mtd":19,"ap_pre":38,"ap_lmtd":1.0,"ap_mtd":1,"apc_pre":91,"apc_lmtd":2.0,"apc_mtd":2,"att_pre":74,"att_lmtd":1.3,"att_mtd":2,"gwp_pre":934578,"gwp_lmtd":57325,"gwp_mtd":44112,"bk_pre":43,"bk_lmtd":2.7,"bk_mtd":2,"data_date":"02-Oct-26"},{"agent_id":"PW89405","name":"Ananya Srivastava","team":"PED Flag Team","am_dm":"Sheikh Khurram Ajaz","trainer":"Abhishek Rathore","tenure":"6 to 9","type":"Red","al_pre":963,"al_lmtd":9.3,"al_mtd":11,"ob_pre":26,"ob_lmtd":0.3,"ob_mtd":0,"ogwp_pre":560872,"ogwp_lmtd":3190,"ogwp_mtd":0,"tl_pre":7172,"tl_lmtd":97.7,"tl_mtd":257,"conn_pre":28.6,"conn_lmtd":25.9,"conn_mtd":21.1,"el_pre":772,"el_lmtd":7.0,"el_mtd":9,"ap_pre":25,"ap_lmtd":0.0,"ap_mtd":0,"apc_pre":60,"apc_lmtd":0.7,"apc_mtd":0,"att_pre":59,"att_lmtd":0.7,"att_mtd":0,"gwp_pre":742466,"gwp_lmtd":3190,"gwp_mtd":0,"bk_pre":35,"bk_lmtd":0.3,"bk_mtd":0,"data_date":"02-Oct-26"},{"agent_id":"PW88954","name":"Ritu Kumari","team":"PED Flag Team","am_dm":"Prince Thakur","trainer":"Karan Arora","tenure":"6 to 9","type":"Red","al_pre":912,"al_lmtd":20.0,"al_mtd":8,"ob_pre":23,"ob_lmtd":0.0,"ob_mtd":0,"ogwp_pre":304748,"ogwp_lmtd":0,"ogwp_mtd":0,"tl_pre":13692,"tl_lmtd":253.3,"tl_mtd":301,"conn_pre":33.3,"conn_lmtd":35.8,"conn_mtd":29.2,"el_pre":709,"el_lmtd":14.3,"el_mtd":5,"ap_pre":40,"ap_lmtd":1.0,"ap_mtd":0,"apc_pre":73,"apc_lmtd":1.7,"apc_mtd":1,"att_pre":71,"att_lmtd":1.3,"att_mtd":1,"gwp_pre":507980,"gwp_lmtd":0,"gwp_mtd":0,"bk_pre":30,"bk_lmtd":0.0,"bk_mtd":0,"data_date":"02-Oct-26"},{"agent_id":"PW88216","name":"Sanisha Bharti","team":"PED Flag Team","am_dm":"Rishabh Gupta","trainer":"Sanya Sharma","tenure":"6 to 9","type":"Red","al_pre":1082,"al_lmtd":24.3,"al_mtd":19,"ob_pre":26,"ob_lmtd":2.0,"ob_mtd":0,"ogwp_pre":528160,"ogwp_lmtd":52256,"ogwp_mtd":0,"tl_pre":14256,"tl_lmtd":301.0,"tl_mtd":268,"conn_pre":29.9,"conn_lmtd":29.2,"conn_mtd":36.3,"el_pre":864,"el_lmtd":19.3,"el_mtd":17,"ap_pre":41,"ap_lmtd":0.3,"ap_mtd":2,"apc_pre":119,"apc_lmtd":2.0,"apc_mtd":2,"att_pre":76,"att_lmtd":1.7,"att_mtd":2,"gwp_pre":1220637,"gwp_lmtd":91001,"gwp_mtd":0,"bk_pre":52,"bk_lmtd":3.3,"bk_mtd":0,"data_date":"02-Oct-26"},{"agent_id":"PW88157","name":"Moinuddin","team":"PED Flag Team","am_dm":"Prince Thakur","trainer":"Karan Arora","tenure":"6 to 9","type":"Red","al_pre":1052,"al_lmtd":21.7,"al_mtd":12,"ob_pre":28,"ob_lmtd":1.0,"ob_mtd":0,"ogwp_pre":555530,"ogwp_lmtd":13508,"ogwp_mtd":0,"tl_pre":18372,"tl_lmtd":423.0,"tl_mtd":323,"conn_pre":31.6,"conn_lmtd":32.8,"conn_mtd":35.4,"el_pre":847,"el_lmtd":15.7,"el_mtd":8,"ap_pre":37,"ap_lmtd":1.7,"ap_mtd":0,"apc_pre":89,"apc_lmtd":2.0,"apc_mtd":1,"att_pre":77,"att_lmtd":1.3,"att_mtd":1,"gwp_pre":791854,"gwp_lmtd":13508,"gwp_mtd":0,"bk_pre":39,"bk_lmtd":1.0,"bk_mtd":0,"data_date":"02-Oct-26"},{"agent_id":"PW87860","name":"Muskan Rawat","team":"PED Flag Team","am_dm":"Sheikh Khurram Ajaz","trainer":"Abhishek Rathore","tenure":"6 to 9","type":"Red","al_pre":933,"al_lmtd":19.0,"al_mtd":18,"ob_pre":23,"ob_lmtd":0.3,"ob_mtd":1,"ogwp_pre":408134,"ogwp_lmtd":15892,"ogwp_mtd":12108,"tl_pre":11461,"tl_lmtd":245.7,"tl_mtd":221,"conn_pre":30.1,"conn_lmtd":29.5,"conn_mtd":34.3,"el_pre":742,"el_lmtd":15.0,"el_mtd":13,"ap_pre":24,"ap_lmtd":0.7,"ap_mtd":0,"apc_pre":57,"apc_lmtd":1.3,"apc_mtd":0,"att_pre":73,"att_lmtd":1.3,"att_mtd":2,"gwp_pre":637429,"gwp_lmtd":15892,"gwp_mtd":12108,"bk_pre":32,"bk_lmtd":0.3,"bk_mtd":1,"data_date":"02-Oct-26"},{"agent_id":"PW85947","name":"Shahid Ahmad","team":"PED Flag Team","am_dm":"Vikash Yadav","trainer":"Sanya Sharma","tenure":"6 to 9","type":"Red","al_pre":764,"al_lmtd":21.3,"al_mtd":11,"ob_pre":14,"ob_lmtd":0.7,"ob_mtd":0,"ogwp_pre":299067,"ogwp_lmtd":5861,"ogwp_mtd":0,"tl_pre":9259,"tl_lmtd":198.7,"tl_mtd":491,"conn_pre":32.0,"conn_lmtd":30.1,"conn_mtd":40.8,"el_pre":597,"el_lmtd":15.0,"el_mtd":7,"ap_pre":27,"ap_lmtd":0.7,"ap_mtd":1,"apc_pre":67,"apc_lmtd":1.7,"apc_mtd":1,"att_pre":48,"att_lmtd":1.3,"att_mtd":1,"gwp_pre":440592,"gwp_lmtd":14165,"gwp_mtd":22787,"bk_pre":20,"bk_lmtd":1.0,"bk_mtd":1,"data_date":"02-Oct-26"},{"agent_id":"PW87539","name":"Pallavi Kumari","team":"PED Flag Team","am_dm":"Vikash Yadav","trainer":"Sanya Sharma","tenure":"6 to 9","type":"Red","al_pre":1092,"al_lmtd":20.3,"al_mtd":21,"ob_pre":23,"ob_lmtd":0.7,"ob_mtd":1,"ogwp_pre":350311,"ogwp_lmtd":14396,"ogwp_mtd":19830,"tl_pre":15487,"tl_lmtd":334.0,"tl_mtd":285,"conn_pre":29.0,"conn_lmtd":29.3,"conn_mtd":26.8,"el_pre":885,"el_lmtd":14.3,"el_mtd":17,"ap_pre":20,"ap_lmtd":0.0,"ap_mtd":0,"apc_pre":81,"apc_lmtd":1.0,"apc_mtd":1,"att_pre":74,"att_lmtd":1.3,"att_mtd":2,"gwp_pre":1301073,"gwp_lmtd":54904,"gwp_mtd":19830,"bk_pre":41,"bk_lmtd":1.0,"bk_mtd":1,"data_date":"02-Oct-26"},{"agent_id":"PW89418","name":"Rimpy","team":"PED Flag Team","am_dm":"Vikash Yadav","trainer":"Sanya Sharma","tenure":"6 to 9","type":"Red","al_pre":1122,"al_lmtd":25.7,"al_mtd":0,"ob_pre":22,"ob_lmtd":1.0,"ob_mtd":0,"ogwp_pre":578353,"ogwp_lmtd":19671,"ogwp_mtd":0,"tl_pre":11490,"tl_lmtd":219.3,"tl_mtd":223,"conn_pre":27.3,"conn_lmtd":27.6,"conn_mtd":null,"el_pre":930,"el_lmtd":21.3,"el_mtd":0,"ap_pre":55,"ap_lmtd":1.0,"ap_mtd":0,"apc_pre":93,"apc_lmtd":2.0,"apc_mtd":0,"att_pre":77,"att_lmtd":1.7,"att_mtd":0,"gwp_pre":855165,"gwp_lmtd":25147,"gwp_mtd":0,"bk_pre":42,"bk_lmtd":1.3,"bk_mtd":0,"data_date":"02-Oct-26"},{"agent_id":"PW88178","name":"Sameer Verma","team":"PED Flag Team","am_dm":"Prince Thakur","trainer":"Karan Arora","tenure":"6 to 9","type":"Red","al_pre":1061,"al_lmtd":18.7,"al_mtd":19,"ob_pre":22,"ob_lmtd":0.7,"ob_mtd":1,"ogwp_pre":350141,"ogwp_lmtd":5968,"ogwp_mtd":20988,"tl_pre":14427,"tl_lmtd":305.0,"tl_mtd":358,"conn_pre":30.0,"conn_lmtd":31.4,"conn_mtd":29.4,"el_pre":863,"el_lmtd":13.0,"el_mtd":16,"ap_pre":11,"ap_lmtd":0.0,"ap_mtd":1,"apc_pre":33,"apc_lmtd":0.3,"apc_mtd":2,"att_pre":77,"att_lmtd":1.3,"att_mtd":2,"gwp_pre":426741,"gwp_lmtd":8186,"gwp_mtd":20988,"bk_pre":27,"bk_lmtd":1.0,"bk_mtd":1,"data_date":"02-Oct-26"},{"agent_id":"PW86558","name":"Dhiresh Pal","team":"PED Flag Team","am_dm":"Sheikh Khurram Ajaz","trainer":"Abhishek Rathore","tenure":"6 to 9","type":"Red","al_pre":1010,"al_lmtd":22.0,"al_mtd":19,"ob_pre":20,"ob_lmtd":0.3,"ob_mtd":0,"ogwp_pre":353905,"ogwp_lmtd":1918,"ogwp_mtd":0,"tl_pre":12347,"tl_lmtd":267.0,"tl_mtd":319,"conn_pre":30.9,"conn_lmtd":28.8,"conn_mtd":29.7,"el_pre":798,"el_lmtd":18.0,"el_mtd":16,"ap_pre":24,"ap_lmtd":1.3,"ap_mtd":0,"apc_pre":70,"apc_lmtd":2.3,"apc_mtd":0,"att_pre":77,"att_lmtd":1.7,"att_mtd":2,"gwp_pre":719372,"gwp_lmtd":12322,"gwp_mtd":0,"bk_pre":36,"bk_lmtd":1.0,"bk_mtd":0,"data_date":"02-Oct-26"},{"agent_id":"PW87173","name":"Anshu Shukla","team":"PED Flag Team","am_dm":"Himanshu Goyal","trainer":"Pooja Neogi","tenure":"6 to 9","type":"Red","al_pre":1182,"al_lmtd":22.3,"al_mtd":17,"ob_pre":12,"ob_lmtd":0.3,"ob_mtd":0,"ogwp_pre":285878,"ogwp_lmtd":3348,"ogwp_mtd":0,"tl_pre":15669,"tl_lmtd":284.3,"tl_mtd":544,"conn_pre":29.1,"conn_lmtd":34.5,"conn_mtd":30.1,"el_pre":886,"el_lmtd":15.7,"el_mtd":13,"ap_pre":36,"ap_lmtd":0.3,"ap_mtd":1,"apc_pre":53,"apc_lmtd":0.7,"apc_mtd":1,"att_pre":75,"att_lmtd":1.3,"att_mtd":2,"gwp_pre":517014,"gwp_lmtd":3348,"gwp_mtd":66229,"bk_pre":17,"bk_lmtd":0.3,"bk_mtd":1,"data_date":"02-Oct-26"},{"agent_id":"PW81161","name":"Divyanshu Pathak","team":"PED Flag Team","am_dm":"Vikash Yadav","trainer":"Sanya Sharma","tenure":"9 to 12","type":"Amber","al_pre":1122,"al_lmtd":23.7,"al_mtd":10,"ob_pre":52,"ob_lmtd":1.3,"ob_mtd":0,"ogwp_pre":970572,"ogwp_lmtd":10634,"ogwp_mtd":0,"tl_pre":16978,"tl_lmtd":374.7,"tl_mtd":376,"conn_pre":28.8,"conn_lmtd":31.8,"conn_mtd":40.5,"el_pre":933,"el_lmtd":17.0,"el_mtd":10,"ap_pre":56,"ap_lmtd":0.7,"ap_mtd":0,"apc_pre":114,"apc_lmtd":1.3,"apc_mtd":1,"att_pre":77,"att_lmtd":1.7,"att_mtd":1,"gwp_pre":1613753,"gwp_lmtd":20293,"gwp_mtd":0,"bk_pre":74,"bk_lmtd":2.0,"bk_mtd":0,"data_date":"02-Oct-26"},{"agent_id":"PW81623","name":"Vishal Meena","team":"PED Flag Team","am_dm":"Prince Thakur","trainer":"Karan Arora","tenure":"9 to 12","type":"Amber","al_pre":1154,"al_lmtd":26.0,"al_mtd":19,"ob_pre":54,"ob_lmtd":0.3,"ob_mtd":0,"ogwp_pre":1098942,"ogwp_lmtd":13143,"ogwp_mtd":0,"tl_pre":7381,"tl_lmtd":159.7,"tl_mtd":240,"conn_pre":31.1,"conn_lmtd":33.0,"conn_mtd":34.5,"el_pre":910,"el_lmtd":19.0,"el_mtd":14,"ap_pre":25,"ap_lmtd":0.7,"ap_mtd":0,"apc_pre":84,"apc_lmtd":3.3,"apc_mtd":1,"att_pre":74,"att_lmtd":1.3,"att_mtd":2,"gwp_pre":1602914,"gwp_lmtd":32224,"gwp_mtd":0,"bk_pre":75,"bk_lmtd":1.0,"bk_mtd":0,"data_date":"02-Oct-26"},{"agent_id":"PW81621","name":"Mohd Wajid Ansari","team":"PED Flag Team","am_dm":"Rishabh Gupta","trainer":"Sanya Sharma","tenure":"9 to 12","type":"Amber","al_pre":1149,"al_lmtd":29.3,"al_mtd":19,"ob_pre":47,"ob_lmtd":0.7,"ob_mtd":0,"ogwp_pre":1214058,"ogwp_lmtd":18180,"ogwp_mtd":0,"tl_pre":14659,"tl_lmtd":327.7,"tl_mtd":290,"conn_pre":28.5,"conn_lmtd":26.9,"conn_mtd":31.2,"el_pre":942,"el_lmtd":22.3,"el_mtd":17,"ap_pre":49,"ap_lmtd":1.0,"ap_mtd":0,"apc_pre":95,"apc_lmtd":2.0,"apc_mtd":1,"att_pre":75,"att_lmtd":1.7,"att_mtd":2,"gwp_pre":1724149,"gwp_lmtd":18180,"gwp_mtd":0,"bk_pre":64,"bk_lmtd":0.7,"bk_mtd":0,"data_date":"02-Oct-26"},{"agent_id":"PW86554","name":"Anik Rawat","team":"Individual","am_dm":"Vicky","trainer":"Shaneel","tenure":"6 to 9","type":"Red","al_pre":1403,"al_lmtd":16.3,"al_mtd":35,"ob_pre":55,"ob_lmtd":0.7,"ob_mtd":2,"ogwp_pre":1336780,"ogwp_lmtd":6331,"ogwp_mtd":13384,"tl_pre":15348,"tl_lmtd":287.0,"tl_mtd":381,"conn_pre":33.0,"conn_lmtd":33.2,"conn_mtd":39.1,"el_pre":1093,"el_lmtd":12.0,"el_mtd":29,"ap_pre":38,"ap_lmtd":0.7,"ap_mtd":2,"apc_pre":95,"apc_lmtd":1.0,"apc_mtd":3,"att_pre":73,"att_lmtd":1.0,"att_mtd":2,"gwp_pre":1756601,"gwp_lmtd":6331,"gwp_mtd":13384,"bk_pre":70,"bk_lmtd":0.7,"bk_mtd":2,"data_date":"02-Oct-26"},{"agent_id":"PW85705","name":"Rakesh Kumar Ram","team":"Individual","am_dm":"Arun Kumar","trainer":"Shaneel","tenure":"6 to 9","type":"Red","al_pre":1196,"al_lmtd":42.0,"al_mtd":33,"ob_pre":46,"ob_lmtd":1.3,"ob_mtd":2,"ogwp_pre":584589,"ogwp_lmtd":17374,"ogwp_mtd":40956,"tl_pre":14923,"tl_lmtd":228.0,"tl_mtd":667,"conn_pre":33.6,"conn_lmtd":35.2,"conn_mtd":37.1,"el_pre":876,"el_lmtd":27.7,"el_mtd":24,"ap_pre":33,"ap_lmtd":0.7,"ap_mtd":0,"apc_pre":74,"apc_lmtd":1.7,"apc_mtd":0,"att_pre":59,"att_lmtd":1.7,"att_mtd":2,"gwp_pre":814041,"gwp_lmtd":17374,"gwp_mtd":40956,"bk_pre":55,"bk_lmtd":1.3,"bk_mtd":2,"data_date":"02-Oct-26"},{"agent_id":"PW83337","name":"Priya Ranjan","team":"Individual","am_dm":"Anuj Goyal","trainer":"Shaneel","tenure":"9 to 12","type":"Red","al_pre":1502,"al_lmtd":27.3,"al_mtd":14,"ob_pre":51,"ob_lmtd":1.7,"ob_mtd":3,"ogwp_pre":774486,"ogwp_lmtd":17731,"ogwp_mtd":55124,"tl_pre":22134,"tl_lmtd":538.7,"tl_mtd":373,"conn_pre":33.1,"conn_lmtd":32.5,"conn_mtd":34.9,"el_pre":1120,"el_lmtd":19.0,"el_mtd":7,"ap_pre":23,"ap_lmtd":0.3,"ap_mtd":1,"apc_pre":64,"apc_lmtd":1.3,"apc_mtd":1,"att_pre":75,"att_lmtd":1.3,"att_mtd":1,"gwp_pre":994654,"gwp_lmtd":19780,"gwp_mtd":55124,"bk_pre":62,"bk_lmtd":2.0,"bk_mtd":3,"data_date":"02-Oct-26"},{"agent_id":"PW87116","name":"Vanshika","team":"Individual","am_dm":"Vicky","trainer":"Shaneel","tenure":"6 to 9","type":"Red","al_pre":1360,"al_lmtd":30.3,"al_mtd":23,"ob_pre":52,"ob_lmtd":0.3,"ob_mtd":2,"ogwp_pre":758193,"ogwp_lmtd":3476,"ogwp_mtd":13304,"tl_pre":14130,"tl_lmtd":241.7,"tl_mtd":397,"conn_pre":32.1,"conn_lmtd":30.8,"conn_mtd":35.9,"el_pre":1032,"el_lmtd":20.3,"el_mtd":16,"ap_pre":46,"ap_lmtd":0.7,"ap_mtd":1,"apc_pre":84,"apc_lmtd":1.0,"apc_mtd":1,"att_pre":76,"att_lmtd":1.7,"att_mtd":1,"gwp_pre":1052151,"gwp_lmtd":13721,"gwp_mtd":33963,"bk_pre":69,"bk_lmtd":1.3,"bk_mtd":3,"data_date":"02-Oct-26"},{"agent_id":"PW85679","name":"Bhumika","team":"Individual","am_dm":"Arun Kumar","trainer":"Shaneel","tenure":"6 to 9","type":"Red","al_pre":1591,"al_lmtd":32.0,"al_mtd":22,"ob_pre":48,"ob_lmtd":2.3,"ob_mtd":2,"ogwp_pre":611594,"ogwp_lmtd":34295,"ogwp_mtd":35420,"tl_pre":20630,"tl_lmtd":440.7,"tl_mtd":456,"conn_pre":32.5,"conn_lmtd":33.8,"conn_mtd":37.2,"el_pre":1199,"el_lmtd":21.3,"el_mtd":17,"ap_pre":48,"ap_lmtd":1.3,"ap_mtd":1,"apc_pre":107,"apc_lmtd":3.0,"apc_mtd":2,"att_pre":77,"att_lmtd":1.7,"att_mtd":2,"gwp_pre":825839,"gwp_lmtd":37190,"gwp_mtd":35420,"bk_pre":62,"bk_lmtd":2.7,"bk_mtd":2,"data_date":"02-Oct-26"},{"agent_id":"PW85680","name":"Abu Talib","team":"Individual","am_dm":"Arun Kumar","trainer":"Shaneel","tenure":"6 to 9","type":"Red","al_pre":1457,"al_lmtd":21.3,"al_mtd":20,"ob_pre":44,"ob_lmtd":1.7,"ob_mtd":1,"ogwp_pre":696160,"ogwp_lmtd":25773,"ogwp_mtd":9088,"tl_pre":17806,"tl_lmtd":376.7,"tl_mtd":434,"conn_pre":27.9,"conn_lmtd":28.7,"conn_mtd":29.2,"el_pre":1106,"el_lmtd":14.0,"el_mtd":15,"ap_pre":53,"ap_lmtd":1.7,"ap_mtd":1,"apc_pre":99,"apc_lmtd":2.3,"apc_mtd":3,"att_pre":76,"att_lmtd":1.3,"att_mtd":2,"gwp_pre":1007169,"gwp_lmtd":42874,"gwp_mtd":9088,"bk_pre":58,"bk_lmtd":2.3,"bk_mtd":1,"data_date":"02-Oct-26"},{"agent_id":"PW85655","name":"Manish Kumar","team":"Individual","am_dm":"Priyanka Pandey","trainer":"Shaneel","tenure":"6 to 9","type":"Red","al_pre":1324,"al_lmtd":24.0,"al_mtd":33,"ob_pre":41,"ob_lmtd":0.3,"ob_mtd":1,"ogwp_pre":604890,"ogwp_lmtd":3700,"ogwp_mtd":18876,"tl_pre":21604,"tl_lmtd":510.7,"tl_mtd":378,"conn_pre":32.0,"conn_lmtd":36.9,"conn_mtd":41.2,"el_pre":1012,"el_lmtd":16.0,"el_mtd":22,"ap_pre":27,"ap_lmtd":0.3,"ap_mtd":1,"apc_pre":85,"apc_lmtd":0.3,"apc_mtd":3,"att_pre":73,"att_lmtd":1.3,"att_mtd":2,"gwp_pre":861478,"gwp_lmtd":3700,"gwp_mtd":50544,"bk_pre":57,"bk_lmtd":0.3,"bk_mtd":2,"data_date":"02-Oct-26"},{"agent_id":"PW84912","name":"Shivesh Patel","team":"Individual","am_dm":"Priyanka Pandey","trainer":"Shaneel","tenure":"9 to 12","type":"Red","al_pre":1542,"al_lmtd":35.7,"al_mtd":24,"ob_pre":44,"ob_lmtd":0.3,"ob_mtd":0,"ogwp_pre":459358,"ogwp_lmtd":7467,"ogwp_mtd":0,"tl_pre":17328,"tl_lmtd":374.7,"tl_mtd":517,"conn_pre":31.8,"conn_lmtd":32.2,"conn_mtd":31.4,"el_pre":1159,"el_lmtd":25.3,"el_mtd":15,"ap_pre":35,"ap_lmtd":1.0,"ap_mtd":1,"apc_pre":103,"apc_lmtd":2.7,"apc_mtd":3,"att_pre":78,"att_lmtd":2.0,"att_mtd":2,"gwp_pre":545327,"gwp_lmtd":7467,"gwp_mtd":0,"bk_pre":50,"bk_lmtd":0.3,"bk_mtd":0,"data_date":"02-Oct-26"},{"agent_id":"PW82469","name":"Riya Singh","team":"Individual","am_dm":"Arun Kumar","trainer":"Shaneel","tenure":"9 to 12","type":"Red","al_pre":317,"al_lmtd":0.3,"al_mtd":13,"ob_pre":9,"ob_lmtd":0.0,"ob_mtd":0,"ogwp_pre":377612,"ogwp_lmtd":1521,"ogwp_mtd":0,"tl_pre":14145,"tl_lmtd":378.0,"tl_mtd":123,"conn_pre":39.4,"conn_lmtd":38.8,"conn_mtd":25.0,"el_pre":214,"el_lmtd":0.3,"el_mtd":9,"ap_pre":7,"ap_lmtd":0.0,"ap_mtd":0,"apc_pre":14,"apc_lmtd":0.0,"apc_mtd":0,"att_pre":68,"att_lmtd":1.0,"att_mtd":2,"gwp_pre":390560,"gwp_lmtd":1521,"gwp_mtd":0,"bk_pre":10,"bk_lmtd":0.0,"bk_mtd":0,"data_date":"02-Oct-26"},{"agent_id":"PW82475","name":"Sunil Thuwal","team":"Individual","am_dm":"Vicky","trainer":"Shaneel","tenure":"9 to 12","type":"Red","al_pre":1493,"al_lmtd":30.0,"al_mtd":9,"ob_pre":38,"ob_lmtd":1.3,"ob_mtd":0,"ogwp_pre":455342,"ogwp_lmtd":14572,"ogwp_mtd":0,"tl_pre":21496,"tl_lmtd":408.0,"tl_mtd":438,"conn_pre":28.8,"conn_lmtd":28.7,"conn_mtd":34.7,"el_pre":1147,"el_lmtd":22.3,"el_mtd":5,"ap_pre":30,"ap_lmtd":0.3,"ap_mtd":1,"apc_pre":92,"apc_lmtd":1.3,"apc_mtd":2,"att_pre":75,"att_lmtd":1.3,"att_mtd":1,"gwp_pre":858871,"gwp_lmtd":84606,"gwp_mtd":0,"bk_pre":51,"bk_lmtd":2.7,"bk_mtd":0,"data_date":"02-Oct-26"},{"agent_id":"PW87930","name":"Sourabh Chauhan","team":"Individual","am_dm":"Anuj Goyal","trainer":"Shaneel","tenure":"6 to 9","type":"Red","al_pre":1603,"al_lmtd":36.0,"al_mtd":20,"ob_pre":41,"ob_lmtd":1.3,"ob_mtd":0,"ogwp_pre":409708,"ogwp_lmtd":19033,"ogwp_mtd":0,"tl_pre":16382,"tl_lmtd":376.0,"tl_mtd":369,"conn_pre":31.6,"conn_lmtd":38.3,"conn_mtd":33.8,"el_pre":1177,"el_lmtd":26.0,"el_mtd":14,"ap_pre":27,"ap_lmtd":0.3,"ap_mtd":0,"apc_pre":77,"apc_lmtd":1.3,"apc_mtd":0,"att_pre":75,"att_lmtd":1.3,"att_mtd":2,"gwp_pre":471411,"gwp_lmtd":26961,"gwp_mtd":0,"bk_pre":46,"bk_lmtd":2.0,"bk_mtd":0,"data_date":"02-Oct-26"},{"agent_id":"PW85712","name":"Yogendra Swaroop","team":"Individual","am_dm":"Vicky","trainer":"Shaneel","tenure":"6 to 9","type":"Red","al_pre":1459,"al_lmtd":36.3,"al_mtd":28,"ob_pre":29,"ob_lmtd":0.7,"ob_mtd":1,"ogwp_pre":395945,"ogwp_lmtd":6615,"ogwp_mtd":6221,"tl_pre":21840,"tl_lmtd":463.3,"tl_mtd":452,"conn_pre":31.6,"conn_lmtd":33.7,"conn_mtd":34.1,"el_pre":1091,"el_lmtd":26.0,"el_mtd":28,"ap_pre":31,"ap_lmtd":0.3,"ap_mtd":0,"apc_pre":49,"apc_lmtd":0.7,"apc_mtd":0,"att_pre":74,"att_lmtd":1.7,"att_mtd":2,"gwp_pre":614216,"gwp_lmtd":6615,"gwp_mtd":6221,"bk_pre":41,"bk_lmtd":0.7,"bk_mtd":1,"data_date":"02-Oct-26"},{"agent_id":"PW87575","name":"Ankeeta Guha","team":"Individual","am_dm":"Vicky","trainer":"Shaneel","tenure":"6 to 9","type":"Red","al_pre":1184,"al_lmtd":40.7,"al_mtd":15,"ob_pre":22,"ob_lmtd":1.7,"ob_mtd":0,"ogwp_pre":258896,"ogwp_lmtd":19423,"ogwp_mtd":0,"tl_pre":13777,"tl_lmtd":315.3,"tl_mtd":253,"conn_pre":36.0,"conn_lmtd":36.4,"conn_mtd":41.0,"el_pre":887,"el_lmtd":28.7,"el_mtd":13,"ap_pre":39,"ap_lmtd":0.7,"ap_mtd":2,"apc_pre":50,"apc_lmtd":1.0,"apc_mtd":2,"att_pre":65,"att_lmtd":1.7,"att_mtd":1,"gwp_pre":543989,"gwp_lmtd":37282,"gwp_mtd":0,"bk_pre":33,"bk_lmtd":2.0,"bk_mtd":0,"data_date":"02-Oct-26"},{"agent_id":"PW82252","name":"Nikhil","team":"Individual","am_dm":"Anuj Goyal","trainer":"Shaneel","tenure":"9 to 12","type":"Red","al_pre":307,"al_lmtd":0.3,"al_mtd":13,"ob_pre":5,"ob_lmtd":0.0,"ob_mtd":0,"ogwp_pre":167877,"ogwp_lmtd":3804,"ogwp_mtd":0,"tl_pre":22345,"tl_lmtd":611.0,"tl_mtd":233,"conn_pre":37.7,"conn_lmtd":34.7,"conn_mtd":30.7,"el_pre":221,"el_lmtd":0.3,"el_mtd":11,"ap_pre":6,"ap_lmtd":0.0,"ap_mtd":0,"apc_pre":14,"apc_lmtd":0.0,"apc_mtd":0,"att_pre":72,"att_lmtd":0.7,"att_mtd":2,"gwp_pre":181281,"gwp_lmtd":3804,"gwp_mtd":0,"bk_pre":6,"bk_lmtd":0.0,"bk_mtd":0,"data_date":"02-Oct-26"},{"agent_id":"PW81875","name":"Neha Mahar","team":"Individual","am_dm":"Arun Kumar","trainer":"Shaneel","tenure":"9 to 12","type":"Amber","al_pre":1358,"al_lmtd":34.3,"al_mtd":14,"ob_pre":58,"ob_lmtd":0.3,"ob_mtd":1,"ogwp_pre":851053,"ogwp_lmtd":4608,"ogwp_mtd":10452,"tl_pre":17127,"tl_lmtd":278.7,"tl_mtd":461,"conn_pre":33.0,"conn_lmtd":34.2,"conn_mtd":40.9,"el_pre":1014,"el_lmtd":22.0,"el_mtd":11,"ap_pre":28,"ap_lmtd":1.0,"ap_mtd":0,"apc_pre":97,"apc_lmtd":2.3,"apc_mtd":1,"att_pre":72,"att_lmtd":1.7,"att_mtd":1,"gwp_pre":1288021,"gwp_lmtd":19010,"gwp_mtd":10452,"bk_pre":77,"bk_lmtd":0.7,"bk_mtd":1,"data_date":"02-Oct-26"},{"agent_id":"PW81510","name":"Md Sahil","team":"Individual","am_dm":"Arun Kumar","trainer":"Shaneel","tenure":"9 to 12","type":"Amber","al_pre":1369,"al_lmtd":25.0,"al_mtd":23,"ob_pre":56,"ob_lmtd":1.0,"ob_mtd":1,"ogwp_pre":738067,"ogwp_lmtd":11571,"ogwp_mtd":8014,"tl_pre":18617,"tl_lmtd":396.7,"tl_mtd":389,"conn_pre":34.3,"conn_lmtd":35.6,"conn_mtd":40.2,"el_pre":1021,"el_lmtd":19.3,"el_mtd":16,"ap_pre":49,"ap_lmtd":0.3,"ap_mtd":0,"apc_pre":90,"apc_lmtd":1.3,"apc_mtd":0,"att_pre":76,"att_lmtd":1.3,"att_mtd":2,"gwp_pre":1014777,"gwp_lmtd":16184,"gwp_mtd":63696,"bk_pre":70,"bk_lmtd":1.3,"bk_mtd":2,"data_date":"02-Oct-26"},{"agent_id":"PW81492","name":"Shivani","team":"Individual UHNI","am_dm":"Rohit Singh","trainer":"Jitesh","tenure":"9 to 12","type":"Red","al_pre":1119,"al_lmtd":29.7,"al_mtd":12,"ob_pre":93,"ob_lmtd":3.3,"ob_mtd":1,"ogwp_pre":2572570,"ogwp_lmtd":98032,"ogwp_mtd":11796,"tl_pre":13408,"tl_lmtd":280.7,"tl_mtd":283,"conn_pre":36.5,"conn_lmtd":37.4,"conn_mtd":33.9,"el_pre":944,"el_lmtd":22.7,"el_mtd":10,"ap_pre":40,"ap_lmtd":0.7,"ap_mtd":1,"apc_pre":87,"apc_lmtd":1.7,"apc_mtd":1,"att_pre":74,"att_lmtd":1.7,"att_mtd":1,"gwp_pre":2692423,"gwp_lmtd":98032,"gwp_mtd":11796,"bk_pre":100,"bk_lmtd":3.3,"bk_mtd":1,"data_date":"02-Oct-26"},{"agent_id":"PW84859","name":"Anil Kumar","team":"Individual UHNI","am_dm":"Anuj Goyal","trainer":"Jitesh","tenure":"9 to 12","type":"Red","al_pre":1368,"al_lmtd":24.7,"al_mtd":11,"ob_pre":82,"ob_lmtd":2.0,"ob_mtd":3,"ogwp_pre":1234067,"ogwp_lmtd":35269,"ogwp_mtd":62035,"tl_pre":22998,"tl_lmtd":468.3,"tl_mtd":504,"conn_pre":35.3,"conn_lmtd":38.8,"conn_mtd":41.7,"el_pre":1054,"el_lmtd":17.3,"el_mtd":10,"ap_pre":35,"ap_lmtd":0.7,"ap_mtd":0,"apc_pre":81,"apc_lmtd":1.3,"apc_mtd":0,"att_pre":77,"att_lmtd":1.7,"att_mtd":1,"gwp_pre":1689526,"gwp_lmtd":43849,"gwp_mtd":62035,"bk_pre":104,"bk_lmtd":3.3,"bk_mtd":3,"data_date":"02-Oct-26"}];
+let OCT_ROWS=[], OCT_SRC='', OCT_OPEN={}, OCT_TYPE='ALL', OCT_MTD_LABEL='Oct MTD';
+function octNum(v){ if(v==null)return null; if(typeof v==='number')return v; const t=(''+v).replace(/[,%₹\s]/g,''); if(t==='')return null; const n=parseFloat(t); return isNaN(n)?null:n; }
+function octPrep(rows){
+  // dedupe by agent_id (keep the latest row) — guards against importing without truncating
+  const by={}; rows.forEach(r=>{ const id=(r.agent_id||'').trim(); if(id) by[id]=r; });
+  const out=Object.values(by).map(r=>{
+    const o={id:(r.agent_id||'').trim(), name:(r.name||'').trim(), team:(r.team||'').trim()||'(blank)', am:(r.am_dm||'').trim(),
+      trainer:(r.trainer||'').trim()||'(blank)', tenure:(r.tenure||'').trim(), type:(r.type||'').trim(), dd:(r.data_date||'').trim()};
+    ['al','ob','ogwp','tl','conn','el','ap','apc','att','gwp','bk'].forEach(k=>['pre','lmtd','mtd'].forEach(p=>{ o[k+'_'+p]=octNum(r[k+'_'+p]); }));
+    o.cPre=octConv(o.ob_pre,o.al_pre); o.cLm=octConv(o.ob_lmtd,o.al_lmtd); o.cMtd=octConv(o.ob_mtd,o.al_mtd);
+    o.improved = (o.cMtd!=null && o.cPre!=null && o.cMtd>o.cPre);
+    return o;
+  });
+  // MTD label from data_date (e.g. 05-Oct-26 -> "Oct 1–5")
+  let maxDay=0; out.forEach(o=>{ const m=o.dd.match(/^(\d{1,2})-([A-Za-z]{3})/); if(m&&+m[1]>maxDay){maxDay=+m[1];} });
+  OCT_MTD_LABEL = maxDay ? ('Oct 1–'+maxDay) : 'Oct MTD';
+  return out;
+}
+function octConv(b,l){ return (l&&l>0) ? ((b||0)/l*100) : null; }
+async function octLoadSupabase(){
+  const PAGE=1000; let offset=0; const all=[];
+  while(true){
+    // select=* on purpose: small table, and avoids HTTP 400 if an optional column is missing
+    const url=SUPABASE_URL+'/rest/v1/fg_oct?select=*&order=id.asc&limit='+PAGE+'&offset='+offset;
+    const res=await fetch(url,{headers:{apikey:SUPABASE_KEY,Authorization:'Bearer '+SUPABASE_KEY,Range:offset+'-'+(offset+PAGE-1)}});
+    if(!res.ok) throw new Error('Supabase HTTP '+res.status);
+    const b=await res.json();
+    if(!Array.isArray(b)||!b.length) break;
+    all.push(...b); if(b.length<PAGE) break; offset+=PAGE; if(offset>50000) break;
+  }
+  if(!all.length) throw new Error('fg_oct is empty');
+  return all;
+}
+function octAgents(){
+  const q=(FC_SEARCH||'').toLowerCase();
+  return OCT_ROWS.filter(a=>(OCT_TYPE==='ALL'||a.type===OCT_TYPE));
+}
+function octSum(list){
+  const T={n:list.length,alP:0,obP:0,alL:0,obL:0,alM:0,obM:0,imp:0};
+  list.forEach(a=>{ T.alP+=a.al_pre||0;T.obP+=a.ob_pre||0;T.alL+=a.al_lmtd||0;T.obL+=a.ob_lmtd||0;T.alM+=a.al_mtd||0;T.obM+=a.ob_mtd||0; if(a.improved)T.imp++; });
+  T.cPre=octConv(T.obP,T.alP); T.cLm=octConv(T.obL,T.alL); T.cMtd=octConv(T.obM,T.alM);
+  T.impPct = T.n ? T.imp/T.n*100 : null;
+  return T;
+}
+function octPill(v,base){ let bg='#64748b'; if(base!==undefined){ bg = (v==null||base==null)?'#cbd5e1':(v>base?'#059669':(v<base?'#dc2626':'#64748b')); } return `<span class="ss-pill" style="background:${bg}">${fcPct(v)}</span>`; }
+function octImpChip(p){ if(p==null)return '<span class="chip n">—</span>'; const c=p>=60?'g':(p>=40?'w':'b'); return '<span class="chip '+c+'">'+p.toFixed(0)+'%</span>'; }
+function octRenderKpis(){
+  const all=octAgents(); const T=octSum(all);
+  const teams=new Set(all.map(a=>a.team)).size, trs=new Set(all.map(a=>a.trainer)).size;
+  const g=(T.cPre&&T.cMtd!=null)?((T.cMtd-T.cPre)/T.cPre*100):null;
+  const gl=(T.cLm&&T.cMtd!=null)?((T.cMtd-T.cLm)/T.cLm*100):null;
+  const sg=v=>v==null?'—':((v>0?'+':'')+v.toFixed(1)+'%');
+  document.getElementById('fcKpis').innerHTML=`
+    <div class="ssd-kpi k1"><div class="glow"></div><div class="lab">FG October Agents</div><div class="val">${T.n}</div><div class="sub">${teams} segments · ${trs} trainers</div></div>
+    <div class="ssd-kpi k2"><div class="glow"></div><div class="lab">Online Conv · ${OCT_MTD_LABEL}</div><div class="val">${fcPct(T.cMtd)}</div><div class="sub">Pre ${fcPct(T.cPre)} · LMTD ${fcPct(T.cLm)}</div></div>
+    <div class="ssd-kpi k3"><div class="glow"></div><div class="lab">Growth</div><div class="val" style="font-size:26px">${sg(g)}</div><div class="sub">vs Pre · ${sg(gl)} vs LMTD</div></div>
+    <div class="ssd-kpi k4"><div class="glow"></div><div class="lab">Improved vs Pre</div><div class="val">${T.imp}<span style="font-size:18px;opacity:.85"> / ${T.n}</span></div><div class="sub">${T.impPct==null?'—':T.impPct.toFixed(0)+'%'} of agents improved</div></div>`;
+}
+function octRenderTable(){
+  const isSeg=FC_VIEW!=='trainer';
+  const q=(FC_SEARCH||'').toLowerCase();
+  const all=octAgents();
+  const G={}; all.forEach(a=>{ const k=isSeg?a.team:a.trainer; (G[k]=G[k]||[]).push(a); });
+  let groups=Object.keys(G).sort().map(k=>({k,agents:G[k],T:octSum(G[k])}));
+  if(q) groups=groups.filter(g=>g.k.toLowerCase().includes(q)||g.agents.some(a=>a.name.toLowerCase().includes(q)||a.id.toLowerCase().includes(q)));
+  const NC=9;
+  let h=`<thead><tr><th class="lft" style="min-width:170px">${isSeg?'Segment':'Trainer'}</th><th>Agents</th>
+    <th>Pre (Jul–Sep)</th><th class="fc-lmtd">LMTD Avg</th><th>${OCT_MTD_LABEL}</th>
+    <th class="fc-gro">Growth Pre→Oct</th><th class="fc-gro">Growth LMTD→Oct</th>
+    <th>Improved vs Pre</th><th>Improved %</th></tr></thead><tbody>`;
+  groups.forEach((g,gi)=>{
+    const T=g.T, open=!!OCT_OPEN[g.k]||!!q;
+    h+=`<tr class="ssd-row ${open?'open':''}" data-octk="${gi}">
+      <td class="lft"><span class="ssd-exp">▸</span><span class="ssd-name">${g.k}</span></td><td>${T.n}</td>
+      <td>${octPill(T.cPre)}</td><td class="fc-lmtd">${octPill(T.cLm)}</td><td><b>${octPill(T.cMtd,T.cPre)}</b></td>
+      <td class="fc-gro">${fcGrowth(T.cPre,T.cMtd)}</td><td class="fc-gro">${fcGrowth(T.cLm,T.cMtd)}</td>
+      <td><b style="color:#047857">${T.imp}</b> <span style="color:#94a3b8">/ ${T.n}</span></td><td>${octImpChip(T.impPct)}</td></tr>`;
+    if(open){
+      let ags=g.agents.slice(); if(q) ags=ags.filter(a=>a.name.toLowerCase().includes(q)||a.id.toLowerCase().includes(q)||g.k.toLowerCase().includes(q));
+      const imp=ags.filter(a=>a.improved).sort((a,b)=>(b.cMtd-b.cPre)-(a.cMtd-a.cPre));
+      const not=ags.filter(a=>!a.improved).sort((a,b)=>((a.cMtd??-1)-(a.cPre||0))-((b.cMtd??-1)-(b.cPre||0)));
+      h+=`<tr class="oct-detail"><td colspan="${NC}"><div class="oct-split">${octMini('✅ Improved vs Pre',imp,'g',isSeg)}${octMini('⚠️ Not improved',not,'b',isSeg)}</div></td></tr>`;
+    }
+  });
+  const T=octSum(all);
+  h+=`<tr class="fc-total"><td class="lft"><b>TOTAL</b></td><td><b>${T.n}</b></td>
+    <td>${octPill(T.cPre)}</td><td class="fc-lmtd">${octPill(T.cLm)}</td><td><b>${octPill(T.cMtd,T.cPre)}</b></td>
+    <td class="fc-gro">${fcGrowth(T.cPre,T.cMtd)}</td><td class="fc-gro">${fcGrowth(T.cLm,T.cMtd)}</td>
+    <td><b style="color:#047857">${T.imp}</b> <span style="color:#94a3b8">/ ${T.n}</span></td><td>${octImpChip(T.impPct)}</td></tr></tbody>`;
+  const tbl=document.getElementById('fcTbl'); tbl.innerHTML=h;
+  tbl.querySelectorAll('tr.ssd-row').forEach(tr=>tr.addEventListener('click',()=>{ const g=groups[+tr.dataset.octk]; OCT_OPEN[g.k]=!OCT_OPEN[g.k]; octRenderTable(); }));
+  tbl.querySelectorAll('.oct-agent').forEach(el=>el.addEventListener('click',ev=>{ ev.stopPropagation(); octOpenAgent(el.dataset.octid); }));
+}
+function octMini(title,list,cls,isSeg){
+  let h=`<div class="oct-mini"><div class="oct-mini-hd ${cls}">${title} <span>(${list.length})</span></div>`;
+  if(!list.length) return h+`<div class="oct-empty">None</div></div>`;
+  h+=`<div class="oct-mini-scroll"><table><thead><tr><th class="lft">Agent</th><th class="lft">${isSeg?'Trainer':'Segment'}</th><th>Type</th><th>Pre</th><th>LMTD</th><th>Oct</th><th>Growth</th></tr></thead><tbody>`;
+  list.forEach(a=>{
+    const tcls=a.type==='Red'?'b':(a.type==='Amber'?'w':'n');
+    const noData=a.cMtd==null?' <span class="chip n" style="font-size:9.5px">no Oct leads</span>':'';
+    h+=`<tr><td class="lft"><span class="fc-diaglink oct-agent" data-octid="${a.id}">${a.id} · ${a.name}</span>${noData}</td>
+      <td class="lft" style="color:#64748b">${isSeg?a.trainer:a.team}</td><td><span class="chip ${tcls}">${a.type||'—'}</span></td>
+      <td>${fcPct(a.cPre)}</td><td>${fcPct(a.cLm)}</td><td><b>${fcPct(a.cMtd)}</b></td><td>${fcGrowth(a.cPre,a.cMtd)}</td></tr>`;
+  });
+  return h+`</tbody></table></div></div>`;
+}
+function octRenderActive(){ octRenderKpis(); octRenderTable(); }
+
+// ---- Agent click: all their data across Pre / LMTD / Oct ----
+function octOpenAgent(id){
+  const a=OCT_ROWS.find(x=>x.id===id); if(!a) return;
+  const ov=document.getElementById('fcDiagOverlay'); ov.style.display='flex';
+  const cnt=v=>v==null?'–':(+v).toLocaleString('en-IN',{maximumFractionDigits:1});
+  const pct=v=>v==null?'–':(+v).toFixed(2)+'%';
+  const inr=v=>v==null?'–':fcInr(v);
+  const rel=(b,c)=>{ if(b==null||c==null||b===0) return '<span class="chip n">—</span>'; const g=(c-b)/b*100; return '<span class="chip '+(g>0?'g':(g<0?'b':'n'))+'">'+(g>0?'▲ +':(g<0?'▼ ':''))+g.toFixed(1)+'%</span>'; };
+  const pp=(b,c)=>{ if(b==null||c==null) return '<span class="chip n">—</span>'; const d=c-b; return '<span class="chip '+(d>0?'g':(d<0?'b':'n'))+'">'+(d>0?'▲ +':(d<0?'▼ ':''))+d.toFixed(2)+'pp</span>'; };
+  const na='<span class="chip n" title="Pre is a 3-month total — compare counts with LMTD">—</span>';
+  const ats=(g,b)=>(b&&b>0)?g/b:null;
+  const ovc=(b,l)=>octConv(b,l);
+  // [label, pre, lmtd, mtd, fmt, kind]  kind: 'rate' (pp vs both), 'avg' (rel vs both), 'count' (rel vs LMTD only)
+  const R=[
+    ['Online Conversion %', a.cPre, a.cLm, a.cMtd, pct, 'rate', true],
+    ['Assigned Leads', a.al_pre, a.al_lmtd, a.al_mtd, cnt, 'count'],
+    ['Online Bookings', a.ob_pre, a.ob_lmtd, a.ob_mtd, cnt, 'count'],
+    ['Online GWP', a.ogwp_pre, a.ogwp_lmtd, a.ogwp_mtd, inr, 'count'],
+    ['Online ATS (GWP ÷ booking)', ats(a.ogwp_pre,a.ob_pre), ats(a.ogwp_lmtd,a.ob_lmtd), ats(a.ogwp_mtd,a.ob_mtd), inr, 'avg'],
+    ['Overall Conversion %', ovc(a.bk_pre,a.al_pre), ovc(a.bk_lmtd,a.al_lmtd), ovc(a.bk_mtd,a.al_mtd), pct, 'rate'],
+    ['Overall Bookings', a.bk_pre, a.bk_lmtd, a.bk_mtd, cnt, 'count'],
+    ['Overall GWP', a.gwp_pre, a.gwp_lmtd, a.gwp_mtd, inr, 'count'],
+    ['Total Leads', a.tl_pre, a.tl_lmtd, a.tl_mtd, cnt, 'count'],
+    ['Connectivity %', a.conn_pre, a.conn_lmtd, a.conn_mtd, pct, 'rate'],
+    ['Eligible Leads', a.el_pre, a.el_lmtd, a.el_mtd, cnt, 'count'],
+    ['Appts', a.ap_pre, a.ap_lmtd, a.ap_mtd, cnt, 'count'],
+    ['Appts Created', a.apc_pre, a.apc_lmtd, a.apc_mtd, cnt, 'count'],
+    ['Attendance (P days)', a.att_pre, a.att_lmtd, a.att_mtd, cnt, 'count']
+  ];
+  let rows='';
+  R.forEach(([lab,p,l,m,f,kind,hl])=>{
+    const vsPre = kind==='rate'?pp(p,m):(kind==='avg'?rel(p,m):na);
+    const vsL   = kind==='rate'?pp(l,m):rel(l,m);
+    rows+=`<tr${hl?' class="oct-hl"':''}><td class="lft">${lab}</td><td>${f(p)}</td><td>${f(l)}</td><td><b>${f(m)}</b></td><td>${vsPre}</td><td>${vsL}</td></tr>`;
+  });
+  const verdict = a.cMtd==null ? '<div class="fc-diag-verdict">No Oct leads yet</div>'
+    : `<div class="fc-diag-verdict ${a.improved?'up':'dn'}">${a.improved?'▲ Improved':'▼ Not improved'} vs Pre</div>`;
+  const card=(lab,v,sub)=>`<div class="fc-diag-cell"><div class="fc-cell-lab">${lab}</div><div class="fc-cell-cur">${fcPct(v)}</div><div class="fc-cell-prev">${sub}</div></div>`;
+  document.getElementById('fcDiagBody').innerHTML=`
+    <div class="fc-diag-head" style="padding-right:46px">
+      <div><div class="fc-diag-tag">FG October · Pre (Jul–Sep) vs LMTD Avg vs ${OCT_MTD_LABEL}</div>
+        <h3 style="margin:4px 0 2px">${a.name||a.id}</h3>
+        <div class="fc-diag-meta">${a.id} · ${a.team} · Trainer ${a.trainer||'—'} · AM/DM ${a.am||'—'} · ${a.tenure||''} · ${a.type||''}</div></div>
+      ${verdict}
+    </div>
+    <div class="fc-diag-grid" style="grid-template-columns:repeat(3,1fr)">
+      ${card('Online Conv · Pre (Jul–Sep)',a.cPre,'baseline')}
+      ${card('Online Conv · LMTD Avg',a.cLm,'same-day window, Jul–Sep avg')}
+      ${card('Online Conv · '+OCT_MTD_LABEL,a.cMtd,'vs Pre '+(a.cPre!=null&&a.cMtd!=null?((a.cMtd-a.cPre>0?'+':'')+(a.cMtd-a.cPre).toFixed(2)+'pp'):'—'))}
+    </div>
+    <div class="oct-agent-tbl"><table><thead><tr><th class="lft">Metric</th><th>Pre (Jul–Sep)</th><th>LMTD Avg</th><th>${OCT_MTD_LABEL}</th><th>vs Pre</th><th>vs LMTD</th></tr></thead><tbody>${rows}</tbody></table></div>
+    <div style="font-size:11px;color:#64748b;margin-top:10px">Pre is the Jul–Sep total, so count metrics are compared with LMTD only; rates (conversion, connectivity, ATS) are compared with both. Online Conv = Online Bookings ÷ Assigned Leads.</div>`;
+}
+
+function octEnter(){
+  const showData=(src)=>{
+    OCT_SRC=src;
+    document.getElementById('fcLoading').style.display='none';
+    document.getElementById('fcContent').style.display='';
+    octRenderActive(); fcWire();
+    const foot=document.getElementById('fcFoot'); if(foot) foot.textContent='FG October · Online Conversion = Online Bookings ÷ Assigned Leads. Pre = Jul–Sep, LMTD = Jul–Sep average for the same day window, Post = '+OCT_MTD_LABEL+'. Improved = Oct online conversion above the agent\'s Pre. Growth = (Oct − base) ÷ base. Source: '+(src==='live'?'Supabase fg_oct':'built-in snapshot (Oct 1–2)')+'.';
+    const pill=document.getElementById('fcUpdated'); if(pill){ pill.style.display=''; pill.classList.remove('live','stale');
+      if(src==='live'){ pill.classList.add('live'); pill.textContent='🟢 Live · '+OCT_ROWS.length+' FG agents · '+OCT_MTD_LABEL; }
+      else { pill.classList.add('stale'); pill.textContent='⚪ Offline · built-in Oct 1–2 data'; } }
+  };
+  if(OCT_ROWS.length){ showData(OCT_SRC||'live'); return; }
+  octLoadSupabase().then(rows=>{ OCT_ROWS=octPrep(rows); showData('live'); })
+    .catch(err=>{ console.warn('FG October: Supabase load failed, using built-in data:',err.message); OCT_ROWS=octPrep(OCT_EMBED); showData('embed'); });
+}
+
 function fcShowChoice(){
   document.getElementById('fcChoice').style.display='';
   document.getElementById('fcBody').style.display='none';
@@ -3615,6 +3857,7 @@ function fcEnterGroup(group){
   // set active tab in switcher
   document.querySelectorAll('#fcGroupSeg .ssd-segbtn').forEach(x=>x.classList.toggle('active',x.dataset.fcgroup===group));
   fcApplyGroupUI();
+  if(group==='oct'){ octEnter(); return; }
   if(group==='nri'){
     if(NRI_DATA && Object.keys(NRI_DATA).length){
       document.getElementById('fcLoading').style.display='none';
@@ -3660,15 +3903,18 @@ function loadFGConv(){
   const back=document.getElementById('fcChoiceBack'); if(back) back.onclick=fcShowChoice;
 }
 function fcApplyGroupUI(){
-  const isNri=FC_GROUP==='nri';
-  // hide FG-only controls when in NRI mode
+  const isNri=FC_GROUP==='nri', isOct=FC_GROUP==='oct';
+  // Health Core: view+band+conv · NRI: none · FG October: view + Type filter
   document.getElementById('fcViewSeg').style.display=isNri?'none':'';
-  document.getElementById('fcBand').style.display=isNri?'none':'';
-  document.getElementById('fcConv').style.display=isNri?'none':'';
+  document.getElementById('fcBand').style.display=(isNri||isOct)?'none':'';
+  document.getElementById('fcConv').style.display=(isNri||isOct)?'none':'';
+  const ot=document.getElementById('fcOctType'); if(ot) ot.style.display=isOct?'':'none';
+  document.querySelectorAll('#fcViewSeg .ssd-segbtn').forEach(x=>x.classList.toggle('active',x.dataset.fcview===(FC_VIEW==='trainer'?'trainer':'segment')));
 }
 function fcRenderGroup(){
   fcApplyGroupUI();
   if(FC_GROUP==='nri'){ nriRenderActive(); }
+  else if(FC_GROUP==='oct'){ octRenderActive(); }
   else { fcRenderActive(); }
 }
 function fcWire(){
@@ -3678,11 +3924,13 @@ function fcWire(){
   });
   document.querySelectorAll('#fcViewSeg .ssd-segbtn').forEach(b=>b.onclick=()=>{
     document.querySelectorAll('#fcViewSeg .ssd-segbtn').forEach(x=>x.classList.remove('active'));
-    b.classList.add('active'); FC_VIEW=b.dataset.fcview; FC_OPEN={}; fcRenderActive();
+    b.classList.add('active'); FC_VIEW=b.dataset.fcview; FC_OPEN={}; OCT_OPEN={};
+    if(FC_GROUP==='oct') octRenderActive(); else fcRenderActive();
   });
+  {const ot=document.getElementById('fcOctType'); if(ot) ot.onchange=e=>{OCT_TYPE=e.target.value; OCT_OPEN={}; octRenderActive();};}
   document.getElementById('fcBand').onchange=e=>{FC_BAND=e.target.value; fcRenderActive();};
   document.getElementById('fcConv').onchange=e=>{FC_CONV=e.target.value; fcRenderActive();};
-  document.getElementById('fcSearch').oninput=e=>{FC_SEARCH=e.target.value; if(FC_GROUP==='nri')nriRenderTable(); else renderFCTable();};
+  document.getElementById('fcSearch').oninput=e=>{FC_SEARCH=e.target.value; if(FC_GROUP==='nri')nriRenderTable(); else if(FC_GROUP==='oct')octRenderTable(); else renderFCTable();};
 }
 {const b=document.getElementById('fcBackHub'); if(b) b.addEventListener('click',showHub);}
 
@@ -4155,7 +4403,7 @@ function fcClearCache(){ FC_DATA={}; NRI_DATA={}; }
     ['ssUpdated',()=>{SS_ROWS=[];loadScreenSharing();}],
     ['fgUpdated',()=>{FG_ROWS=[];loadFG();}],
     ['faUpdated',()=>{FA_RAW={};FA_MGR={};loadFOSAppt();}],
-    ['fcUpdated',()=>{ if(FC_GROUP==='nri'){NRI_DATA={};} else {FC_DATA={};} fcEnterGroup(FC_GROUP); }]
+    ['fcUpdated',()=>{ if(FC_GROUP==='nri'){NRI_DATA={};} else if(FC_GROUP==='oct'){OCT_ROWS=[];} else {FC_DATA={};} fcEnterGroup(FC_GROUP); }]
   ];
   map.forEach(([id,fn])=>{ const el=document.getElementById(id); if(el){ el.title='Double-click to refresh data'; el.style.cursor='pointer'; el.addEventListener('dblclick',fn); } });
 })();
@@ -4213,6 +4461,7 @@ function mapSupabaseRow(r){
     'NHT Trainer Code': r.nht_trainer_code||'', 'NHT Trainer Name': r.nht_trainer_name||'',
     'LP -Trainer Code M1': r.lp_trainer_code||'', 'LP-Trainer Name M': r.lp_trainer_name||'',
     'Business Unit': r.business_unit||'', 'Location': r.location||'',
+    'Working City': r.working_city||'',
     'Segment': r.segment||'', 'Status': r.status||'', 'LWD': r.lwd||'',
     '0-30': r.nop_0_30||'', '31-60': r.nop_31_60||'', '61-90': r.nop_61_90||'',
     '0-30_1': r.ape_0_30||'', '31-60_1': r.ape_31_60||'', '61-90_1': r.ape_61_90||'',
@@ -4223,9 +4472,18 @@ function mapSupabaseRow(r){
 }
 async function loadFromSupabase(){
   const PAGE=1000; let offset=0; const all=[];
+  const BASE_COLS='employee_id,employee_name,start_date,batch_no,nht_trainer_code,nht_trainer_name,lp_trainer_code,lp_trainer_name,business_unit,location,segment,status,lwd,nop_0_30,nop_31_60,nop_61_90,ape_0_30,ape_31_60,ape_61_90,lead_0_30,lead_31_60,lead_61_90,data_date';
+  // working_city is optional: if the column isn't in zero_to_90 yet, fall back to the base list
+  let cols=BASE_COLS+',working_city';
   while(true){
-    const url=SUPABASE_URL+'/rest/v1/zero_to_90?select=employee_id,employee_name,start_date,batch_no,nht_trainer_code,nht_trainer_name,lp_trainer_code,lp_trainer_name,business_unit,location,segment,status,lwd,nop_0_30,nop_31_60,nop_61_90,ape_0_30,ape_31_60,ape_61_90,lead_0_30,lead_31_60,lead_61_90,data_date&order=id.asc&limit='+PAGE+'&offset='+offset;
-    const res=await fetch(url,{headers:{apikey:SUPABASE_KEY,Authorization:'Bearer '+SUPABASE_KEY,Range:offset+'-'+(offset+PAGE-1)}});
+    const mkUrl=c=>SUPABASE_URL+'/rest/v1/zero_to_90?select='+c+'&order=id.asc&limit='+PAGE+'&offset='+offset;
+    const hdrs={apikey:SUPABASE_KEY,Authorization:'Bearer '+SUPABASE_KEY,Range:offset+'-'+(offset+PAGE-1)};
+    let res=await fetch(mkUrl(cols),{headers:hdrs});
+    if(!res.ok && cols!==BASE_COLS){
+      console.warn('zero_to_90 has no working_city column — loading without it');
+      window.__wcNoCol=true;
+      cols=BASE_COLS; res=await fetch(mkUrl(cols),{headers:hdrs});
+    }
     if(!res.ok) throw new Error('Supabase HTTP '+res.status);
     const batch=await res.json();
     if(!Array.isArray(batch)||!batch.length) break;
