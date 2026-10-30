@@ -654,6 +654,144 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
   .oct-agent-tbl td{padding:7px 10px;border-bottom:1px solid #eef2f7;text-align:center;white-space:nowrap}
   .oct-agent-tbl th.lft,.oct-agent-tbl td.lft{text-align:left}
   .oct-agent-tbl tr.oct-hl td{background:#eff6ff;font-weight:700}
+
+  /* ===== Focus Report ===== */
+  #frOverlay{position:fixed;inset:0;background:rgba(13,27,42,.55);display:none;align-items:flex-start;justify-content:center;z-index:10000;padding:24px;overflow:auto}
+  .fr-panel{background:#eef2f7;border-radius:20px;max-width:1280px;width:100%;padding:24px 26px;box-shadow:0 24px 60px rgba(10,25,50,.35)}
+  .fr-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;background:linear-gradient(135deg,#0d2a4d,#1d4f8f);color:#fff;border-radius:16px;padding:18px 22px;margin-bottom:16px}
+  .fr-top h2{font-family:'Sora',sans-serif;font-size:22px;margin:4px 0 4px;color:#fff}
+  .fr-top .fr-mut{color:#c7d6ee}
+  .fr-tag{font-size:11.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#93c5fd}
+  .fr-top-btns{display:flex;gap:8px;flex-shrink:0}
+  .fr-kpis{margin-bottom:14px;display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+  .ssd-kpi.fr-k-teal{background:linear-gradient(135deg,#14b8a6,#0f766e)}
+  .ssd-kpi.fr-k-red{background:linear-gradient(135deg,#ef4444,#b91c1c)}
+  .fr-sec-h{font-family:'Sora',sans-serif;font-weight:800;font-size:15px;color:#0d2a4d;margin:18px 0 10px}
+  .fr-sec-h .fr-mut{font-family:'Inter',sans-serif;font-weight:500;font-size:12px}
+  .fr-mut{color:#64748b;font-size:12px}
+  .fr-ins-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}
+  .fr-ins{background:#fff;border:1px solid #e4e9f0;border-left:5px solid #94a3b8;border-radius:12px;padding:12px 14px}
+  .fr-ins.g{border-left-color:#059669}.fr-ins.w{border-left-color:#d97706}.fr-ins.b{border-left-color:#dc2626}
+  .fr-ins-h{font-weight:800;font-size:13.5px;color:#0d1b2a;margin-bottom:4px}
+  .fr-ins-d{font-size:12.5px;color:#475569;line-height:1.5}
+  .fr-tbl-wrap{background:#fff;border:1px solid #e4e9f0;border-radius:14px;overflow-x:auto}
+  .fr-tbl{width:100%;min-width:0;border-collapse:collapse;font-size:13px}
+  .fr-tbl th{background:#274c83;color:#fff;font-size:10.5px;text-transform:uppercase;letter-spacing:.04em;padding:10px 12px;white-space:nowrap;text-align:center}
+  .fr-tbl td{padding:9px 12px;border-bottom:1px solid #eef2f7;text-align:center;white-space:nowrap}
+  .fr-tbl th.lft,.fr-tbl td.lft{text-align:left}
+  .fr-tbl tr:hover td{background:#f6f9ff}
+  .fr-link{color:#1d4ed8;font-weight:700;cursor:pointer;text-decoration:underline;text-decoration-color:#bfdbfe}
+  .fr-chip{display:inline-block;padding:3px 10px;border-radius:20px;font-weight:800;font-size:11.5px;white-space:nowrap}
+  .fr-chip.g{background:#dcfce7;color:#047857}.fr-chip.w{background:#fef3c7;color:#b45309}.fr-chip.b{background:#fee2e2;color:#b91c1c}.fr-chip.n{background:#f1f5f9;color:#64748b}
+  .fr-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(520px,1fr));gap:14px}
+  @media(max-width:640px){.fr-cards{grid-template-columns:1fr}}
+  .fr-card{background:#fff;border:1px solid #e4e9f0;border-radius:14px;padding:16px 18px;box-shadow:0 1px 2px rgba(13,27,42,.04);transition:box-shadow .3s}
+  .fr-card.fr-flash{box-shadow:0 0 0 3px #3b82f6}
+  .fr-card-h{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;border-bottom:1px solid #eef2f7;padding-bottom:10px;margin-bottom:10px}
+  .fr-card-name{font-family:'Sora',sans-serif;font-weight:800;font-size:16px;color:#0d2a4d}
+  .fr-act-h{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:#1d4ed8;margin-bottom:6px}
+  .fr-acts{margin:0 0 10px 18px;padding:0;font-size:13px;color:#1e293b;line-height:1.55}
+  .fr-acts li{margin-bottom:5px}
+  .fr-boxes{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+  .fr-box{border-radius:10px;padding:9px 11px;border:1px solid #e4e9f0}
+  .fr-box.g{background:#f0fdf4;border-color:#bbf7d0}.fr-box.b{background:#fef2f2;border-color:#fecaca}.fr-box.w{background:#fffbeb;border-color:#fde68a}
+  .fr-box-h{font-size:11.5px;font-weight:800;margin-bottom:5px;color:#0d1b2a}
+  .fr-box ul{margin:0;padding-left:16px;font-size:12px;color:#334155;line-height:1.5}
+  .fr-foot{font-size:11.5px;color:#64748b;margin-top:16px;line-height:1.5}
+  body.fr-open{overflow:hidden}
+  @media print{
+    body.fr-open > *:not(#frOverlay){display:none!important}
+    #frOverlay{position:static;background:none;padding:0;display:block!important;overflow:visible}
+    .fr-panel{box-shadow:none;max-width:none;padding:0;background:#fff}
+    .fr-top-btns{display:none}
+    .fr-card,.fr-ins{break-inside:avoid}
+    .fr-top,.ssd-kpi{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  }
+
+  /* Focus Report v2: controls, path to goal, winning formula */
+  .fr-ctls{display:flex;flex-wrap:wrap;gap:12px;align-items:center;background:#fff;border:1px solid #e4e9f0;border-radius:14px;padding:10px 14px;margin-bottom:14px}
+  .fr-ctl{display:flex;align-items:center;gap:6px}
+  .fr-ctl>span{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:#64748b;margin-right:2px}
+  .fr-gbtn{border:1px solid #d6dee9;background:#f8fafc;color:#334155;font-weight:700;font-size:12.5px;padding:6px 12px;border-radius:9px;cursor:pointer}
+  .fr-gbtn.on{background:#0d2a4d;color:#fff;border-color:#0d2a4d}
+  .fr-ctl select{border:1px solid #d6dee9;border-radius:9px;padding:6px 10px;font-size:12.5px;min-width:180px}
+  .fr-path{background:#fff;border:1px solid #e4e9f0;border-radius:14px;padding:14px 16px}
+  .fr-path-top{display:flex;align-items:stretch;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+  .fr-pt{flex:1;min-width:160px;background:#f8fafc;border:1px solid #e4e9f0;border-radius:12px;padding:10px 14px}
+  .fr-pt.goal{background:#eff6ff;border-color:#bfdbfe}
+  .fr-pt-l{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:#64748b}
+  .fr-pt-v{font-family:'Sora',sans-serif;font-size:28px;font-weight:800;color:#0d2a4d;line-height:1.15}
+  .fr-pt-v.g{color:#047857}.fr-pt-v.b{color:#b91c1c}
+  .fr-pt-arrow{display:flex;align-items:center;font-size:22px;color:#94a3b8;font-weight:800}
+  .fr-path-say{font-size:14px;color:#0d1b2a;line-height:1.5}
+  .fr-lever td{white-space:normal}
+  .fr-lever tr.fr-base td{background:#f8fafc;color:#475569}
+  .fr-lever tr.fr-win td{background:#f0fdf4}
+  .fr-lever tr.fr-hit td{background:#dcfce7;font-weight:700}
+  .fr-g{color:#047857}
+  .fr-formula{background:#fff;border:1px solid #e4e9f0;border-radius:14px;padding:14px 16px}
+  .fr-formula-line{font-size:14.5px;background:linear-gradient(90deg,#fef9c3,#fff);border:1px solid #fde68a;border-radius:10px;padding:10px 14px;margin-bottom:12px;color:#0d1b2a}
+  .fr-formula-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:14px;align-items:start}
+  @media(max-width:900px){.fr-formula-grid{grid-template-columns:1fr}}
+  .fr-formula-notes p{margin:0 0 8px;font-size:13px;color:#334155;line-height:1.5}
+  .fr-tbl tr.fr-sel td{background:#eff6ff}
+  .fr-route{font-size:12px;white-space:normal!important;min-width:240px}
+  .fr-card-route{background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:8px 12px;font-size:12.5px;margin-bottom:10px}
+  .fr-card-route>span:first-child{font-weight:800;color:#1d4ed8}
+
+  /* Month-end probability */
+  .fr-prob{display:grid;grid-template-columns:minmax(220px,300px) 1fr;gap:14px;align-items:stretch}
+  @media(max-width:800px){.fr-prob{grid-template-columns:1fr}}
+  .fr-prob-main{border-radius:16px;padding:18px 20px;color:#fff;display:flex;flex-direction:column;justify-content:center;box-shadow:0 8px 22px rgba(20,40,80,.13)}
+  .fr-prob-main.g{background:linear-gradient(135deg,#10b981,#047857)}.fr-prob-main.w{background:linear-gradient(135deg,#f59e0b,#d97706)}
+  .fr-prob-main.b{background:linear-gradient(135deg,#ef4444,#b91c1c)}.fr-prob-main.n{background:linear-gradient(135deg,#64748b,#334155)}
+  .fr-prob-v{font-family:'Sora',sans-serif;font-size:46px;font-weight:800;line-height:1}
+  .fr-prob-l{font-size:13px;margin-top:8px;opacity:.95;line-height:1.4}
+  .fr-prob-side{background:#fff;border:1px solid #e4e9f0;border-radius:16px;padding:14px 18px;display:flex;flex-direction:column;gap:10px;justify-content:center}
+  .fr-prob-row{font-size:14px;color:#0d1b2a;line-height:1.45}
+  .fr-prob-chips{display:flex;flex-wrap:wrap;gap:8px}
+
+
+
+  /* 📈 Trends v2 — clean table, frozen headers */
+  .trx-bar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin:4px 0 12px}
+  .trx-ctl{display:flex;gap:10px;flex-wrap:wrap}
+  .trx-seg{display:inline-flex;background:#f1f5f9;border-radius:11px;padding:4px}
+  .trx-seg button{border:0;background:none;font:700 12.5px 'Inter',sans-serif;color:#64748b;padding:7px 16px;border-radius:8px;cursor:pointer}
+  .trx-seg button.on{background:#fff;color:#0d2a4d;box-shadow:0 2px 6px rgba(20,40,80,.12)}
+  .trx-legend{display:flex;flex-wrap:wrap;gap:12px;align-items:center;font-size:11.5px;color:#5a6b80}
+  .trx-legend .tv{min-width:0;padding:0 5px;font-size:10px}
+  .trx-card{background:#fff;border:1px solid #dbe3ee;border-radius:14px;box-shadow:0 1px 2px rgba(13,27,42,.04),0 10px 30px rgba(13,27,42,.06);overflow:hidden}
+  .trx-scroll{max-height:calc(100vh - 260px);min-height:320px;overflow:auto}
+  table.trx{width:100%;min-width:1060px;border-collapse:separate;border-spacing:0;table-layout:fixed;font-size:12.5px;font-variant-numeric:tabular-nums;color:#1e293b}
+  table.trx col.w-b{width:76px} table.trx col.w-d{width:104px} table.trx col.w-v{width:12%} table.trx col.w-m{width:15.5%}
+  table.trx thead th{position:sticky;z-index:4;color:#fff;font:700 10.5px 'Inter',sans-serif;letter-spacing:.05em;text-transform:uppercase;text-align:center;white-space:nowrap;border-right:1px solid rgba(255,255,255,.12)}
+  table.trx thead tr.h1 th{top:0;height:36px;background:#0d2a4d}
+  table.trx thead tr.h2 th{top:36px;height:32px;background:#274c83;font-size:10px;letter-spacing:.03em}
+  table.trx thead th.lft{text-align:left;padding-left:16px}
+  table.trx thead th.slab{border-bottom:1px solid rgba(255,255,255,.18)}
+  table.trx tbody td{padding:9px 10px;border-bottom:1px solid #eef2f7;text-align:center;white-space:nowrap;vertical-align:middle;background:#fff}
+  table.trx tbody tr.trx-row:hover td{background:#f6f9ff}
+  table.trx tbody tr.trx-grp td{background:#eaf0f8;border-top:1px solid #d3deec;border-bottom:1px solid #d3deec;text-align:left;padding:8px 16px;box-shadow:inset 4px 0 0 #2563eb}
+  .g-name{font:800 13px 'Sora',sans-serif;color:#0d2a4d}
+  .g-meta{margin-left:10px;font-size:11px;color:#64748b;font-weight:600}
+  table.trx td.c-b{font-weight:800;color:#0d2a4d;text-align:left;padding-left:16px}
+  table.trx td.c-d{color:#5a6b80;text-align:left}
+  table.trx td.c-v,table.trx td.c-m{border-left:1px solid #f1f4f9}
+  table.trx td.c-na{color:#94a3b8;font-style:italic;font-size:11.5px;border-left:1px solid #f1f4f9;background:repeating-linear-gradient(135deg,#fff,#fff 6px,#fafbfd 6px,#fafbfd 12px)}
+  table.trx tr.trx-sum td{background:#f8fafc;border-bottom:2px solid #dbe3ee;font-weight:700}
+  table.trx td.c-sum{text-align:left;padding-left:16px;color:#334155;font-size:11.5px;text-transform:uppercase;letter-spacing:.04em}
+  .tv{display:inline-block;min-width:46px;padding:3px 8px;border-radius:999px;font-weight:800;font-size:12px;text-align:center}
+  .tv.g{background:#dcfce7;color:#047857}.tv.w{background:#fef3c7;color:#b45309}.tv.b{background:#fee2e2;color:#b91c1c}.tv.n{background:#f1f5f9;color:#94a3b8}
+  .ta{display:inline-block;min-width:52px;text-align:right;margin-right:8px;font-weight:800;color:#0d1b2a}
+  .ta i{font-style:normal;font-weight:600;color:#94a3b8}
+  .tdl{display:inline-block;min-width:40px;margin-left:6px;font-size:10.5px;font-weight:800;text-align:left}
+  .tdl.up{color:#059669}.tdl.dn{color:#dc2626}.tdl.n{color:#94a3b8}
+  .trx-legend .tdl{min-width:0;margin:0}
+  .live{display:block;width:max-content;margin:4px auto 0;font-size:9.5px;font-weight:800;background:#dbeafe;color:#1e40af;padding:1px 7px;border-radius:8px;font-style:normal}
+  .c-na .live{display:inline-block;margin:0 0 0 6px}
+  .trx-empty{padding:40px!important;color:#64748b}
+  .trx-foot{font-size:11px;color:#64748b;margin-top:8px}
 </style>
 </head>
 <body>
@@ -722,6 +860,7 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
         <button class="btn btn-xl" id="backHub"><span>◀</span> Hub</button>
         <button class="btn btn-xl" id="switchBuBtn" style="display:none"><span>🔄</span> Switch Unit</button>
         <span id="lastUpdated" class="upd-pill" style="display:none"></span>
+        <button class="btn btn-xl" id="focusBtn" disabled><span>🧠</span> Focus Report</button>
         <button class="btn btn-xl" id="xlBtn" disabled><span>⬇️</span> Export Excel</button>
         <button class="btn btn-xl" id="rawBtn" disabled><span>📋</span> Agent Raw (Admin)</button>
       </div>
@@ -760,6 +899,7 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
     <div class="tabstrip">
       <button class="tab on" data-tab="batch">Batch Wise Summary</button>
       <button class="tab" data-tab="jyoti">Jyoti's View</button>
+      <button class="tab" data-tab="trends">📈 Trends</button>
     </div>
     <div class="controls" id="controlsBatch">
       <div class="ctl"><label>Batch</label><select id="batchSel"></select></div>
@@ -771,7 +911,6 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
       <div class="ctl"><label>View</label>
         <div class="seg-toggle" id="viewTog">
           <button data-view="seg" class="on">Segment</button>
-          <button data-view="loc">City</button>
           <button data-view="trainer">Trainer</button>
           <button data-view="phases">All Phases</button>
           <button data-view="journey">Agent Journey</button>
@@ -794,6 +933,7 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
 
     <div id="focusView" class="hidden"></div>
     <div id="jyotiView" class="hidden"></div>
+    <div id="trendView" class="hidden"></div>
 
     <footer class="note" id="footnote"></footer>
   </div>
@@ -1966,7 +2106,7 @@ aaInit();
 
 <script>
 const TGT = {"PED":{"0-30":[5,150000],"31-60":[6,180000],"61-90":[7,216000]},"FF":{"0-30":[10,150000],"31-60":[12,180000],"61-90":[14,216000]},"Individual":{"0-30":[7,100000],"31-60":[8,120000],"61-90":[10,144000]},"Chat":{"0-30":[12,250000],"31-60":[14,300000],"61-90":[17,360000]},"Growth":{"0-30":[3,120000],"31-60":[3,120000],"61-90":[3,120000]},"HOM":{"0-30":[3,75000],"31-60":[3,100000],"61-90":[3,100000]},"Health Growth":{"0-30":[3,120000],"31-60":[5,120000],"61-90":[7,120000]},"NRI":{"0-30":[10,300000],"31-60":[12,350000],"61-90":[15,450000]},"Bengali":{"0-30":[6,130000],"31-60":[7,150000],"61-90":[8,175000]}};
-const TGT_HR = {"Bangalore":{"Health Fresh":{"0-30":[8,120000],"31-60":[10,200000],"61-90":[12,300000]}},"Bhubaneshwar":{"Health Fresh":{"0-30":[3,40000],"31-60":[5,125000],"61-90":[7,200000]},"HOM":{"0-30":[3,70000],"31-60":[5,100000],"61-90":[7,125000]},"Health Growth":{"0-30":[4,50000],"31-60":[7,100000],"61-90":[9,125000]}},"Chennai":{"Health Fresh":{"0-30":[8,120000],"31-60":[10,200000],"61-90":[12,300000]}},"Hyderabad":{"Health Fresh":{"0-30":[7,150000],"31-60":[9,250000],"61-90":[11,300000]},"HOM":{"0-30":[3,70000],"31-60":[5,100000],"61-90":[7,125000]},"Health NRI":{"0-30":[10,350000],"31-60":[12,400000],"61-90":[15,450000]}},"Kochi":{"Health Fresh":{"0-30":[15,250000],"31-60":[18,300000],"61-90":[22,320000]},"HOM":{"0-30":[3,70000],"31-60":[5,100000],"61-90":[7,125000]},"Health NRI":{"0-30":[10,300000],"31-60":[13,350000],"61-90":[16,450000]},"Health Growth":{"0-30":[4,50000],"31-60":[7,100000],"61-90":[9,125000]}},"Mumbai":{"Health Fresh":{"0-30":[4,75000],"31-60":[9,125000],"61-90":[13,200000]},"Health Growth":{"0-30":[4,50000],"31-60":[7,100000],"61-90":[9,125000]},"HOM":{"0-30":[3,70000],"31-60":[5,100000],"61-90":[7,125000]}}};
+const TGT_HR = {"Bangalore":{"Health Fresh":{"0-30":[8,120000],"31-60":[10,200000],"61-90":[12,300000]}},"Bhubaneshwar":{"Health Fresh":{"0-30":[3,40000],"31-60":[5,125000],"61-90":[7,200000]},"HOM":{"0-30":[3,70000],"31-60":[5,100000],"61-90":[7,125000]},"Health Growth":{"0-30":[4,50000],"31-60":[7,100000],"61-90":[9,125000]}},"Chennai":{"Health Fresh":{"0-30":[8,120000],"31-60":[10,200000],"61-90":[12,300000]}},"Hyderabad":{"Health Fresh":{"0-30":[7,150000],"31-60":[9,250000],"61-90":[11,300000]},"HOM":{"0-30":[3,70000],"31-60":[5,100000],"61-90":[7,125000]},"Health NRI":{"0-30":[10,350000],"31-60":[12,400000],"61-90":[15,450000]}},"Kochi":{"Health Fresh":{"0-30":[15,250000],"31-60":[18,300000],"61-90":[22,320000]},"HOM":{"0-30":[3,70000],"31-60":[5,100000],"61-90":[7,125000]},"Health NRI":{"0-30":[10,300000],"31-60":[13,350000],"61-90":[16,450000]},"Health Growth":{"0-30":[5,70000],"31-60":[7,125000],"61-90":[9,200000]}},"Mumbai":{"Health Fresh":{"0-30":[4,75000],"31-60":[9,125000],"61-90":[13,200000]},"Health Growth":{"0-30":[4,50000],"31-60":[7,100000],"61-90":[9,125000]},"HOM":{"0-30":[3,70000],"31-60":[5,100000],"61-90":[7,125000]}}};
 const TGT_FOS = {"East-1":{"A":{"0-30":[0.35,197410],"31-60":[0.35,296114],"61-90":[0.35,359856]},"B":{"0-30":[0.35,164421],"31-60":[0.35,220380],"61-90":[0.35,268505]}},"East-2":{"A":{"0-30":[0.35,152432],"31-60":[0.35,245822],"61-90":[0.35,250644]},"B":{"0-30":[0.35,133616],"31-60":[0.35,163558],"61-90":[0.35,191053]}},"North-1":{"A":{"0-30":[0.35,266104],"31-60":[0.35,431805],"61-90":[0.35,429624]},"B":{"0-30":[0.35,300042],"31-60":[0.35,364739],"61-90":[0.35,369414]}},"South-1":{"A":{"0-30":[0.35,401372],"31-60":[0.35,516012],"61-90":[0.35,584424]},"B":{"0-30":[0.35,312866],"31-60":[0.35,404103],"61-90":[0.35,434392]}},"South-2":{"A":{"0-30":[0.35,289632],"31-60":[0.35,417115],"61-90":[0.35,460951]},"B":{"0-30":[0.35,273319],"31-60":[0.35,400963],"61-90":[0.35,456853]}},"South-3":{"A":{"0-30":[0.35,372217],"31-60":[0.35,468918],"61-90":[0.35,537200]},"B":{"0-30":[0.35,239875],"31-60":[0.35,356576],"61-90":[0.35,356005]}},"West-1":{"A":{"0-30":[0.35,344623],"31-60":[0.35,476527],"61-90":[0.35,624338]}},"West-2":{"A":{"0-30":[0.35,308744],"31-60":[0.35,341655],"61-90":[0.35,445057]},"B":{"0-30":[0.35,72520],"31-60":[0.35,276247],"61-90":[0.35,303533]}},"West-3":{"A":{"0-30":[0.35,215706],"31-60":[0.35,385088],"61-90":[0.35,395294]},"B":{"0-30":[0.35,277685],"31-60":[0.35,335575],"61-90":[0.35,385707]}},"Central":{"B":{"0-30":[0.35,262309],"31-60":[0.35,367371],"61-90":[0.35,404208]}},"North-2":{"B":{"0-30":[0.35,230296],"31-60":[0.35,305399],"61-90":[0.35,370166]}},"North-3":{"B":{"0-30":[0.35,220906],"31-60":[0.35,235481],"61-90":[0.35,238248]}},"North-4":{"B":{"0-30":[0.35,224893],"31-60":[0.35,265022],"61-90":[0.35,361237]}}};
 const TGT_MOTOR = {"CV":{"0-30":[50,0],"31-60":[70,0],"61-90":[70,0]},"Car Growth":{"0-30":[25,0],"31-60":[40,0],"61-90":[50,0]},"Car Growth - Experiment":{"0-30":[50,0],"31-60":[70,0],"61-90":[70,0]},"Car-taxi (Experiment)":{"0-30":[50,0],"31-60":[70,0],"61-90":[70,0]},"MH five-seven":{"0-30":[50,0],"31-60":[70,0],"61-90":[70,0]},"New Car Experiment":{"0-30":[50,0],"31-60":[70,0],"61-90":[70,0]},"New Car OB":{"0-30":[50,0],"31-60":[70,0],"61-90":[70,0]},"OB (3 to 9 Yrs)":{"0-30":[50,0],"31-60":[70,0],"61-90":[70,0]},"Outbound":{"0-30":[50,0],"31-60":[70,0],"61-90":[70,0]},"Regional OB Hyd":{"0-30":[50,0],"31-60":[70,0],"61-90":[70,0]},"SAOD 15 +":{"0-30":[50,0],"31-60":[70,0],"61-90":[70,0]},"Break In":{"0-30":[50,0],"31-60":[70,0],"61-90":[70,0]},"Fresh":{"0-30":[50,0],"31-60":[70,0],"61-90":[70,0]},"Renewal":{"0-30":[50,0],"31-60":[70,0],"61-90":[70,0]},"Inbound":{"0-30":[50,0],"31-60":[70,0],"61-90":[70,0]},"Chat":{"0-30":[50,0],"31-60":[70,0],"61-90":[70,0]}};
 const TGT_HNI = {"HNI":{"0-30":[0,125000],"31-60":[0,225000],"61-90":[0,225000]}};
@@ -1975,9 +2115,8 @@ const SLABS=['0-30','31-60','61-90'];
 const SLAB_BOUNDS={'0-30':[0,30],'31-60':[30,60],'61-90':[60,90]};
 const SEG_MAP={'Ind':'Individual','IND':'Individual','ind':'Individual','Health Growth':'Growth','health growth':'Growth','HEALTH GROWTH':'Growth','Health growth':'Growth','Growth':'Growth'};
 // Health Regional segment normalization (in case of casing/spacing variants)
-const LOC_NORM_HR={'Bhubaneswar':'Bhubaneshwar','bhubaneswar':'Bhubaneshwar','BHUBANESWAR':'Bhubaneshwar',
-  'Gurgan':'Gurgaon','gurgan':'Gurgaon','GURGAN':'Gurgaon','Gurugram':'Gurgaon','gurugram':'Gurgaon','GURUGRAM':'Gurgaon'};
-  const SEG_MAP_HR={'Health fresh':'Health Fresh','HEALTH FRESH':'Health Fresh','Health NRI':'Health NRI','Health nri':'Health NRI','Health Growth':'Health Growth','Health HOM':'HOM','HOM':'HOM'};
+const LOC_NORM_HR={'Bhubaneswar':'Bhubaneshwar','bhubaneswar':'Bhubaneshwar','BHUBANESWAR':'Bhubaneshwar'};
+  const SEG_MAP_HR={'Health fresh':'Health Fresh','HEALTH FRESH':'Health Fresh','Health NRI':'Health NRI','Health nri':'Health NRI','Health Growth':'Health Growth','Health HOM':'HOM','HOM':'HOM','Mum Growth':'Health Growth','Mumbai Growth':'Health Growth','Kochi Growth':'Health Growth','Kochi HOM':'HOM','Mum HOM':'HOM','Mumbai HOM':'HOM'};
 const EXCLUDE_SEG=['Handover','Handover Data'];
 // ---- Business Unit registry ----
 // structure: 'seg' (target keyed by Segment) or 'locseg' (keyed by Location × Segment)
@@ -2072,6 +2211,451 @@ function buildRows(batchRecs,slab,key){
   });
   return Object.values(groups).filter(g=>g.open>0||g.cur>0).sort((a,b)=>b.cur-a.cur);
 }
+
+// ===== 🧠 Focus Report v3: core goal = % of agents meeting their own target =====
+// GGN / Health Regional / Motors: NOP met · FOS: Conversion met + APE met · HNI: APE met.
+// "Met" uses exactly the summary table's rule (prorated MTD target, current HC) so Met % always matches the dashboard.
+const FR={goal:70, metric:null, trainer:'ALL'};
+function frPl(n,w,wp){ return n+' '+(n===1?w:(wp||w+'s')); }
+function frNum(v,d){ if(v==null||!isFinite(v)) return '—'; return (+v).toLocaleString('en-IN',{maximumFractionDigits:d==null?1:d}); }
+function frList(names,max){ max=max||4; const a=names.slice(0,max); return a.join(', ')+(names.length>max?` +${names.length-max} more`:''); }
+const FR_ML={nop:'NOP',conv:'Conversion',ape:'APE'};
+function frStatus(p){ const g=FR.goal; if(p==null) return {k:'n',t:'No target',i:'⚪'}; if(p>=g) return {k:'g',t:'Achieving',i:'🟢'}; if(p>=g-15) return {k:'w',t:'Close',i:'🟡'}; return {k:'b',t:'Needs focus',i:'🔴'}; }
+function frCtx(){
+  const bu=state.bu, bi=batchInfo(state.batch);
+  const metric=buMetric(bu), isConv=metric==='conv', noApe=buNoApe(bu), noNop=buNoNop(bu);
+  const closed=bi.curSlab==='90+', slab=closed?'61-90':bi.curSlab;
+  const hi=SLAB_BOUNDS[slab][1];
+  const daysIn=mtdDaysInSlab(slab,bi.tenure), daysLeft=closed?0:Math.max(0,hi-bi.tenure);
+  const prevSlab=slab==='0-30'?null:(slab==='31-60'?'0-30':'31-60');
+  const opts=[]; if(isConv) opts.push('conv'); else if(!noNop) opts.push('nop'); if(!noApe) opts.push('ape');
+  let pm=FR.metric; if(!opts.includes(pm)) pm=opts[0];
+  return {bu,bi,isConv,noApe,noNop,closed,slab,daysIn,daysLeft,prevSlab,opts,pm,core:opts[0],goal:FR.goal};
+}
+// met / gap / at-risk for one agent on a metric (same rules as buildRows)
+function frMet(a,m){ if(m==='ape') return a.aA>=a.tA; if(m==='conv') return (a.conv||0)>=a.tN; return a.aN>=a.tN; }   // identical to buildRows okN / okA
+function frGap(a,m){
+  if(m==='ape') return Math.max(0,a.tA-a.aA);
+  if(m==='conv') return a.lead>0 ? Math.max(1,Math.ceil(a.tN*a.lead-a.aN-1e-9)) : 1;
+  return Math.max(1,Math.ceil(a.tN-a.aN-1e-9));
+}
+function frAtRisk(a,m){
+  if(m==='ape') return (a.aA-a.tA) < 0.10*a.tA;
+  if(m==='conv') return a.lead>0 && (a.aN/(a.lead+1)) < a.tN;      // next visit without a booking drops them below 35%
+  return (a.aN-a.tN) < 1;                                            // less than one booking of headroom
+}
+function frGapTxt(a,m){
+  if(m==='ape') return fmtAPE(frGap(a,m))+' APE';
+  if(m==='conv') return a.lead>0 ? frPl(frGap(a,m),'booking')+' on existing visits' : '1 visit + 1 booking (no visits yet)';
+  return frPl(frGap(a,m),'booking');
+}
+function frNowTxt(a,m){
+  if(m==='ape') return `${fmtAPE(a.aA)} of ${fmtAPE(a.tA)}`;
+  if(m==='conv') return `${frNum(a.lead>0?a.aN/a.lead*100:0,1)}% (${a.aN}/${a.lead})`;
+  return `${frNum(a.aN,1)} of ${frNum(a.tN,1)}`;
+}
+function frEnrich(agents,c,recById,trainerName){
+  agents.forEach(a=>{
+    const r=recById[a.id]; a.rec=r; a.trainer=trainerName;
+    const tdf=r?tgtFor(r,c.slab):null; a.fullN=tdf?tdf[0]:0; a.fullA=tdf?tdf[1]:0;
+    a.paceN=c.daysIn>0?a.aN/c.daysIn:0; a.paceA=c.daysIn>0?a.aA/c.daysIn:0;
+    if(c.isConv){ a.needN=Math.max(0,Math.ceil(a.tN*a.lead-a.aN-1e-9)); a.convP=a.lead>0?a.aN/a.lead*100:0; }
+    a.t2aN=(!c.isConv&&a.tN>0)?a.aN/a.tN*100:null; a.t2aA=a.tA>0?a.aA/a.tA*100:null;
+    a.prev={};
+    if(r&&c.prevSlab){ const tp=tgtFor(r,c.prevSlab); if(tp){
+      const ld=r.lead[c.prevSlab]||0, n=r.nop[c.prevSlab]||0, ap=r.ape[c.prevSlab]||0;
+      a.prev.nop=n>=tp[0]; a.prev.ape=ap>=tp[1]; a.prev.conv= ld>0 ? n/ld>=tp[0] : false;
+    } }
+  });
+}
+function frClassify(G,c){
+  const quick=[], zero=[], low=[], below=[];
+  G.agents.forEach(a=>{
+    if(c.isConv){
+      if(a.aN===0 && c.daysIn>=3) zero.push(a);
+      else if(a.needN>0 && a.needN<=1) quick.push(a);
+      if(a.needN>0) below.push(a);
+    } else if(!c.noNop){
+      a.shortN=Math.max(0,a.tN-a.aN); a.t2a=a.t2aN;
+      if(a.aN===0 && c.daysIn>=3) zero.push(a);
+      else if(a.shortN>0 && a.shortN<=Math.max(1,0.25*a.tN)) quick.push(a);
+      else if(a.t2a!=null && a.t2a<50) low.push(a);
+    } else {
+      a.shortA=Math.max(0,a.tA-a.aA); a.t2a=a.t2aA;
+      if(a.aA===0 && c.daysIn>=3) zero.push(a);
+      else if(a.shortA>0 && a.shortA<=0.25*a.tA) quick.push(a);
+      else if(a.t2a!=null && a.t2a<50) low.push(a);
+    }
+  });
+  return {quick,zero,low:low.sort((x,y)=>x.t2a-y.t2a),below};
+}
+// ---- 🏁 Path to goal: fewest/easiest agents to convert so ≥ goal% of agents meet target ----
+function frMetPath(agents,cur,c,m){
+  m=m||c.pm;
+  const P={m,cur,unitBk:m!=='ape'};
+  const met=agents.filter(a=>frMet(a,m)), not=agents.filter(a=>!frMet(a,m));
+  P.met=met.length; P.pct=cur>0?P.met/cur*100:null;
+  P.goalAgents=Math.ceil(c.goal/100*cur-1e-9); P.need=Math.max(0,P.goalAgents-P.met);
+  // easiest first: smallest gap; agents with no visits yet (FOS) count as harder; ties go to agents already producing (higher pace)
+  const ease=a=>frGap(a,m)+((m==='conv'&&!(a.lead>0))?0.5:0);
+  const pz=a=>m==='ape'?a.paceA:a.paceN;
+  const sorted=not.slice().sort((x,y)=>ease(x)-ease(y)||pz(y)-pz(x)||(x.name||'').localeCompare(y.name||''));
+  P.list=sorted; P.target=sorted.slice(0,P.need); P.backup=sorted.slice(P.need,P.need+5);
+  P.effort=P.target.reduce((s,a)=>s+frGap(a,m),0);
+  P.risk=met.filter(a=>frAtRisk(a,m)).sort((x,y)=>(m==='ape'?(x.aA-x.tA)-(y.aA-y.tA):(x.aN-x.tN)-(y.aN-y.tN)));
+  const pace = m==='ape' ? agents.reduce((s,a)=>s+a.paceA,0) : agents.reduce((s,a)=>s+a.paceN,0);
+  P.pace=pace; P.daysEq = pace>0 ? P.effort/pace : null;
+  P.reachable = P.need<=sorted.length;
+  const split={}; P.target.forEach(a=>{ const t=a.trainer||'—'; split[t]=split[t]||{n:0,g:0}; split[t].n++; split[t].g+=frGap(a,m); });
+  P.split=Object.entries(split).sort((a,b)=>b[1].n-a[1].n);
+  P.fmtG = m==='ape' ? v=>fmtAPE(v) : v=>frPl(Math.round(v),'booking');
+  return P;
+}
+function frDaysEq(d){ if(d==null) return ''; return d<1 ? 'less than a day of the team\'s current output' : `about ${frNum(d,1)} days of the team's current output`; }
+function frRouteText(P,c){
+  if(!P.cur) return '—';
+  if(P.need===0) return `✅ ${frNum(P.pct,0)}% meeting${P.risk.length?` · protect ${P.risk.length} at risk`:''}`;
+  if(!P.reachable) return `Needs ${P.need} more — not enough agents`;
+  return `Convert ${frPl(P.need,'agent')} (${P.fmtG(P.effort)}): ${frList(P.target.map(a=>a.name),3)}`;
+}
+// ---- 🏆 Winning formula: agents meeting target vs not ----
+function frFormula(agents,c){
+  const m=c.pm;
+  if(agents.length<6) return {few:true};
+  let win=agents.filter(a=>frMet(a,m)), lose=agents.filter(a=>!frMet(a,m)), basis=`meeting ${FR_ML[m]} target vs not meeting`;
+  if(win.length<3||lose.length<3){
+    const sc=a=>m==='ape'?(a.t2aA||0):(m==='conv'?(a.convP||0):(a.t2aN||0));
+    const s=agents.slice().sort((a,b)=>sc(b)-sc(a)); const q=Math.max(2,Math.floor(s.length/4)); win=s.slice(0,q); lose=s.slice(-q); basis='top 25% vs bottom 25%';
+  }
+  const st=g=>{ const n=g.length, sN=g.reduce((s,a)=>s+a.aN,0), sA=g.reduce((s,a)=>s+a.aA,0), sL=g.reduce((s,a)=>s+(a.lead||0),0);
+    const pv=g.filter(a=>a.prev[m]!=null);
+    return {n, pace:c.daysIn>0&&n?sN/n/c.daysIn:null, paceA:c.daysIn>0&&n?sA/n/c.daysIn:null, ats:sN>0?sA/sN:null,
+      conv:sL>0?sN/sL*100:null, visits:c.daysIn>0&&n?sL/n/c.daysIn:null, prev:pv.length?pv.filter(a=>a.prev[m]).length/pv.length*100:null}; };
+  const W=st(win), Lo=st(lose), r=(a,b)=>(a!=null&&b>0)?a/b:null, rows=[];
+  if(c.isConv){
+    rows.push({l:'Visits per agent / day',w:frNum(W.visits,2),o:frNum(Lo.visits,2),x:r(W.visits,Lo.visits)});
+    rows.push({l:'Conversion (bookings ÷ visits)',w:W.conv==null?'—':frNum(W.conv,1)+'%',o:Lo.conv==null?'—':frNum(Lo.conv,1)+'%',x:r(W.conv,Lo.conv)});
+  } else if(!c.noNop) rows.push({l:'Bookings per agent / day',w:frNum(W.pace,2),o:frNum(Lo.pace,2),x:r(W.pace,Lo.pace)});
+  if(!c.noApe && !c.noNop && W.ats!=null) rows.push({l:'Ticket size (APE per booking)',w:fmtAPE(W.ats),o:Lo.ats==null?'—':fmtAPE(Lo.ats),x:r(W.ats,Lo.ats)});
+  if(c.noNop) rows.push({l:'APE per agent / day',w:fmtAPE(W.paceA),o:fmtAPE(Lo.paceA),x:r(W.paceA,Lo.paceA)});
+  if(c.prevSlab && W.prev!=null && Lo.prev!=null) rows.push({l:`Met their ${c.prevSlab} ${FR_ML[m]} target`,w:frNum(W.prev,0)+'%',o:frNum(Lo.prev,0)+'%',x:r(W.prev,Lo.prev)});
+  const vol=c.isConv?r(W.visits,Lo.visits):(c.noNop?r(W.paceA,Lo.paceA):r(W.pace,Lo.pace)), conv=c.isConv?r(W.conv,Lo.conv):null, ats=(c.noNop)?null:r(W.ats,Lo.ats);
+  const cand=[['volume',vol],['conversion',conv],['ticket size',ats]].filter(x=>x[1]!=null&&isFinite(x[1])).sort((a,b)=>b[1]-a[1]);
+  const lines=[];
+  if(cand.length){ const d=cand[0];
+    const tip={volume:c.isConv?'more visits per day':(c.noNop?'more APE written per day (meetings, follow-ups, closures)':'more conversations and bookings per day'),conversion:'better visit-to-close (pitch, objection handling)','ticket size':'higher sum insured, plan upgrades and riders'}[d[0]];
+    lines.push(`<b>Main differentiator: ${d[0]}</b> — agents meeting target are ${frNum(d[1],1)}× the rest. Biggest lever: ${tip}.`); }
+  if(c.prevSlab && W.prev!=null && Lo.prev!=null && W.prev>Lo.prev+10)
+    lines.push(`${frNum(W.prev,0)}% of agents meeting target now also met it in ${c.prevSlab} (vs ${frNum(Lo.prev,0)}% of the rest) — early wins carry forward, so recover laggards in the first 10 days of each slab.`);
+  const bench = c.isConv ? `${frNum(W.visits,2)} visits/day at ${frNum(W.conv,1)}% conversion${(!c.noApe&&W.ats)?` and ${fmtAPE(W.ats)} ticket size`:''}`
+              : (c.noNop ? `${fmtAPE(W.paceA)} APE/day` : `${frNum(W.pace,2)} bookings/day${(!c.noApe&&W.ats)?` at ${fmtAPE(W.ats)} ticket size`:''}`);
+  return {basis,W,Lo,rows,lines,bench,nW:win.length,nL:lose.length};
+}
+
+// ===== 📊 Month-end probability: replay the rest of the slab 2,000× from each agent's own pace =====
+// Seeded RNG so results are stable for the same data (they only change when the data changes).
+function frRng(seed){ let t=seed>>>0; return ()=>{ t+=0x6D2B79F5; let r=Math.imul(t^(t>>>15),1|t); r^=r+Math.imul(r^(r>>>7),61|r); return ((r^(r>>>14))>>>0)/4294967296; }; }
+function frHash(s){ let h=2166136261; for(let i=0;i<s.length;i++){ h^=s.charCodeAt(i); h=Math.imul(h,16777619); } return h>>>0; }
+function frNorm(R){ let u=0,v=0; while(u===0)u=R(); while(v===0)v=R(); return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v); }
+function frGamma(R,k){ // Marsaglia–Tsang, k>=1, mean k
+  const d=k-1/3, c=1/Math.sqrt(9*d);
+  for(;;){ let x,v; do{ x=frNorm(R); v=1+c*x; }while(v<=0); v=v*v*v; const u=R();
+    if(u<1-0.0331*x*x*x*x) return d*v; if(Math.log(u)<0.5*x*x+d*(1-v+Math.log(v))) return d*v; }
+}
+function frPois(R,l){ if(l<=0) return 0; if(l>30) return Math.max(0,Math.round(l+Math.sqrt(l)*frNorm(R))); const L=Math.exp(-l); let k=0,p=1; do{ k++; p*=R(); }while(p>L); return k-1; }
+function frBinom(R,n,p){ if(n<=0) return 0; if(n>40){ const m=n*p, sd=Math.sqrt(n*p*(1-p)); return Math.min(n,Math.max(0,Math.round(m+sd*frNorm(R)))); } let x=0; for(let i=0;i<n;i++) if(R()<p) x++; return x; }
+// agents: enriched agents (aN,aA,lead,fullN,fullA,tN,trainer,id). boost: {id: units added now} for scenario runs.
+function frSimulate(agents,cur,c,m,runs,boost){
+  runs=runs||2000; boost=boost||{};
+  const K=4, PRIOR=3;                               // gamma shape (day-to-day + true-pace uncertainty), prior weight in days
+  const n=agents.length, dIn=Math.max(1,c.daysIn), dL=c.daysLeft;
+  const sN=agents.reduce((s,a)=>s+a.aN,0), sA=agents.reduce((s,a)=>s+a.aA,0), sL=agents.reduce((s,a)=>s+(a.lead||0),0);
+  const teamPaceN=n?sN/n/dIn:0, teamPaceA=n?sA/n/dIn:0, teamATS=sN>0?sA/sN:0, teamConv=sL>0?sN/sL:0.35, teamVis=n?sL/n/dIn:0;
+  const useBk = m!=='ape' || sN>0;                  // APE via bookings × ticket size when booking data exists
+  const P=agents.map(a=>{
+    const bN=(m==='ape'?0:(boost[a.id]||0)), bA=(m==='ape'?(boost[a.id]||0):0);
+    const aN=a.aN+bN, aA=a.aA+bA;
+    return {a, aN, aA, lead:a.lead||0,
+      paceN:(a.aN+PRIOR*teamPaceN)/(dIn+PRIOR), paceA:(a.aA+PRIOR*teamPaceA)/(dIn+PRIOR),
+      ats:(a.aA+PRIOR*teamATS)/(a.aN+PRIOR), vis:((a.lead||0)+PRIOR*teamVis)/(dIn+PRIOR),
+      conv:(a.aN+5*teamConv)/((a.lead||0)+5)};
+  });
+  const R=frRng(frHash(c.bu+'|'+state.batch+'|'+m+'|'+(CUTOFF?CUTOFF.getTime():0)+'|'+Object.keys(boost).length));
+  const metRuns=new Array(runs), agentHits=new Float64Array(n), tr={};
+  agents.forEach(a=>{ tr[a.trainer]=tr[a.trainer]||{cur:0,runs:new Array(runs)}; });
+  for(let r=0;r<runs;r++){
+    let met=0; const tc={};
+    for(let i=0;i<n;i++){
+      const p=P[i], a=p.a; let ok;
+      if(dL<=0){ ok = m==='ape'? p.aA>=a.fullA : (m==='conv'? (p.lead>0 && p.aN/p.lead>=a.tN) : p.aN>=a.fullN); }
+      else if(m==='conv'){
+        const V=frPois(R,p.vis*dL*frGamma(R,K)/K), B=frBinom(R,V,Math.min(0.95,p.conv)), L=p.lead+V;
+        ok = L>0 && (p.aN+B)/L>=a.tN;
+      } else if(m==='ape'){
+        const add = useBk ? frPois(R,p.paceN*dL*frGamma(R,K)/K)*p.ats : p.paceA*dL*frGamma(R,K)/K;
+        ok = p.aA+add>=a.fullA;
+      } else {
+        ok = p.aN+frPois(R,p.paceN*dL*frGamma(R,K)/K)>=a.fullN;
+      }
+      if(ok){ met++; agentHits[i]++; tc[a.trainer]=(tc[a.trainer]||0)+1; }
+    }
+    metRuns[r]=met; for(const t in tr) tr[t].runs[r]=tc[t]||0;
+  }
+  const sorted=Array.from(metRuns).sort((x,y)=>x-y), q=f=>sorted[Math.min(runs-1,Math.floor(f*runs))];
+  const per={}; agents.forEach((a,i)=>{ per[a.id]=agentHits[i]/runs*100; });
+  return {runs,cur,metRuns,per,tr,
+    exp:cur?metRuns.reduce((s,x)=>s+x,0)/runs/cur*100:null, p10:cur?q(0.1)/cur*100:null, p90:cur?q(0.9)/cur*100:null,
+    chance:(goal,curOverride)=>{ const cc=curOverride||cur; if(!cc) return null; const need=Math.ceil(goal/100*cc-1e-9); return metRuns.filter(x=>x>=need).length/runs*100; },
+    trChance:(t,goal,tcur)=>{ const o=tr[t]; if(!o||!tcur) return null; const need=Math.ceil(goal/100*tcur-1e-9); return o.runs.filter(x=>x>=need).length/runs*100; }};
+}
+function frProbCls(p){ return p==null?'n':(p>=70?'g':(p>=40?'w':'b')); }
+function frProbTxt(p){ return p==null?'—':(p>=99.5?'>99%':(p<0.5?'<1%':Math.round(p)+'%')); }
+
+function frAnalyse(){
+  const c=frCtx(), {bi}=c;
+  const recById={}; bi.recs.forEach(r=>{ recById[r.id]=r; });
+  const rows=buildRows(bi.recs,c.slab,'trainer');
+  const segKey=c.isConv?'zone':(buStruct(c.bu)==='locseg'?'locseg':'seg');
+  const segRows=buildRows(bi.recs,c.slab,segKey);
+  const trainers=rows.map(G=>{
+    frEnrich(G.agents,c,recById,G.name);
+    const T={name:G.name,cur:G.cur,open:G.open,exits:Math.max(0,G.open-G.cur),achN:G.achN,achA:G.achA,tgtN:G.tgtN,tgtA:G.tgtA,lead:G.lead,metN:G.metN,metA:G.metA};
+    T.metNp=G.cur>0?G.metN/G.cur*100:null; T.metAp=G.cur>0?G.metA/G.cur*100:null;   // same as summary table
+    T.conv=c.isConv?(G.lead>0?G.achN/G.lead*100:null):null;
+    T.t2aN=c.isConv?null:(G.tgtN>0?G.achN/G.tgtN*100:null); T.t2aA=G.tgtA>0?G.achA/G.tgtA*100:null;
+    Object.assign(T,frClassify(G,c));
+    T.agents=G.agents;
+    T.path=frMetPath(G.agents,G.cur,c);
+    T.score=T.path.pct;
+    T.st=frStatus(T.score);
+    return T;
+  });
+  trainers.forEach(T=>{ T.actions=frActions(T,c); });
+  const all=trainers.flatMap(t=>t.agents);
+  const B={cur:0,open:0,achN:0,achA:0,tgtN:0,tgtA:0,lead:0,metN:0,metA:0};
+  trainers.forEach(t=>{ ['cur','open','achN','achA','tgtN','tgtA','lead','metN','metA'].forEach(k=>B[k]+=t[k]||0); });
+  B.exits=Math.max(0,B.open-B.cur);
+  B.metNp=B.cur>0?B.metN/B.cur*100:null; B.metAp=B.cur>0?B.metA/B.cur*100:null;
+  B.conv=c.isConv?(B.lead>0?B.achN/B.lead*100:null):null;
+  B.zero=trainers.reduce((s,t)=>s+t.zero.length,0);
+  B.noData = B.cur>0 && B.achN===0 && B.achA===0 && (!c.isConv || B.lead===0);
+  const scopeT = FR.trainer!=='ALL' ? trainers.find(t=>t.name===FR.trainer) : null;
+  const scopeAgents = scopeT ? scopeT.agents : all, scopeCur = scopeT ? scopeT.cur : B.cur;
+  const path=frMetPath(scopeAgents,scopeCur,c);
+  const formula=frFormula(scopeAgents,c);
+  const metPct=(g,m)=>g.cur>0?(m==='ape'?g.metA:g.metN)/g.cur*100:null;
+  const segSorted=segRows.filter(g=>g.cur>=3).sort((a,b)=>metPct(a,c.pm)-metPct(b,c.pm));
+  const bestT=trainers.filter(t=>t.cur>=3&&t.score!=null).sort((a,b)=>b.score-a.score)[0];
+  const ins=[], g=c.goal, ML=FR_ML[c.pm];
+  if(B.noData){
+    ins.push({k:'b',h:'⚠️ No achievement recorded for this slab yet',d:`All ${B.cur} agents show zero ${c.noNop?'APE':'bookings'} in the ${c.slab} slab after ${frPl(c.daysIn,'day')}. This usually means the slab data hasn't been uploaded yet — please check today's upload before acting on this report.`});
+  } else {
+    const P=path; const bp=frMetPath(all,B.cur,c);
+    if(bp.need>0) ins.push({k:'b',h:`${frNum(bp.pct,0)}% of agents meeting ${ML} target — ${bp.need} more needed for ${g}%`,d:`${bp.met} of ${B.cur} agents are at or above their MTD target. ${bp.need===1?'The easiest agent needs':'The easiest '+frPl(bp.need,'agent')+' need'} just ${bp.fmtG(bp.effort)} in total${bp.daysEq!=null?` (${frDaysEq(bp.daysEq)})`:''}.`});
+    else ins.push({k:'g',h:`${frNum(bp.pct,0)}% of agents meeting ${ML} target — goal of ${g}% achieved ✅`,d:`${bp.met} of ${B.cur} agents are at or above target.${bp.risk.length?` Protect the ${frPl(bp.risk.length,'agent')} who are only just above the line.`:''}`});
+    const focusT=trainers.filter(t=>t.score!=null&&t.score<g).sort((a,b)=>a.score-b.score);
+    if(focusT.length){
+      const tot=trainers.reduce((s,t)=>s+t.path.need,0), share=tot>0?focusT.reduce((s,t)=>s+t.path.need,0):0;
+      ins.push({k:'b',h:focusT.length===trainers.length?`${trainers.length===2?'Both trainers are':(trainers.length===1?'The trainer is':`All ${trainers.length} trainers are`)} below ${g}% of agents meeting target`:`${focusT.length} of ${trainers.length} trainers ${focusT.length===1?'is':'are'} below ${g}% of agents meeting target`,
+        d:`${frList(focusT.map(t=>t.name+' ('+frNum(t.score,0)+'%)'),5)}.`});
+    }
+    if(bp.risk.length) ins.push({k:'w',h:`${frPl(bp.risk.length,'agent')} only just meeting target`,d:`The MTD target grows every day — ${c.pm==='conv'?'one more visit without a booking':(c.pm==='ape'?'a slow couple of days':'one day without a booking')} drops them below. Protecting them is as important as converting new ones: ${frList(bp.risk.map(a=>a.name),5)}.`});
+    if(B.zero>0) ins.push({k:'b',h:`${frPl(B.zero,'agent')} still at zero after ${frPl(c.daysIn,'day')} in the slab`,d:'They cannot meet target this slab without a first booking — call-listening / joint sessions first.'});
+    // second-metric gap
+    if(c.opts.length>1 && B.metNp!=null && B.metAp!=null){
+      const a1=B.metNp, a2=B.metAp, l1=c.isConv?'Conversion':'NOP';
+      if(a2<a1-15) ins.push({k:'w',h:`APE is the weaker target: ${frNum(a2,0)}% meeting APE vs ${frNum(a1,0)}% meeting ${l1}`,d:`Agents are ${c.isConv?'closing visits':'booking'} but at low ticket size — coach on sum insured, plan choice and riders.`});
+      else if(a1<a2-15) ins.push({k:'w',h:`${l1} is the weaker target: ${frNum(a1,0)}% meeting ${l1} vs ${frNum(a2,0)}% meeting APE`,d:c.isConv?'Ticket size is fine but too many visits don\'t close — review visit-to-close pitch and objection handling.':'Ticket size is fine but volume is short — focus on call volume and lead conversion.'});
+    }
+    if(segSorted.length>1){ const w=segSorted[0], b2=segSorted[segSorted.length-1]; ins.push({k:'w',h:`Weakest ${c.isConv?'zone':'segment'}: ${w.name}`,d:`${frNum(metPct(w,c.pm),0)}% of agents meeting ${ML} target (${w.cur} agents) — the best is ${b2.name} at ${frNum(metPct(b2,c.pm),0)}%.`}); }
+    if(B.open>0 && B.exits>0){ const ar=B.exits/B.open*100; if(ar>=5) ins.push({k:ar>=10?'b':'w',h:`${frPl(B.exits,'exit')} in this slab (${frNum(ar,1)}% attrition)`,d:'Every exit shrinks headcount — check engagement of agents in the zero / lowest lists.'}); }
+  }
+  // 📊 month-end probability (base cached per data/metric; scenario = quickest-route agents converted now)
+  let sim=null, simScen=null; // simScen kept null (scenario replaced by swing group)
+  if(!B.noData && B.cur>0){
+    const key=[c.bu,state.batch,c.pm,CUTOFF?CUTOFF.getTime():0].join('|');
+    if(!FR._sim || FR._sim.key!==key){ FR._sim={key, s:frSimulate(all,B.cur,c,c.pm,2000)}; }
+    sim=FR._sim.s;
+    all.forEach(a=>{ a.prob=sim.per[a.id]; });
+  }
+  return {c,trainers,B,ins,path,formula,scopeT,segSorted,metPct,bestT,sim,simScen,scopeAgents,scopeCur};
+}
+function frActions(T,c){
+  const A=[], nm=a=>a.name, P=T.path, m=c.pm;
+  if(T.zero.length) A.push({p:1,t:`Sit with ${frPl(T.zero.length,'agent')} still at zero after ${frPl(c.daysIn,'day')} — call-listening + joint calls today: ${frList(T.zero.map(nm))}.`});
+  if(P.need>0 && P.target.length) A.push({p:2,t:`To reach ${c.goal}%: convert ${frPl(P.need,'agent')} — ${frList(P.target.map(a=>a.name+' ('+frGapTxt(a,m)+')'),4)}.`});
+  if(P.risk.length) A.push({p:3,t:`Protect ${frPl(P.risk.length,'agent')} only just meeting target — ${frList(P.risk.map(nm),4)}.`});
+  if(c.isConv && m==='conv' && T.below.length>P.target.length){ const n=T.below.length-P.target.length; A.push({p:4,t:`${frPl(n,'more agent')} below 35% conversion — review visit-to-close pitch and objection handling.`}); }
+  if(T.low.length && m!=='conv') A.push({p:5,t:`Lowest achievers (under 50% of target): ${frList(T.low.map(a=>a.name+' '+frNum(a.t2a,0)+'%'))} — daily target and end-of-day review.`});
+  if(T.open>0 && T.exits>0 && T.exits/T.open>=0.1) A.push({p:6,t:`${frPl(T.exits,'exit')} this slab (${frNum(T.exits/T.open*100,0)}%) — watch engagement of agents in the zero/low lists.`});
+  if(!A.length) A.push({p:9,t:`${frNum(P.pct,0)}% of agents meeting target — keep the rhythm and push the rest over the line.`});
+  return A.sort((a,b)=>a.p-b.p).slice(0,4);
+}
+function frPathHtml(P,c){
+  if(!P.cur) return `<div class="fr-path"><div class="fr-mut">No agents in this scope.</div></div>`;
+  const ML=FR_ML[P.m], pf=v=>v==null?'—':frNum(v,0)+'%';
+  const after = P.cur>0 ? (P.met+Math.min(P.need,P.list.length))/P.cur*100 : null;
+  const head=`<div class="fr-path-top">
+    <div class="fr-pt"><div class="fr-pt-l">Agents meeting ${ML} target</div><div class="fr-pt-v ${P.pct>=c.goal?'g':'b'}">${pf(P.pct)}</div><div class="fr-mut">${P.met} of ${P.cur} agents</div></div>
+    <div class="fr-pt-arrow">→</div>
+    <div class="fr-pt"><div class="fr-pt-l">Needed for ${c.goal}%</div><div class="fr-pt-v">${P.need===0?'✅ 0':'+'+P.need}</div><div class="fr-mut">${P.need===0?'goal already met':`more agents · ${P.fmtG(P.effort)} in total`}</div></div>
+    <div class="fr-pt-arrow">→</div>
+    <div class="fr-pt goal"><div class="fr-pt-l">${P.need===0?'Protect':'After converting them'}</div><div class="fr-pt-v ${P.need===0?'':'g'}">${P.need===0?P.risk.length:pf(after)}</div><div class="fr-mut">${P.need===0?'agents only just above target':'✅ '+c.goal+'% reached'}</div></div>
+  </div>`;
+  let say;
+  if(P.need===0) say=`✅ <b>${frNum(P.pct,0)}% of agents are meeting ${ML} target</b> — the ${c.goal}% goal is met. ${P.risk.length?`The risk now is slipping: the MTD target grows daily, so keep the ${frPl(P.risk.length,'agent')} just above the line booking.`:'No one is sitting on the edge — keep the rhythm and push the rest over the line.'}`;
+  else if(!P.reachable) say=`⚠️ There aren't enough agents below target to reach ${c.goal}% — check headcount.`;
+  else say=`🏁 <b>Quickest route to ${c.goal}%:</b> convert ${P.need===1?'<b>1 agent</b> below — they need':`the <b>${P.need} easiest agents</b> below — together they need`} just <b>${P.fmtG(P.effort)}</b>${P.daysEq!=null?` (${frDaysEq(P.daysEq)})`:''}.${P.split.length>1?` Split by trainer: ${P.split.map(([t,v])=>`${t} ${v.n}`).join(' · ')}.`:''}`;
+  let tbl='';
+  if(P.need>0){
+    tbl=`<table class="fr-tbl fr-lever"><thead><tr><th>#</th><th class="lft">Agent</th><th class="lft">Trainer</th><th>Now (MTD)</th><th>Needs</th><th>Chance by slab end</th><th>Agents meeting after</th></tr></thead><tbody>`;
+    P.target.forEach((a,i)=>{ const pct=(P.met+i+1)/P.cur*100, hit=i===P.target.length-1;
+      tbl+=`<tr class="fr-win${hit?' fr-hit':''}"><td>${i+1}</td><td class="lft"><b>${a.name}</b> <span class="fr-mut">${a.id}</span></td><td class="lft">${a.trainer}</td><td>${frNowTxt(a,P.m)}</td><td><b>${frGapTxt(a,P.m)}</b></td><td>${a.prob==null||c.closed?'—':`<span class="fr-chip ${frProbCls(a.prob)}">${frProbTxt(a.prob)}</span>`}</td><td><b class="${pct>=c.goal?'fr-g':''}">${frNum(pct,0)}%</b>${hit?' ✅':''}</td></tr>`; });
+    P.backup.forEach(a=>{ tbl+=`<tr><td class="fr-mut">backup</td><td class="lft">${a.name} <span class="fr-mut">${a.id}</span></td><td class="lft">${a.trainer}</td><td>${frNowTxt(a,P.m)}</td><td>${frGapTxt(a,P.m)}</td><td>${a.prob==null||c.closed?'—':`<span class="fr-chip ${frProbCls(a.prob)}">${frProbTxt(a.prob)}</span>`}</td><td class="fr-mut">—</td></tr>`; });
+    tbl+='</tbody></table>';
+  }
+  const riskH = P.risk.length ? `<div class="fr-box w" style="margin-top:10px"><div class="fr-box-h">🛡️ Protect — only just meeting target (${P.risk.length})</div><ul>${P.risk.slice(0,10).map(a=>`<li><b>${a.name}</b> <span class="fr-mut">${a.id} · ${a.trainer}</span> — ${frNowTxt(a,P.m)}${a.prob!=null&&!c.closed?` · <b>${frProbTxt(a.prob)}</b> chance to hold to slab end`:''}</li>`).join('')}${P.risk.length>10?`<li class="fr-mut">+${P.risk.length-10} more</li>`:''}</ul></div>` : '';
+  return `<div class="fr-path">${head}<div class="fr-path-say">${say}</div>${tbl?`<div class="fr-tbl-wrap" style="margin-top:10px">${tbl}</div>`:''}${riskH}
+    <div class="fr-mut" style="margin-top:8px;font-size:11px">"Meeting target" = at or above the prorated MTD target — the same rule as Met % in the summary table${P.m==='conv'?' (conversion ≥ 35% of visits; "needs" = bookings on visits already done)':''}. Agents are picked easiest-first (smallest gap). The MTD target grows every day, so the list changes daily.</div></div>`;
+}
+function frFormulaHtml(F,c,R){
+  if(F.few) return `<div class="fr-formula"><div class="fr-mut">Not enough agents in this scope to compare.</div></div>`;
+  const rows=F.rows.map(x=>`<tr><td class="lft">${x.l}</td><td class="fr-g"><b>${x.w}</b></td><td>${x.o}</td><td>${x.x!=null?frNum(x.x,1)+'×':'—'}</td></tr>`).join('');
+  const best=[];
+  if(R.segSorted.length>1){ const b=R.segSorted[R.segSorted.length-1]; best.push(`Best ${c.isConv?'zone':'segment'}: <b>${b.name}</b> (${frNum(R.metPct(b,c.pm),0)}% of agents meeting target)`); }
+  if(R.bestT) best.push(`Best trainer group: <b>${R.bestT.name}</b> (${frNum(R.bestT.score,0)}% meeting target) — share their daily routine with the rest`);
+  const P=R.path, ML=FR_ML[c.pm];
+  let line;
+  if(P.need>0) line=`To get ${c.goal}% of agents meeting ${ML} target: <b>convert ${frPl(P.need,'agent')}</b> (${P.fmtG(P.effort)}), ${P.risk.length?`<b>protect the ${P.risk.length} just above the line</b>, `:''}get <b>every agent off zero by day 7</b>, and coach the rest to the winners' rhythm: <b>${F.bench}</b>.`;
+  else line=`${c.goal}% achieved — ${P.risk.length?`protect the ${P.risk.length} just above the line and `:''}coach the rest to the winners' rhythm: <b>${F.bench}</b>.`;
+  if(c.closed) line=`For the next slab: get <b>every agent off zero by day 7</b> and coach to the winners' rhythm: <b>${F.bench}</b>.`;
+  return `<div class="fr-formula"><div class="fr-formula-line">🏆 <b>Winning formula</b> — ${line}</div>
+    <div class="fr-formula-grid">
+      <div class="fr-tbl-wrap"><table class="fr-tbl"><thead><tr><th class="lft">What agents meeting target do differently</th><th>Meeting (${F.nW})</th><th>Not meeting (${F.nL})</th><th>Gap</th></tr></thead><tbody>${rows}</tbody></table>
+        <div class="fr-mut" style="padding:6px 10px">Compared: ${F.basis}, current slab.</div></div>
+      <div class="fr-formula-notes">${F.lines.map(l=>`<p>${l}</p>`).join('')}${best.map(l=>`<p>${l}</p>`).join('')}</div>
+    </div></div>`;
+}
+function frProbHtml(R){
+  const {c,sim,simScen,scopeT,scopeAgents,scopeCur,path}=R; if(!sim) return '';
+  const ML=FR_ML[c.pm], g=c.goal, bi=c.bi;
+  const end=new Date(bi.start.getTime()+SLAB_BOUNDS[c.slab][1]*86400000).toLocaleDateString('en-GB',{day:'2-digit',month:'short'});
+  if(c.closed){ return `<div class="fr-prob"><div class="fr-prob-main n"><div class="fr-prob-v">${frNum(path.pct,0)}%</div><div class="fr-prob-l">final — agents meeting ${ML} target (slab closed)</div></div></div>`; }
+  const chance = scopeT ? sim.trChance(scopeT.name,g,scopeCur) : sim.chance(g);
+  // most likely finish for the scope
+  let exp=sim.exp, p10=sim.p10, p90=sim.p90;
+  if(scopeT){ const o=sim.tr[scopeT.name]; if(o){ const arr=o.runs.slice().sort((x,y)=>x-y), q=f=>arr[Math.min(arr.length-1,Math.floor(f*arr.length))]/scopeCur*100;
+    exp=o.runs.reduce((s2,x)=>s2+x,0)/o.runs.length/scopeCur*100; p10=q(0.1); p90=q(0.9); } }
+  const lik=scopeAgents.filter(a=>a.prob>=70).length, toss=scopeAgents.filter(a=>a.prob>=30&&a.prob<70).length, unl=scopeAgents.filter(a=>a.prob<30).length;
+  const goalA=Math.ceil(g/100*scopeCur-1e-9), tossList=scopeAgents.filter(a=>a.prob>=30&&a.prob<70).sort((x,y)=>y.prob-x.prob);
+  const needFromToss=goalA-lik;
+  let swing;
+  if(needFromToss<=0) swing=`🎯 <b>${lik} agents are already likely to finish on target</b> — enough for ${g}%. Keep them on track${toss?` and don't let the ${frPl(toss,'toss-up agent')} slide`:''}.`;
+  else if(needFromToss<=toss) swing=`🎯 <b>Swing group: ${frPl(toss,'toss-up agent')}.</b> Land <b>${needFromToss} of them</b> and ${g}% is reached — coach these first: ${frList(tossList.map(a=>a.name),5)}.`;
+  else swing=`🎯 <b>Even if all ${frPl(toss,'toss-up agent')} land</b>, that's ${frNum((lik+toss)/scopeCur*100,0)}% — reaching ${g}% also needs <b>${needFromToss-toss} of the ${unl} “unlikely” agents</b> to turn around. Start with the toss-ups: ${frList(tossList.map(a=>a.name),4)}.`;
+  return `<div class="fr-prob">
+    <div class="fr-prob-main ${frProbCls(chance)}"><div class="fr-prob-v">${frProbTxt(chance)}</div><div class="fr-prob-l">chance that <b>≥${g}% of agents</b> meet their ${ML} target by slab end (${end})</div></div>
+    <div class="fr-prob-side">
+      <div class="fr-prob-row">📍 <b>Most likely finish:</b> ${frNum(exp,0)}% of agents meeting target <span class="fr-mut">(likely range ${frNum(p10,0)}–${frNum(p90,0)}%)</span></div>
+      <div class="fr-prob-row">${swing}</div>
+      ${path.need===0?`<div class="fr-prob-row">🛡️ <b>Already at ${frNum(path.pct,0)}% today</b> — the target grows daily${path.risk.length?`, so protect the ${frPl(path.risk.length,'agent')} just above the line`:', keep the rhythm'}.</div>`:''}
+      <div class="fr-prob-chips"><span class="fr-chip g">🟢 Likely to meet: ${lik}</span><span class="fr-chip w">🟡 Toss-up: ${toss}</span><span class="fr-chip b">🔴 Unlikely: ${unl}</span></div>
+    </div>
+  </div>
+  <div class="fr-mut" style="font-size:11px;margin:6px 2px 0">How: the remaining ${frPl(c.daysLeft,'day')} are replayed 2,000 times from each agent's pace so far (lightly blended with the team average), with normal day-to-day ups and downs. It's a probability, not a promise — it updates every day with the data.</div>`;
+}
+function frRender(){
+  const R=frAnalyse();
+  const {c,B,trainers}=R, bi=c.bi, ML=FR_ML[c.pm];
+  const buLabel=(BU_REGISTRY[c.bu]||{}).label||c.bu;
+  const startStr=bi.start.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'2-digit'});
+  const cutStr=CUTOFF?CUTOFF.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'2-digit'}):'—';
+  const pct=v=>v==null?'—':frNum(v,0)+'%';
+  const chip=st=>`<span class="fr-chip ${st.k}">${st.i} ${st.t}</span>`;
+  const sorted=trainers.slice().sort((a,b)=>((a.score==null?999:a.score)-(b.score==null?999:b.score)));
+  if(B.noData) sorted.forEach(t=>{ t.actions=[{t:'No slab data yet — verify the upload, then re-open this report.'}]; t.zero=[]; t.quick=[]; t.low=[]; t.below=[]; t.st={k:'n',t:'No data',i:'⚪'}; });
+  const goals=[60,70,80,90,100].map(g=>`<button class="fr-gbtn${FR.goal===g?' on':''}" data-goal="${g}">${g}%</button>`).join('');
+  const mbtn=c.opts.length>1?`<div class="fr-ctl"><span>Target</span>${c.opts.map(o=>`<button class="fr-gbtn${c.pm===o?' on':''}" data-pm="${o}">${FR_ML[o]}</button>`).join('')}</div>`:'';
+  const topts=['ALL'].concat(trainers.map(t=>t.name).sort()).map(n=>`<option value="${n}"${FR.trainer===n?' selected':''}>${n==='ALL'?'All trainers':n}</option>`).join('');
+  const controls=`<div class="fr-ctls"><div class="fr-ctl"><span>Goal: agents meeting target</span>${goals}</div>${mbtn}<div class="fr-ctl"><span>Focus</span><select id="frTrainerSel">${topts}</select></div></div>`;
+  // KPIs — Met % exactly as the summary table
+  const bp=frMetPath(trainers.flatMap(t=>t.agents),B.cur,c);
+  const k=[['Current HC',B.cur,`${B.open} opening · ${frPl(B.exits,'exit')}`,'k1']];
+  if(!c.noNop) k.push([c.isConv?'Meeting Conversion':'Meeting NOP',pct(B.metNp),`${B.metN} of ${B.cur} agents${c.isConv&&B.conv!=null?` · batch conv ${frNum(B.conv,1)}%`:''}`,'k2']);
+  if(!c.noApe) k.push(['Meeting APE',pct(B.metAp),`${B.metA} of ${B.cur} agents`,'fr-k-teal']);
+  k.push([`Needed for ${c.goal}%`,B.noData?'—':(bp.need===0?'✅ 0':'+'+bp.need),B.noData?'':(bp.need===0?`goal met on ${ML}`:`agents on ${ML} · ${bp.fmtG(bp.effort)}`),'k3']);
+  k.push(['At zero',B.zero,`after ${frPl(c.daysIn,'day')} in slab`,'fr-k-red']);
+  const kpis=k.map(x=>`<div class="ssd-kpi ${x[3]}"><div class="glow"></div><div class="lab">${x[0]}</div><div class="val">${x[1]}</div><div class="sub">${x[2]}</div></div>`).join('');
+  const insH=R.ins.map(x=>`<div class="fr-ins ${x.k}"><div class="fr-ins-h">${x.h}</div><div class="fr-ins-d">${x.d}</div></div>`).join('');
+  const scopeName=R.scopeT?R.scopeT.name:'whole batch';
+  const pathH=B.noData?'<div class="fr-path"><div class="fr-mut">The path to goal will appear once this slab has data.</div></div>':frPathHtml(R.path,c);
+  const formH=B.noData?'':frFormulaHtml(R.formula,c,R);
+  // ranking
+  const h1 = c.noNop?'':`<th>${c.isConv?'Meeting Conv':'Meeting NOP'}</th>`, h2=c.noApe?'':'<th>Meeting APE</th>';
+  let tbl=`<table class="fr-tbl"><thead><tr><th class="lft">Trainer</th><th>HC</th>${h1}${h2}<th>Needed for ${c.goal}% (${ML})</th><th class="lft">Quickest route</th><th>Chance of ${c.goal}% by slab end</th><th>Protect</th><th>At zero</th><th>Status</th></tr></thead><tbody>`;
+  sorted.forEach((t,i)=>{
+    const P=t.path; const tch=(R.sim&&!c.closed)?R.sim.trChance(t.name,c.goal,t.cur):null;
+    tbl+=`<tr${FR.trainer===t.name?' class="fr-sel"':''}><td class="lft"><a class="fr-link" data-fr="${i}">${t.name}</a></td><td>${t.cur}</td>${c.noNop?'':`<td>${t.metN} <span class="fr-mut">(${pct(t.metNp)})</span></td>`}${c.noApe?'':`<td>${t.metA} <span class="fr-mut">(${pct(t.metAp)})</span></td>`}<td><b>${B.noData?'—':(P.need===0?'✅':'+'+P.need)}</b></td><td class="lft fr-route">${B.noData?'—':frRouteText(P,c)}</td><td>${tch==null?'—':`<span class="fr-chip ${frProbCls(tch)}">${frProbTxt(tch)}</span>`}</td><td>${B.noData?'—':P.risk.length}</td><td>${t.zero.length}</td><td>${chip(t.st)}</td></tr>`;
+  });
+  tbl+='</tbody></table>';
+  const agentLine=a=>{
+    if(c.isConv) return `<li><b>${a.name}</b> <span class="fr-mut">${a.id}</span> — ${frNum(a.convP,1)}% conv (${a.aN}/${a.lead} visits)${a.needN?`, needs <b>${a.needN}</b> booking${a.needN>1?'s':''}`:''}</li>`;
+    if(c.noNop) return `<li><b>${a.name}</b> <span class="fr-mut">${a.id}</span> — ${fmtAPE(a.aA)} of ${fmtAPE(a.tA)}</li>`;
+    return `<li><b>${a.name}</b> <span class="fr-mut">${a.id}</span> — ${frNum(a.aN,1)} of ${frNum(a.tN,1)} NOP${a.shortN>0?`, short <b>${frNum(a.shortN,1)}</b>`:''}${c.noApe?'':` · APE ${fmtAPE(a.aA)}`}</li>`;
+  };
+  const box=(title,cls,list)=> list.length?`<div class="fr-box ${cls}"><div class="fr-box-h">${title} (${list.length})</div><ul>${list.slice(0,8).map(agentLine).join('')}${list.length>8?`<li class="fr-mut">+${list.length-8} more</li>`:''}</ul></div>`:'';
+  const cardList=FR.trainer!=='ALL'?sorted.filter(t=>t.name===FR.trainer):sorted;
+  const cards=cardList.map(t=>{
+    const i=sorted.indexOf(t), P=t.path;
+    const sub=[!c.noNop?`${c.isConv?'Conv':'NOP'} met ${pct(t.metNp)}`:'', !c.noApe?`APE met ${pct(t.metAp)}`:''].filter(Boolean).join(' · ');
+    const tch=(R.sim&&!c.closed)?R.sim.trChance(t.name,c.goal,t.cur):null;
+    const route=(B.noData)?'':`<div class="fr-card-route"><span>🏁 To ${c.goal}% on ${ML}:</span> ${frRouteText(P,c)}${tch!=null?` <span class="fr-chip ${frProbCls(tch)}" style="margin-left:6px">📊 ${frProbTxt(tch)} chance by slab end</span>`:''}</div>`;
+    return `<div class="fr-card" id="fr-card-${i}">
+      <div class="fr-card-h"><div><div class="fr-card-name">${t.name}</div><div class="fr-mut">${frPl(t.cur,'agent')} in slab · ${sub}${t.exits?` · ${frPl(t.exits,'exit')}`:''}</div></div>${chip(t.st)}</div>
+      ${route}
+      <div class="fr-act-h">Focus actions</div>
+      <ol class="fr-acts">${t.actions.map(a=>`<li>${a.t}</li>`).join('')}</ol>
+      <div class="fr-boxes">${box('🚨 At zero','b',t.zero)}${c.pm!=='conv'?box('📉 Lowest achievers','w',t.low):''}${c.isConv&&c.pm==='conv'?box('Below 35% conversion','w',t.below.filter(a=>!t.zero.includes(a))):''}</div>
+    </div>`;
+  }).join('');
+  const html=`
+    <div class="fr-top">
+      <div><div class="fr-tag">🧠 Focus Report · auto-generated from today's data</div>
+        <h2>${buLabel} · Batch ${state.batch}</h2>
+        <div class="fr-mut">Started ${startStr} · ${c.slab.replace('-',' to ')} days slab · ${c.closed?'slab closed (final)':`day ${c.daysIn} of 30, ${frPl(c.daysLeft,'day')} left`} · data till ${cutStr}</div></div>
+      <div class="fr-top-btns"><button class="btn" onclick="window.print()">🖨 Print / Save PDF</button><button class="btn" onclick="frClose()">✕ Close</button></div>
+    </div>
+    ${controls}
+    <div class="kpis fr-kpis">${kpis}</div>
+    ${R.sim?`<div class="fr-sec-h">📊 Month-end probability — ${scopeName}</div>${frProbHtml(R)}`:''}
+    <div class="fr-sec-h">🏁 Path to ${c.goal}% of agents meeting ${ML} target — ${scopeName}</div>
+    ${pathH}
+    ${formH?`<div class="fr-sec-h">🏆 Winning formula — ${scopeName}</div>${formH}`:''}
+    <div class="fr-sec-h">Leader summary — where to focus</div>
+    <div class="fr-ins-grid">${insH}</div>
+    <div class="fr-sec-h">Trainer ranking <span class="fr-mut">(lowest % meeting target first · click a trainer to jump to their card)</span></div>
+    <div class="fr-tbl-wrap">${tbl}</div>
+    <div class="fr-sec-h">Trainer focus cards${FR.trainer!=='ALL'?' — '+FR.trainer:''}</div>
+    <div class="fr-cards">${cards||'<div class="fr-mut">No trainer data for this batch.</div>'}</div>
+    <div class="fr-foot">Core goal: ${c.goal}% of agents meeting their own target — ${c.isConv?'Conversion (≥35%) and APE':(c.noNop?'APE':'NOP')}${(!c.isConv&&!c.noNop&&!c.noApe)?' (APE shown alongside)':''}. Meeting target = at or above the prorated MTD target, same as Met % in the summary table; only current headcount counts. Status: 🟢 ≥${c.goal}% · 🟡 within 15 points · 🔴 below.</div>`;
+  let ov=document.getElementById('frOverlay');
+  if(!ov){ ov=document.createElement('div'); ov.id='frOverlay'; ov.innerHTML='<div class="fr-panel" id="frPanel"></div>'; document.body.appendChild(ov);
+    ov.addEventListener('click',e=>{ if(e.target===ov) frClose(); }); }
+  const keep=ov.style.display==='flex'?ov.scrollTop:0;
+  document.getElementById('frPanel').innerHTML=html;
+  ov.style.display='flex'; document.body.classList.add('fr-open'); ov.scrollTop=keep;
+  ov.querySelectorAll('.fr-link').forEach(el=>el.addEventListener('click',()=>{ const cd=document.getElementById('fr-card-'+el.dataset.fr); if(cd){ cd.scrollIntoView({behavior:'smooth',block:'start'}); cd.classList.add('fr-flash'); setTimeout(()=>cd.classList.remove('fr-flash'),1200);} else { FR.trainer=sorted[+el.dataset.fr].name; frRender(); } }));
+  ov.querySelectorAll('[data-goal]').forEach(b=>b.onclick=()=>{ FR.goal=+b.dataset.goal; frRender(); });
+  ov.querySelectorAll('[data-pm]').forEach(b=>b.onclick=()=>{ FR.metric=b.dataset.pm; frRender(); });
+  const ts=document.getElementById('frTrainerSel'); if(ts) ts.onchange=e=>{ FR.trainer=e.target.value; frRender(); };
+}
+function frClose(){ const ov=document.getElementById('frOverlay'); if(ov) ov.style.display='none'; document.body.classList.remove('fr-open'); }
+function frOpen(){
+  if(!state.bu || state.batch==null || !RECS.length){ alert('Select a business unit and a batch first, then open the Focus Report.'); return; }
+  if(FR._key!==state.bu+'|'+state.batch){ FR.trainer='ALL'; FR.metric=null; FR._key=state.bu+'|'+state.batch; }
+  try{ frRender(); }catch(e){ console.error(e); alert('Could not build the Focus Report: '+e.message); }
+}
+
 function pctCell(a,t){const p=t>0?a/t*100:0;return{p,html:`<span class="pct ${cls(p)}">${t>0?Math.round(p)+'%':'—'}</span>`};}
 function totalsOf(rows){return rows.reduce((a,g)=>({open:a.open+g.open,cur:a.cur+g.cur,tgtN:a.tgtN+g.tgtN,tgtA:a.tgtA+g.tgtA,
   achN:a.achN+g.achN,achA:a.achA+g.achA,metN:a.metN+g.metN,metA:a.metA+g.metA,
@@ -2263,16 +2847,16 @@ function agentDetailHtml(g){
   BUCKETS.forEach(bk0=>{const bk=isConv&&bk0.key==='nop'?{...bk0,label:'Missing Conversion only'}:bk0;const list=g.agents.filter(a=>a.bucket===bk.key);
     h+=`<div class="bucket bk-${bk.cls}"><div class="bucket-hd"><span class="bdot ${bk.cls}"></span>${bk.label}<span class="bcount">${list.length}</span></div>`;
     if(!list.length)h+=`<div class="empty">None</div>`;
-    else if(isConv){h+=`<div class="agtbl-wrap"><table class="agtbl"><thead><tr><th>Ecode</th><th>Agent</th><th>City</th><th>Conv%</th><th>tgt</th><th>APE</th><th>tgt</th></tr></thead><tbody>`;
+    else if(isConv){h+=`<div class="agtbl-wrap"><table class="agtbl"><thead><tr><th>Ecode</th><th>Agent</th><th>Conv%</th><th>tgt</th><th>APE</th><th>tgt</th></tr></thead><tbody>`;
       list.sort((a,b)=>a.name.localeCompare(b.name)).forEach(a=>{const nC=(a.conv||0)>=a.tN?'g':'b',aC=a.aA>=a.tA?'g':'b';
         h+=`<tr class="fos-agent" data-feid="${a.id||''}" data-fname="${(a.name||'').replace(/"/g,'&quot;')}" data-fvisits="${a.visits||0}" data-fbook="${a.aN||0}" data-fslab="${a.slab||''}" style="cursor:pointer"><td class="muted" style="font-size:11px">${a.id||''} <span style="color:#0d5a63">📊</span></td><td class="an">${a.name}${(a.status==='Inactive'||a.lwd)?' <span class="extag">exited</span>':''}</td>
-          <td class="muted">${a.loc||''}</td><td class="pct ${nC}">${((a.conv||0)*100).toFixed(2)}%</td><td class="muted">${Math.round(a.tN*100)}%</td><td class="pct ${aC}">${fmtAPE(a.aA)}</td><td class="muted">${fmtAPE(a.tA)}</td></tr>`;});
+          <td class="pct ${nC}">${((a.conv||0)*100).toFixed(2)}%</td><td class="muted">${Math.round(a.tN*100)}%</td><td class="pct ${aC}">${fmtAPE(a.aA)}</td><td class="muted">${fmtAPE(a.tA)}</td></tr>`;});
       h+=`</tbody></table></div>`;}
-    else{h+=`<div class="agtbl-wrap"><table class="agtbl"><thead><tr><th>Agent</th><th>City</th><th>NOP</th><th>tgt</th>${noApe?'':'<th>APE</th><th>tgt</th>'}</tr></thead><tbody>`;
+    else{h+=`<div class="agtbl-wrap"><table class="agtbl"><thead><tr><th>Agent</th><th>NOP</th><th>tgt</th>${noApe?'':'<th>APE</th><th>tgt</th>'}</tr></thead><tbody>`;
       list.sort((a,b)=>a.name.localeCompare(b.name)).forEach(a=>{const nC=a.aN>=a.tN?'g':'b',aC=a.aA>=a.tA?'g':'b';
         const clk=(state.bu==='GGN'&&a.id)?` class="zga-agent" data-zeid="${a.id}" data-zname="${(a.name||'').replace(/"/g,'&quot;')}" style="cursor:pointer"`:'';
         h+=`<tr${clk}><td class="an">${a.name}${(state.bu==='GGN'&&a.id)?' <span style="color:#0d5a63;font-size:10px">📊</span>':''}${(a.status==='Inactive'||a.lwd)?' <span class="extag">exited</span>':''}</td>
-          <td class="muted">${a.loc||''}</td><td class="pct ${nC}">${fmt(a.aN)}</td><td class="muted">${fmt(a.tN)}</td>${noApe?'':`<td class="pct ${aC}">${fmtAPE(a.aA)}</td><td class="muted">${fmtAPE(a.tA)}</td>`}</tr>`;});
+          <td class="pct ${nC}">${fmt(a.aN)}</td><td class="muted">${fmt(a.tN)}</td>${noApe?'':`<td class="pct ${aC}">${fmtAPE(a.aA)}</td><td class="muted">${fmtAPE(a.tA)}</td>`}</tr>`;});
       h+=`</tbody></table></div>`;}
     h+=`</div>`;});
   return h+`</div></div>`;
@@ -2500,10 +3084,10 @@ function renderSummary(bi){
   const gkey=state.view==='seg'?(isHR?'locseg':'seg'):state.view;
   renderTargetStrip(isConv,noApe,noNop);
   const rows=buildRows(bi.recs,state.slab,gkey);const T=totalsOf(rows);renderKPIs(T);
-  if(gkey==='locseg'||gkey==='loc')rows.sort((a,b)=>a.name.localeCompare(b.name));
-  document.getElementById('tblTitle').firstChild.textContent=(state.view==='seg'?(isHR?(isConv?'City-wise summary ':'Location-wise summary '):'Segment-wise summary '):(state.view==='loc'?'City-wise summary ':'Trainer-wise summary '));
+  if(gkey==='locseg')rows.sort((a,b)=>a.name.localeCompare(b.name));
+  document.getElementById('tblTitle').firstChild.textContent=(state.view==='seg'?(isHR?(isConv?'City-wise summary ':'Location-wise summary '):'Segment-wise summary '):'Trainer-wise summary ');
   document.getElementById('tblTag').textContent=`Batch #${state.batch} · ${state.slab} days`;
-  const colHead=state.view==='seg'?(isHR?(isConv?'City · Segment':'Location · Segment'):'Segment'):(state.view==='loc'?'City':'Trainer (LP M1)');
+  const colHead=state.view==='seg'?(isHR?(isConv?'City · Segment':'Location · Segment'):'Segment'):'Trainer (LP M1)';
   const L1=isConv?'Conv':'NOP', BK=isConv?'Conv%':'Bkgs';
   const cs=(noApe||noNop)?1:2; // colspan for paired metric groups
   const NCOLS=(noApe||noNop)?12:18;
@@ -2631,6 +3215,102 @@ function wireDetailRows(scope){
     if(open){det.style.display='none';tr.classList.remove('open');}
     else{det.firstElementChild.innerHTML=agentDetailHtml(window.__jvRows[uid][i]);det.style.display='';tr.classList.add('open');}};});
 }
+
+// ===== 📈 Trends: every batch × slab — T2A % and agents achieving target, by segment or trainer =====
+function trBadge(v,good,mid,txt){ if(v==null) return '<span class="tv n">—</span>'; const k=v>=good?'g':(v>=mid?'w':'b'); return `<span class="tv ${k}">${txt}</span>`; }
+function trDelta(cur,prev,unit){ if(cur==null||prev==null) return '<span class="tdl"></span>'; const d=Math.round(cur-prev); if(d===0) return '<span class="tdl n">=</span>'; return `<span class="tdl ${d>0?'up':'dn'}">${d>0?'▲':'▼'} ${Math.abs(d)}${unit}</span>`; }
+function renderTrends(){
+  const bu=state.bu, isHR=buStruct(bu)==='locseg', isConv=buMetric(bu)==='conv', noApe=buNoApe(bu), noNop=buNoNop(bu);
+  const opts=[]; if(isConv) opts.push('conv'); else if(!noNop) opts.push('nop'); if(!noApe) opts.push('ape');
+  if(state.trBU!==bu){ state.trBU=bu; state.trMetric=opts[0]; state.trView='seg'; }   // each unit opens on its core target
+  if(!opts.includes(state.trMetric)) state.trMetric=opts[0];
+  const m=state.trMetric; state.trView=state.trView||'seg';
+  const key=state.trView==='trainer'?'trainer':(isConv?'zone':(isHR?'locseg':'seg'));
+  const grpLabel=key==='trainer'?'Trainer':(key==='zone'?'Zone':(isHR?'Location · Segment':'Segment'));
+  const ML={nop:'NOP',conv:'Conversion',ape:'APE'}[m];
+  const batches=[...new Set(RECS.map(r=>r.batch))].sort((a,b)=>a-b);
+  // data[group][batch][slab] = {val, met, cur, metP, st, nd, day, raw}
+  const data={}, binfo={};
+  batches.forEach(bt=>{
+    const bi=batchInfo(bt); if(!bi) return; binfo[bt]=bi;
+    SLABS.forEach(slab=>{
+      const [lo,hi]=SLAB_BOUNDS[slab]; if(bi.tenure<=lo) return;
+      const st=bi.tenure>=hi?'done':'live';
+      const grows=buildRows(bi.recs,slab,key);
+      const nd=grows.reduce((s2,g)=>s2+(g.achN||0)+(g.achA||0),0)===0;   // nothing for the whole batch -> not uploaded
+      grows.forEach(g=>{
+        if(!g.cur) return;
+        let num,den;
+        if(m==='ape'){num=g.achA;den=g.tgtA;} else if(m==='conv'){num=g.achN;den=g.lead;} else {num=g.achN;den=g.tgtN;}
+        const metN=m==='ape'?g.metA:g.metN;
+        (data[g.name]=data[g.name]||{})[bt]=data[g.name][bt]||{};
+        data[g.name][bt][slab]={val:den>0?num/den*100:null,num,den,met:metN,cur:g.cur,metP:g.cur?metN/g.cur*100:null,st,nd,day:mtdDaysInSlab(slab,bi.tenure)};
+      });
+    });
+  });
+  const groups=Object.keys(data).sort((a,b)=>a.localeCompare(b));
+  const valLbl=m==='conv'?'Conv %':'T2A %', vGood=m==='conv'?35:100, vMid=m==='conv'?28:70, unit=m==='conv'?'pp':'';
+  const fmtD=d=>d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'2-digit'});
+  const tog=(id,items,cur)=>`<div class="trx-seg" id="${id}">${items.map(([k,l])=>`<button data-v="${k}" class="${cur===k?'on':''}">${l}</button>`).join('')}</div>`;
+  const cellVal=c=>`<td class="c-v">${trBadge(c.val,vGood,vMid,c.val==null?'—':Math.round(c.val)+'%')}${c._dv||''}</td>`;
+  const cellMet=c=>`<td class="c-m"><span class="ta">${c.met}<i>/${c.cur}</i></span>${trBadge(c.metP,70,50,c.metP==null?'—':Math.round(c.metP)+'%')}${c._dm||''}</td>`;
+  let body='';
+  if(!groups.length) body=`<tr><td colspan="8" class="trx-empty">No batch data yet for this business unit.</td></tr>`;
+  groups.forEach(gname=>{
+    const bts=batches.filter(bt=>data[gname][bt]);
+    const hcNow=bts.length?Math.max(...SLABS.map(sl=>{const c=data[gname][bts[bts.length-1]][sl];return c?c.cur:0;})):0;
+    body+=`<tr class="trx-grp"><td colspan="8"><span class="g-name">${gname}</span><span class="g-meta">${bts.length} batch${bts.length>1?'es':''}</span></td></tr>`;
+    const prev={};
+    bts.forEach(bt=>{
+      const bi=binfo[bt], row=data[gname][bt];
+      body+=`<tr class="trx-row"><td class="c-b">#${bt}</td><td class="c-d">${fmtD(bi.start)}</td>`;
+      SLABS.forEach(sl=>{
+        const c=row[sl];
+        if(!c){ body+=`<td colspan="2" class="c-na">${bi.tenure<=SLAB_BOUNDS[sl][0]?'Not started':'—'}</td>`; return; }
+        if(c.nd){ body+=`<td colspan="2" class="c-na">No data yet${c.st==='live'?` <span class="live">Day ${c.day}</span>`:''}</td>`; return; }
+        const p=prev[sl];
+        c._dv=trDelta(c.val,p&&p.val,unit); c._dm=trDelta(c.metP,p&&p.metP,'');
+        if(c.st==='live') c._dv+=`<span class="live">Day ${c.day}</span>`;
+        body+=cellVal(c)+cellMet(c);
+        prev[sl]=c;
+      });
+      body+='</tr>';
+    });
+    if(bts.length>1){
+      body+=`<tr class="trx-sum"><td colspan="2" class="c-sum">All batches</td>`;
+      SLABS.forEach(sl=>{
+        let met=0,cur=0,num=0,den=0;
+        bts.forEach(bt=>{ const c=data[gname][bt][sl]; if(!c||c.nd) return; met+=c.met; cur+=c.cur; num+=c.num||0; den+=c.den||0; });
+        if(!cur){ body+=`<td colspan="2" class="c-na">—</td>`; return; }
+        body+=cellVal({val:den>0?num/den*100:null})+cellMet({met,cur,metP:met/cur*100});
+      });
+      body+='</tr>';
+    }
+  });
+  const h=`<div class="trx-bar">
+      <div class="trx-ctl">${tog('trViewTog',[['seg',isConv?'Zone-wise':(isHR?'Location-wise':'Segment-wise')],['trainer','Trainer-wise']],state.trView==='trainer'?'trainer':'seg')}
+      ${opts.length>1?tog('trMetTog',opts.map(o=>[o,{nop:'NOP',conv:'Conversion',ape:'APE'}[o]]),m):''}</div>
+      <div class="trx-legend">
+        <span><span class="tv g">●</span> ${m==='conv'?'≥35%':'≥100%'} / ≥70% agents</span>
+        <span><span class="tv w">●</span> ${m==='conv'?'28–34%':'70–99%'} / 50–69%</span>
+        <span><span class="tv b">●</span> below</span>
+        <span class="tdl up">▲</span><span class="tdl dn">▼</span><span>vs previous batch, same slab</span>
+      </div>
+    </div>
+    <div class="trx-card"><div class="trx-scroll"><table class="trx">
+      <colgroup><col class="w-b"><col class="w-d">${SLABS.map(()=>'<col class="w-v"><col class="w-m">').join('')}</colgroup>
+      <thead>
+        <tr class="h1"><th rowspan="2" class="lft">Batch</th><th rowspan="2" class="lft">Start date</th>${SLABS.map(sl=>`<th colspan="2" class="slab">${sl.replace('-',' – ')} days</th>`).join('')}</tr>
+        <tr class="h2">${SLABS.map(()=>`<th>${valLbl}</th><th>Agents achieved ${ML} target</th>`).join('')}</tr>
+      </thead>
+      <tbody>${body}</tbody>
+    </table></div></div>
+`;
+  const host=document.getElementById('trendView'); host.innerHTML=h;
+  host.querySelectorAll('#trViewTog button').forEach(b=>b.onclick=()=>{ state.trView=b.dataset.v; renderTrends(); });
+  host.querySelectorAll('#trMetTog button').forEach(b=>b.onclick=()=>{ state.trMetric=b.dataset.v; renderTrends(); });
+}
+
 function renderJyoti(){
   const batches=[...new Set(RECS.map(r=>r.batch))].sort((a,b)=>a-b);
   const isHR=buStruct(state.bu)==='locseg';
@@ -2713,13 +3393,19 @@ function renderJyoti(){
 
 function render(){
   if(!RECS.length)return;
-  const isJyoti=state.tab==='jyoti';
-  document.getElementById('controlsBatch').classList.toggle('hidden',isJyoti);
-  document.getElementById('batchMeta').classList.toggle('hidden',isJyoti);
-  document.getElementById('summaryView').classList.toggle('hidden',isJyoti);
-  document.getElementById('focusView').classList.toggle('hidden',isJyoti||state.view!=='focus');
+  const isJyoti=state.tab==='jyoti', isTrend=state.tab==='trends', isAlt=isJyoti||isTrend;
+  document.getElementById('controlsBatch').classList.toggle('hidden',isAlt);
+  document.getElementById('batchMeta').classList.toggle('hidden',isAlt);
+  document.getElementById('summaryView').classList.toggle('hidden',isAlt);
+  document.getElementById('focusView').classList.toggle('hidden',isAlt||state.view!=='focus');
   document.getElementById('jyotiView').classList.toggle('hidden',!isJyoti);
-  document.getElementById('kpis').classList.toggle('hidden',isJyoti);
+  document.getElementById('trendView').classList.toggle('hidden',!isTrend);
+  document.getElementById('kpis').classList.toggle('hidden',isAlt);
+  {const zc=document.getElementById('zgaCards'); if(zc&&isAlt) zc.style.display='none';}
+  if(isTrend){ renderTrends();
+    document.getElementById('footnote').innerHTML=`Trends — every batch in every slab it has reached. T2A % = achievement ÷ target (MTD-prorated while a slab is live, marked “day N”). Agents achieved target = agents at/above target ÷ that slab's headcount (green ≥70%, amber 50–69%, red below 50%). ▲▼ = change vs the previous batch in the same slab. Cutoff ${CUTOFF.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})}.`;
+    return;
+  }
   if(isJyoti){ renderJyoti();
     document.getElementById('footnote').innerHTML=`Jyoti's View — every batch at its current slab. All figures shown per-agent. T2A% = achievement ÷ MTD target (red if below 100%). Met % = agents hitting target ÷ current HC (red if below 70%). Cutoff ${CUTOFF.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})}.`;
     return;
@@ -2766,24 +3452,20 @@ function ingest(rows){
     const segRaw=(get('Segment')||'').trim();if(EXCLUDE_SEG.includes(segRaw)){skipped++;return;}
     const status=(get('Status')||'').trim();
     let lwd=parseDate(get('LWD'));
-    let loc=(get('Location')||'').trim();
-    // Working City: source column. Header match ignores case, spaces, underscores and hyphens.
-    let wcity='';
-    {const want=['workingcity','workcity','basecity','postingcity'];
-     for(const kk in r){const nk=kk.replace(/^\ufeff/,'').trim().toLowerCase().replace(/[\s_\-]/g,'');
-       if(want.includes(nk)){const v=r[kk];if(v!==null&&v!==undefined&&(''+v).trim()!==''){wcity=(''+v).trim();break;}}}} if(typeof LOC_NORM_HR!=='undefined'&&LOC_NORM_HR[loc])loc=LOC_NORM_HR[loc];
+    let loc=(get('Location')||'').trim(); if(typeof LOC_NORM_HR!=='undefined'&&LOC_NORM_HR[loc])loc=LOC_NORM_HR[loc];
     // Business Unit: explicit column, else infer from Location matching HR target locations
     let bu=detectBU(get('Business Unit')||get('BU')||get('Business_Unit')||get('Vertical'));
     if(!bu){ bu = (TGT_HR[loc]) ? 'HR' : 'GGN'; }
     // segment normalization per BU registry
     const cfg=BU_REGISTRY[bu]||{segmap:{}};
-    const seg = (cfg.segmap&&cfg.segmap[segRaw]) || segRaw;
+    const segCI=(map,k)=>{ if(!map) return null; if(map[k]) return map[k]; const n=k.toLowerCase().replace(/\s+/g,' '); for(const kk in map){ if(kk.toLowerCase().replace(/\s+/g,' ')===n) return map[kk]; } return null; };
+    const seg = segCI(cfg.segmap,segRaw) || segRaw;
     let batchNo=parseInt(get('Batch No'));
     // GGN: legacy stray-agent case — merge batch 12 into 11 ONLY if it shares batch 11's 20-May start date.
     // A batch 12 with its own start date (e.g. a genuinely new batch) stays separate.
     if(bu==='GGN'&&batchNo===12){const sd=(get('Start Date')||'').trim();if(sd==='20-May-26')batchNo=11;}
     const rec={id:get('EmployeeID'),name:get('Employee Name'),start,batch:batchNo,
-      trainer:(get('LP-Trainer Name M')||'Unassigned').trim(),seg,loc,wcity,bu,status,lwd,
+      trainer:(get('LP-Trainer Name M')||'Unassigned').trim(),seg,loc,bu,status,lwd,
       nop:{'0-30':num(r.__nop0),'31-60':num(r.__nop1),'61-90':num(r.__nop2)},
       ape:{'0-30':num(r.__ape0),'31-60':num(r.__ape1),'61-90':num(r.__ape2)},
       lead:{'0-30':num(r.__lead0),'31-60':num(r.__lead1),'61-90':num(r.__lead2)},
@@ -2813,7 +3495,7 @@ function processRows(dataRows, sourceName){
   window.__skipped=skipped;window.__src=sourceName;
   document.getElementById('emptyState').classList.add('hidden');
   document.getElementById('xlBtn').disabled=false;
-  {const rb=document.getElementById('rawBtn'); if(rb) rb.disabled=false;}
+  {const rb=document.getElementById('rawBtn'); if(rb) rb.disabled=false;} {const fb=document.getElementById('focusBtn'); if(fb) fb.disabled=false;}
   showBULanding();
   return true;
 }
@@ -2932,7 +3614,7 @@ function exportAgentRaw(){
     const row={
       'Employee ID': r.id||'', 'Employee Name': r.name||'', 'Batch': r.batch,
       'Start Date': r.start.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'2-digit'}),
-      'Segment': r.seg||'', 'Location': r.loc||'', 'Working City': r.wcity||'', 'Trainer': r.trainer||'',
+      'Segment': r.seg||'', 'Location': r.loc||'', 'Trainer': r.trainer||'',
       'Status': (attrited?'Inactive':'Active'),
       'Tenure (days)': tenureOf(r),
       'Met 0-30': slabStatus(r,'0-30'),
@@ -2947,34 +3629,15 @@ function exportAgentRaw(){
         row['Visits '+sl]  = Math.round((r.lead&&r.lead[sl])||0);
         row['Booking '+sl] = Math.round(r.nop[sl]||0);
         row['APE '+sl]     = Math.round(r.ape[sl]||0);
-        const ld=(r.lead&&r.lead[sl])||0, bk=r.nop[sl]||0;
-        row['Conv% '+sl]   = ld>0 ? Math.round(bk/ld*1000)/10 : '';
       });
-      // overall conversion across the slabs the agent actually reached
-      let tV=0,tB=0;
-      slabList.forEach(sl=>{ tV+=(r.lead&&r.lead[sl])||0; tB+=r.nop[sl]||0; });
-      const td0=tgtFor(r,'0-30')||tgtFor(r,'31-60')||tgtFor(r,'61-90');
-      row['Visits Total']   = Math.round(tV);
-      row['Booking Total']  = Math.round(tB);
-      row['Conv% Overall']  = tV>0 ? Math.round(tB/tV*1000)/10 : '';
-      row['Conv Target %']  = td0 ? Math.round(td0[0]*1000)/10 : '';
-      row['Conv Met']       = (tV>0&&td0) ? ((tB/tV)>=td0[0]?'Met':'Not Met') : '';
     }
     rows.push(row);
   });
-  const wcFilled=rows.filter(x=>(x['Working City']||'').trim()!=='').length;
-  console.log('Agent Raw ('+bu+'): '+rows.length+' rows, Working City filled on '+wcFilled
-    +(window.__wcNoCol?' (zero_to_90 has no working_city column)':''));
   const ws=XLSX.utils.json_to_sheet(rows);
   const wb=XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb,ws,'Agent Raw');
   const cut=CUTOFF.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'2-digit'});
   XLSX.writeFile(wb, (BU_REGISTRY[bu].label.replace(/[^A-Za-z0-9]+/g,'_'))+'_Agent_Raw_'+cut+'.xlsx');
-  if(rows.length&&wcFilled===0&&!window.__wcWarned){ window.__wcWarned=true;
-    alert('The file downloaded, but Working City is empty.\n\n'
-      +(window.__wcNoCol
-        ? 'The zero_to_90 table has no working_city column yet. Add it in Supabase, then reload.'
-        : 'The working_city column exists but has no values for these agents.')); }
 }
 function exportExcel(){
   const wb=XLSX.utils.book_new();
@@ -3031,6 +3694,8 @@ function exportExcel(){
 }
 document.getElementById('xlBtn').addEventListener('click',exportExcel);
 document.getElementById('rawBtn').addEventListener('click',exportAgentRaw);
+document.getElementById('focusBtn').addEventListener('click',frOpen);
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') frClose(); });
 document.getElementById('switchBuBtn').addEventListener('click',()=>{document.getElementById('switchBuBtn').style.display='none';document.getElementById('buBadge').textContent='';showBULanding();});
 
 
@@ -4461,7 +5126,6 @@ function mapSupabaseRow(r){
     'NHT Trainer Code': r.nht_trainer_code||'', 'NHT Trainer Name': r.nht_trainer_name||'',
     'LP -Trainer Code M1': r.lp_trainer_code||'', 'LP-Trainer Name M': r.lp_trainer_name||'',
     'Business Unit': r.business_unit||'', 'Location': r.location||'',
-    'Working City': r.working_city||'',
     'Segment': r.segment||'', 'Status': r.status||'', 'LWD': r.lwd||'',
     '0-30': r.nop_0_30||'', '31-60': r.nop_31_60||'', '61-90': r.nop_61_90||'',
     '0-30_1': r.ape_0_30||'', '31-60_1': r.ape_31_60||'', '61-90_1': r.ape_61_90||'',
@@ -4472,18 +5136,9 @@ function mapSupabaseRow(r){
 }
 async function loadFromSupabase(){
   const PAGE=1000; let offset=0; const all=[];
-  const BASE_COLS='employee_id,employee_name,start_date,batch_no,nht_trainer_code,nht_trainer_name,lp_trainer_code,lp_trainer_name,business_unit,location,segment,status,lwd,nop_0_30,nop_31_60,nop_61_90,ape_0_30,ape_31_60,ape_61_90,lead_0_30,lead_31_60,lead_61_90,data_date';
-  // working_city is optional: if the column isn't in zero_to_90 yet, fall back to the base list
-  let cols=BASE_COLS+',working_city';
   while(true){
-    const mkUrl=c=>SUPABASE_URL+'/rest/v1/zero_to_90?select='+c+'&order=id.asc&limit='+PAGE+'&offset='+offset;
-    const hdrs={apikey:SUPABASE_KEY,Authorization:'Bearer '+SUPABASE_KEY,Range:offset+'-'+(offset+PAGE-1)};
-    let res=await fetch(mkUrl(cols),{headers:hdrs});
-    if(!res.ok && cols!==BASE_COLS){
-      console.warn('zero_to_90 has no working_city column — loading without it');
-      window.__wcNoCol=true;
-      cols=BASE_COLS; res=await fetch(mkUrl(cols),{headers:hdrs});
-    }
+    const url=SUPABASE_URL+'/rest/v1/zero_to_90?select=employee_id,employee_name,start_date,batch_no,nht_trainer_code,nht_trainer_name,lp_trainer_code,lp_trainer_name,business_unit,location,segment,status,lwd,nop_0_30,nop_31_60,nop_61_90,ape_0_30,ape_31_60,ape_61_90,lead_0_30,lead_31_60,lead_61_90,data_date&order=id.asc&limit='+PAGE+'&offset='+offset;
+    const res=await fetch(url,{headers:{apikey:SUPABASE_KEY,Authorization:'Bearer '+SUPABASE_KEY,Range:offset+'-'+(offset+PAGE-1)}});
     if(!res.ok) throw new Error('Supabase HTTP '+res.status);
     const batch=await res.json();
     if(!Array.isArray(batch)||!batch.length) break;
